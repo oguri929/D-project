@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="mapper.board">
+	<insert id="insertBoard" parameterType="boardDto" useGeneratedKeys="true" keyProperty="num">
+		INSERT INTO BOARD(
+			NUM, 
+			TITLE, 
+			WRITER, 
+			CONTENT) 
+		VALUES(
+			#{num}, 
+			#{title}, 
+			#{writer}, 
+			#{content})	
+		<selectKey keyProperty="num" resultType="Integer" order="BEFORE">
+			SELECT BOARD_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+	</insert> 
+	
+	<select id="selectAllBoard" resultType="boardDto" parameterType="criteria">
+		SELECT * 
+		FROM (
+			SELECT ROWNUM RN, A.*
+				FROM (
+						SELECT * 
+						FROM BOARD 
+						ORDER BY NUM DESC 
+						)A
+				)
+	WHERE RN BETWEEN #{rowStart} AND #{rowEnd}
+	</select> 
+	
+	<select id="selectTotBoard" resultType="int">
+		SELECT COUNT(*) FROM BOARD WHERE NUM > 0
+	</select>
+	
+	<select id="selectBoardOne" parameterType="int" resultType="boardDto">
+		SELECT * FROM BOARD WHERE NUM = #{num}
+	</select>
+	
+	<update id="updateBoard" parameterType="boardDto">
+		UPDATE BOARD SET 
+			TITLE=#{title}, 
+			CONTENT=#{content} 
+		where NUM=#{num}
+	</update>
+	
+	<update id="updateBoardCnt" parameterType="int">
+		UPDATE BOARD SET CNT=CNT+1 WHERE NUM=#{num}
+	</update>
+	
+	<delete id="deleteBoard" parameterType="int">
+		DELETE FROM BOARD WHERE NUM=#{num}
+	</delete>
+	
+	<insert id="insertFile" parameterType="hashMap">
+		INSERT INTO BOARD_FILE_INFO(
+			FILE_NUM,
+			BOARD_NUM,
+			ORG_FILE_NAME,
+			STORED_FILE_NAME,
+			FILE_SIZE
+		)VALUES(
+			BOARD_FILE_SEQ.NEXTVAL,
+			#{BOARD_NUM},
+			#{ORG_FILE_NAME},
+			#{STORED_FILE_NAME},
+			#{FILE_SIZE}
+		)
+    </insert>
+    
+    <select id="selectFileList" parameterType="int" resultType="hashMap">
+		SELECT FILE_NUM,
+			   ORG_FILE_NAME,
+			   ROUND(FILE_SIZE/1024,1) AS FILE_SIZE
+		  FROM BOARD_FILE_INFO
+		 WHERE BOARD_NUM = #{num}
+		 ORDER BY FILE_NUM ASC
+	</select>
+	
+	<select id="selectFileInfoByFileNum" parameterType="int" resultType="hashMap">
+		SELECT
+			BOARD_NUM, 
+			STORED_FILE_NAME,
+			ORG_FILE_NAME
+		FROM BOARD_FILE_INFO
+		WHERE FILE_NUM = #{fileNum}
+	</select>
+	
+	<delete id="deleteFile" parameterType="int">
+		DELETE FROM BOARD_FILE_INFO WHERE BOARD_NUM = #{num} 
+	</delete>
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 마이바티스 작동 규칙 정의 -->
+	<settings>
+		<setting name="cacheEnabled" value="false"/>
+		<setting name="useGeneratedKeys" value="false"/>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings>
+	<typeAliases>
+		<typeAlias alias="criteria" type="com.mycompany.myapp.utils.Criteria"/>
+		<typeAlias alias="boardDto" type="com.mycompany.myapp.board.domain.BoardDto"/>
+		<typeAlias alias="subjectDto" type="com.mycompany.myapp.studyroom.domain.SubjectDto"/>
+		<typeAlias alias="studyroomDto" type="com.mycompany.myapp.studyroom.domain.StudyroomDto"/>
+	</typeAliases>
+</configuration>
