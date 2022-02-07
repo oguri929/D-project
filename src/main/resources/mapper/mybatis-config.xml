@@ -10,6 +10,7 @@
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
 	</settings>
 	<typeAliases>
+		<typeAlias alias="memberDTO" type="com.mycompany.myapp.member.dto.MemberDTO" />
 		<typeAlias alias="criteria" type="com.mycompany.myapp.utils.Criteria"/>
 		<typeAlias alias="boardDto" type="com.mycompany.myapp.board.domain.BoardDto"/>
 		<typeAlias alias="subjectDto" type="com.mycompany.myapp.studyroom.domain.SubjectDto"/>

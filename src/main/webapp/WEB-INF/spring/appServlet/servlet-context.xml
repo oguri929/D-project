@@ -31,6 +31,10 @@
 		<beans:constructor-arg ref="studyroomService" />
 	</beans:bean>
 	
+	<beans:bean id="memberController" class="com.mycompany.myapp.member.controller.MemberController">
+		<beans:constructor-arg ref="memberService" />
+	</beans:bean>
+	
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 	    <!--  파일업로드 용량 (10MB)-->
 	    <beans:property name="maxUploadSize" value="100000000"/>
