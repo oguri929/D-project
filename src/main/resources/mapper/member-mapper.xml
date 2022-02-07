@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+	  <!-- 로그인 -->
+	  <select id="login" resultType="memberDTO" parameterType="memberDTO">
+        SELECT ID,NAME
+		FROM
+		MEMBER_INFO
+		WHERE ID=#{id}
+		AND PW=#{pw}  
+   	  </select>
+   	  
+   	  <!-- 회원가입 -->
+   	  <insert id="register"  parameterType="memberDTO">
+		insert into MEMBER_INFO (NUM,ID,PW,LOCAL,BIRTH,GENDER,NICKNAME,EMAIL,ADMIN,NAME)
+		values (MEMBERINFO_SEQ.nextval,#{id},#{pw},#{local},#{birth},#{gender},#{nickname},#{email},0,#{name})
+   	  	<selectKey keyProperty="num" resultType="Integer">
+		<!--  NVL : 지정값이 null이면, 다음값으로 출력  -->
+		SELECT NVL(MAX(num), 0) FROM MEMBER_INFO
+		</selectKey>
+   	  </insert>
+   	  
+   	  <!-- 회원정보 수정 -->
+   	  <update id="memberUpdate" parameterType="memberDTO">
+   	  	UPDATE MEMBER_INFO SET
+   	  	PW=#{pw},
+   	  	LOCAL=#{local},
+   	  	BIRTH=#{birth},
+   	  	GENDER=#{gender},
+   	  	NICKNAME=#{nickname},
+   	  	EMAIL=#{email},
+		ADMIN=#{admin},
+   	  	NAME=#{name} WHERE ID=#{id}
+   	  </update>
+
+	
+  
+</mapper>
