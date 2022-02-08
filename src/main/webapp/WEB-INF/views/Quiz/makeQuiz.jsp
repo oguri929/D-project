@@ -36,7 +36,15 @@ function showChoiceOption(){
 			<td>방번호</td><td><input type="number" name="quizList[0].roomNum"/></td>
 		</tr>
 		<tr>
-			<td>주제번호</td><td><input type="number" name="quizList[0].subjectNum"/></td>
+			<td>주제번호</td><td>
+			<c:if test="${chatroomList}">
+			<select name=quizList[0].subjectNum">
+				<c:forEach var="room" items="${chatroomList }" varStatus="status"> 
+					<option></option>
+				</c:forEach>
+			</select>
+			</c:if>
+			</td>
 		</tr>
 		<tr>
 			<td>만든사람</td><td><input type="number" name="quizList[0].makerNum"/></td>
