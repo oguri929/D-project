@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,7 +49,7 @@
 	</P>
 		
 	<button type="submit">회원가입하기</button>
-	<p><a href="/user/login.do">로그인하러가기</a></p>
+	<p><a href="../login.do">로그인하러가기</a></p>
 </form>
 </body>
 </html>

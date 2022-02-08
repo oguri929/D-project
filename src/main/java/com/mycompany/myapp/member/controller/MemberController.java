@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -35,15 +36,15 @@ public class MemberController {
     
 	
 	@RequestMapping("login.do")
-	public String login() {
+	public String login(MemberDTO dto) {
 		logger.info("post login");
 		
 		return "user/login";
 	}
 	
 	
-	@RequestMapping(value="/user/logincheck.do", method=RequestMethod.POST)
-	public String login(MemberDTO dto, HttpServletRequest request, RedirectAttributes rttr) throws Exception {
+	@RequestMapping(value="login.do", method=RequestMethod.POST)
+	public String login(MemberDTO dto, HttpServletRequest request, Model model,RedirectAttributes rttr) throws Exception {
 		logger.info("post login");
 		
 		// 세션 생성
@@ -51,16 +52,20 @@ public class MemberController {
 		
 		MemberDTO login = memberService.login(dto);
 		
-		if(login == null) {
+		if(!BCrypt.checkpw(dto.getPw(), login.getPw())) {
 			// 세션 저장
 			session.setAttribute("user", null);
 			rttr.addFlashAttribute("msg", false);
 			// 조건문에 의해 login 값이 null 이라면, msg 라는 정보에 false라는
 			// 값이 들어가서 전송된다. 이 값은 다른 페이지로 이동하거나 새로고침을 하면 없어지는 일회용값이다.
 	} else {
+			System.out.println("login succece");
 			session.setAttribute("user", login);
+			model.addAttribute("user", login);
+			//rttr.addFlashAttribute("user",login);
+			return "redirect:/";
 	}
-	return "redirect:/";
+	return "redirect:../login.do";
 	
 	/*로그인이 실패하면 어떠한 값도 넘어오지 않으니 null이 되고
 	 * 성공하면 매퍼에 있는 쿼리문에 대한 결과가 넘어오게 된다.
@@ -85,15 +90,15 @@ public class MemberController {
 	
 	
 	// 회원가입 GET	
-	@RequestMapping(value="/register.do",method = RequestMethod.GET)
+	@RequestMapping(value="/user/register.do",method = RequestMethod.GET)
 	public String registerGET() throws Exception {
 		return "user/register";
 	}
 	
 	// 회원가입 POST
-	@RequestMapping(value="/registerCheck.do",method = RequestMethod.POST)
+	@RequestMapping(value="/user/registerCheck.do",method = RequestMethod.POST)
 	public String registerPOST(MemberDTO dto,RedirectAttributes redirectAttributes) throws Exception {
-		
+		System.out.println("resgister post");
 		String hashedPw = BCrypt.hashpw(dto.getPw(),BCrypt.gensalt());
 		dto.setPw(hashedPw);
 		memberService.register(dto);

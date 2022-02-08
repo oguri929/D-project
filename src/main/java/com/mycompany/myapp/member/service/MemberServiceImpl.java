@@ -23,12 +23,6 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.login(dto);
 	}
 	
-	
-	
-	
-	
-
-
 	// 회원가입
 	@Override
 	public void register(MemberDTO dto) throws Exception {
