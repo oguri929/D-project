@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.mycompany.myapp.quiz.dto.ChatRoomInfoOfMember;
 import com.mycompany.myapp.quiz.dto.QuizDto;
 
 @Repository
@@ -18,6 +19,7 @@ public interface QuizDaoInterface {
 	public QuizDto selectOneQuizByNum(long num);
 	public void countUpNOA(long num);
 	public void sountUPNOQ(long num);
+	public List<ChatRoomInfoOfMember> selectAllChatroomOfMember(long num);
 	
 	
 }

@@ -17,8 +17,8 @@
 			<td>
 				<select name="quizType" >
 					<option value="1" <c:if test="${quiz.quizType==1}"> selected </c:if>>5지선다</option>
-					<option value="2" <c:if test="${quiz.quizType==2}"> selected </c:if>>단답형</option>
-					<option value="3" <c:if test="${quiz.quizType==3}"> selected </c:if>>주관식</option>
+					<option value="2" <c:if test="${quiz.quizType==2}"> </c:if>>단답형</option>
+					<option value="3" <c:if test="${quiz.quizType==3}">  </c:if>>주관식</option>
 				</select>
 			</td>
 		</tr>

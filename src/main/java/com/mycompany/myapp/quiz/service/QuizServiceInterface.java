@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.mycompany.myapp.quiz.dto.ChatRoomInfoOfMember;
 import com.mycompany.myapp.quiz.dto.QuizDto;
 import com.mycompany.myapp.quiz.dto.SolveQuizVo;
 
@@ -19,6 +20,6 @@ public interface QuizServiceInterface {
 	public List<QuizDto> getQuizListByMakerNum(long makerNum);
 	public Map<Integer,QuizDto> selectQuizList(List<QuizDto> quizList, int numOfQuestion );
 	public boolean checkAnswer(SolveQuizVo solveVo,QuizDto quizDto);
-	
+	public List<ChatRoomInfoOfMember> getChatroomListofMember(long memberNum);
 	
 }

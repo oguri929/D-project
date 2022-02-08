@@ -16,5 +16,6 @@
 		<typeAlias alias="subjectDto" type="com.mycompany.myapp.studyroom.domain.SubjectDto"/>
 		<typeAlias alias="studyroomDto" type="com.mycompany.myapp.studyroom.domain.StudyroomDto"/>
 		<typeAlias alias="quizDto" type="com.mycompany.myapp.quiz.dto.QuizDto"/>
+		<typeAlias alias="chatRoomInfoOfMember" type="com.mycompany.myapp.quiz.dto.ChatRoomInfoOfMember"/>
 	</typeAliases>
 </configuration>

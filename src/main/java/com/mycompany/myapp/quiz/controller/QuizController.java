@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.mycompany.myapp.member.dto.MemberDTO;
 import com.mycompany.myapp.quiz.dto.QuizDto;
 import com.mycompany.myapp.quiz.dto.SelectQuizNumAndSubjectVO;
 import com.mycompany.myapp.quiz.dto.SolveQuizVo;
@@ -31,12 +33,17 @@ public class QuizController {
 	 */
 	
 	@RequestMapping(value="/makeQuiz", method=RequestMethod.GET)
-	public String getMakeQuiz(QuizDto dto,HttpServletRequest request) {
-		
+	public String getMakeQuiz(QuizDto dto,HttpServletRequest request,Model model) {
+		HttpSession session=request.getSession();
+		MemberDTO memberDto=(MemberDTO) session.getAttribute("user");
+		model.addAttribute("chatroomList",ser.getChatroomListofMember(memberDto.getNum()));
 		return "Quiz/makeQuiz";
 	}
 	@RequestMapping(value="/makeQuiz", method=RequestMethod.POST)
 	public String postMakeQuiz(QuizDto dto,HttpServletRequest request) {
+		HttpSession session=request.getSession();
+		MemberDTO memberDto=(MemberDTO) session.getAttribute("user");
+		dto.setMakerNum(memberDto.getNum());
 		ser.insertQuiz(dto.getQuizList());
 		return "Quiz/makeQuiz";
 	}

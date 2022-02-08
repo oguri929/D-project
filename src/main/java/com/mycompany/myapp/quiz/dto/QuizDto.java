@@ -21,6 +21,9 @@ public class QuizDto {
 	private String explanation;
 	private long numOfQuiz;
 	private long numOfAnswser;
+	private String subject;
+	//private String //방번호
+	//private String 
 	private List<QuizDto> quizList;
 	
 	public List<QuizDto> getQuizList() {

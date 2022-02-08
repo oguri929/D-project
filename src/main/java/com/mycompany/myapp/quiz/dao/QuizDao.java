@@ -6,7 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-
+import com.mycompany.myapp.quiz.dto.ChatRoomInfoOfMember;
 import com.mycompany.myapp.quiz.dto.QuizDto;
 
 @Repository
@@ -46,7 +46,10 @@ public class QuizDao implements QuizDaoInterface {
 		// TODO Auto-generated method stub
 		return sqlSessiontemplate.selectOne("selectOneQuizByNum",num);
 	}
-
+	@Override
+	public List<ChatRoomInfoOfMember> selectAllChatroomOfMember(long memberNum) {
+		return sqlSessiontemplate.selectList("getChatRoomNames", memberNum);
+	}
 	@Override
 	public void countUpNOA(long num) {
 		// TODO Auto-generated method stub

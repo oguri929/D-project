@@ -25,6 +25,17 @@
 		(QUIZ_NUM_SEQ.nextval,#{roomNum},#{makerNum},#{subjectNum},#{quizType},#{question},#{option1},#{option2},#{option3},#{option4},#{option5},#{answer},#{explanation},#{numOfQuiz},#{numOfAnswser})
 		
 	</insert>
+	<select id="getChatRoomNames" parameterType="long" resultType="chatRoomInfoOfMember">
+		select 
+		SINFO.NUM as subject_num,
+		SINFO.SUBJECT,
+		STR.NUM as chatroom_num,
+		STR.ROOMNAME as room_name 
+		from MATCHTABLE MAT 
+		join STUDYROOM STR on (MAT.CHATROOM_NUM=STR.NUM) 
+		join SUBJECT_INFO SINFO on (STR.SUBJECT=SINFO.NUM)
+		where MEMBER_NUM=#{member_num}
+	</select>
 	<!-- 
 	<update id="update" parameterType="dto">
 		update MEMBER set NAME=#{name},PASSWORD=#{password} where EMAIL=#{email}

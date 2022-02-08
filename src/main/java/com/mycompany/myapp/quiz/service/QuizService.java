@@ -10,6 +10,7 @@ import java.util.Random;
 import org.springframework.stereotype.Service;
 
 import com.mycompany.myapp.quiz.dao.QuizDao;
+import com.mycompany.myapp.quiz.dto.ChatRoomInfoOfMember;
 import com.mycompany.myapp.quiz.dto.QuizDto;
 import com.mycompany.myapp.quiz.dto.SolveQuizVo;
 
@@ -121,6 +122,12 @@ public class QuizService implements QuizServiceInterface{
 		// TODO Auto-generated method stub
 		
 		return dao.selectQuizListByMakerNum(makerNum);
+	}
+
+	@Override
+	public List<ChatRoomInfoOfMember> getChatroomListofMember(long memberNum) {
+		// TODO Auto-generated method stub
+		return dao.selectAllChatroomOfMember(memberNum);
 	}
 	
 
