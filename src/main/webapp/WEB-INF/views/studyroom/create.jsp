@@ -36,7 +36,15 @@
 			<th>과목정보</th>
 			<td colspan="3">
 				<c:forEach var="sub" items="${subjectList}">
-					<input type="checkbox" name="subject" value="${sub.subject}">${sub.subject}
+					<c:choose>
+						<c:when test="${sub.subject eq '기타' }">
+							<input type="radio" name="subject" value="${sub.num}">${sub.subject}
+							<input type="text" name="addSubject"><br>
+						</c:when>
+						<c:otherwise>
+							<input type="radio" name="subject" value="${sub.num}">${sub.subject}
+						</c:otherwise>
+					</c:choose>
 				</c:forEach>
 			</td>
 		</tr>

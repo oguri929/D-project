@@ -9,8 +9,17 @@
 	</select>
 	
 	<select id="selectSubject" resultType="subjectDto" parameterType="int">
-		SELECT SUBJECT FROM SUBJECT_INFO WHERE NUM = #{subjNum} 
+		SELECT * FROM SUBJECT_INFO WHERE NUM = #{subjNum} 
 	</select>
+	
+	<select id="selectSubjectByName" resultType="int" parameterType="String">
+		SELECT NUM FROM SUBJECT_INFO WHERE SUBJECT = #{addSubject} 
+	</select>
+	
+	<insert id="insertSubject" parameterType="String">
+		INSERT INTO SUBJECT_INFO(NUM, SUBJECT)
+		VALUES(SUBJECT_SEQ.NEXTVAL, #{addSubject})
+	</insert>
 	
 	<insert id="insertStudyroom" parameterType="studyroomDto" useGeneratedKeys="true" keyProperty="num">
 		INSERT INTO STUDYROOM(
@@ -49,6 +58,10 @@
 				)
 	WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
 	ORDER BY NUM DESC
+	</select>
+	
+	<select id="selectStudyroomByTag" resultType="studyroomDto" parameterType="int">
+		SELECT * FROM STUDYROOM WHERE SUBJECT = #{num}
 	</select>
 	
 	<select id="selectOneStudyroom" resultType="studyroomDto" parameterType="int">

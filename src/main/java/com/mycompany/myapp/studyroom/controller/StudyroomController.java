@@ -34,13 +34,15 @@ public class StudyroomController {
 	}
 	
 	@RequestMapping(value = "/studyroom/create", method = RequestMethod.POST)
-	public String createStudyroom(StudyroomDto studyroomDto, HttpServletRequest request) {
-		String[] subjects = request.getParameterValues("subject");
-		String subject = "";
-		for(int i=0; i<subjects.length; i++) {
-			subject += subjects[i] + ",";
+	public String createStudyroom(StudyroomDto studyroomDto, HttpServletRequest req) {
+		String addSubject = req.getParameter("addSubject");
+		
+		if(addSubject != null) {
+			studyroomService.addSubject(addSubject);
+			int subject = studyroomService.getSubjectByName(addSubject);
+			studyroomDto.setSubject(subject);
 		}
-		studyroomDto.setSubject(subject);
+		
 		studyroomService.createStudyroom(studyroomDto);
 		return "redirect:/studyroom/list";
 	}
@@ -48,18 +50,21 @@ public class StudyroomController {
 	@RequestMapping(value =  "/studyroom/list", method = RequestMethod.GET)
 	public String listStudyroom(Model model, SearchCriteria scri) {
 		List<StudyroomDto> studyroomList = studyroomService.listStudyroom(scri);
+		
+		List<SubjectDto> subjectList =  studyroomService.getSubjectList();
 
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(scri);
 		pageMaker.setTotalCount(studyroomService.countTotStudyroom(scri));
 		
 		for(int i=0; i<studyroomList.size(); i++) {
-			StudyroomDto std = studyroomList.get(i);
-			String str = std.getSubject();
-			String nstr = removeComma(str);
-			std.setSubject(nstr);
+			StudyroomDto studyroomDto = studyroomList.get(i);
+			int subjNum = studyroomDto.getSubject();
+			SubjectDto subjectDto = studyroomService.getSubject(subjNum);
+			studyroomDto.setSubjectDto(subjectDto);
 		}
 		
+		model.addAttribute("subjectList", subjectList);
 		model.addAttribute("studyroomList", studyroomList);
 		model.addAttribute("pageMaker", pageMaker);
 		return "/studyroom/list";
@@ -68,10 +73,8 @@ public class StudyroomController {
 	@RequestMapping(value="/studyroom/read/{num}")
 	public String readStudyroom(@PathVariable int num, Model model) {
 		StudyroomDto studyroomDto = studyroomService.readStudyroom(num);
-		
-		String str = studyroomDto.getSubject();
-		String nstr = removeComma(str);
-		studyroomDto.setSubject(nstr);
+		SubjectDto subjectDto = studyroomService.getSubject(studyroomDto.getSubject());
+		studyroomDto.setSubjectDto(subjectDto);
 		
 		model.addAttribute("studyroomDto", studyroomDto);
 	
@@ -91,12 +94,7 @@ public class StudyroomController {
 	
 	@RequestMapping(value = "/studyroom/edit/{num}", method = RequestMethod.POST)
 	public String editStudyroom(StudyroomDto studyroomDto, HttpServletRequest request) {
-		String[] subjects = request.getParameterValues("subject");
-		String subject = "";
-		for(int i=0; i<subjects.length; i++) {
-			subject += subjects[i] + ",";
-		}
-		studyroomDto.setSubject(subject);
+		
 		studyroomService.editStudyroom(studyroomDto);
 	
 		return "redirect:/studyroom/list";
@@ -116,11 +114,23 @@ public class StudyroomController {
 		return "redirect:/studyroom/list";
 	}
 	
-	public String removeComma(String str) {
-		if(str.endsWith(",")) {
-			return str.substring(0, str.length()-1);
+	@RequestMapping(value = "/studyroom/search/{num}")
+	public String searchByTag(@PathVariable int num, Model model) {
+		List<StudyroomDto> studyroomList = studyroomService.listStudyroom(num);
+		
+		List<SubjectDto> subjectList =  studyroomService.getSubjectList();
+		
+		for(int i=0; i<studyroomList.size(); i++) {
+			StudyroomDto studyroomDto = studyroomList.get(i);
+			int subjNum = studyroomDto.getSubject();
+			SubjectDto subjectDto = studyroomService.getSubject(subjNum);
+			studyroomDto.setSubjectDto(subjectDto);
 		}
-		return str;
+		
+		model.addAttribute("subjectList", subjectList);
+		model.addAttribute("studyroomList", studyroomList);
+		
+		return "/studyroom/list";
 	}
 		
 }

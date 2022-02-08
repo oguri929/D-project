@@ -15,12 +15,13 @@ public class StudyroomDto {
 	private Date regdate;
 	private String captain;
 	private int cnt;
-	private String subject;
+	private int subject;
+	private SubjectDto subjectDto;
 
 	public StudyroomDto() {}
 
 	public StudyroomDto(String pw, String local, String roomName, String roomDiscript, int memberLimit, String captain,
-			String subject) {
+			int subject) {
 		super();
 		this.pw = pw;
 		this.local = local;
@@ -103,15 +104,20 @@ public class StudyroomDto {
 		this.cnt = cnt;
 	}
 
-	public String getSubject() {
+	public int getSubject() {
 		return subject;
 	}
 
-	public void setSubject(String subject) {
+	public void setSubject(int subject) {
 		this.subject = subject;
 	}
 
-	
+	public SubjectDto getSubjectDto() {
+		return subjectDto;
+	}
 
+	public void setSubjectDto(SubjectDto subjectDto) {
+		this.subjectDto = subjectDto;
+	}
 
 }

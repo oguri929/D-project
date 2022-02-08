@@ -13,6 +13,16 @@
 	</style>
 </head>
 <body>
+	<table border="1">
+		<tr>
+			<td>
+			<c:forEach var="sub" items="${subjectList }">
+				<a href="<c:url value="/studyroom/search/${sub.num }" />">${sub.subject }</a>
+			</c:forEach>
+			</td>
+		</tr>
+	</table>
+		
 	<c:choose>
 	<c:when test="${empty studyroomList }">
 		<tr>
@@ -21,7 +31,6 @@
 	</c:when>
 	
 	<c:when test="${!empty studyroomList}">
-	<form action=""></form>
 	<div class="search">
 	    <select name="searchType">
 	      <option value="n"<c:out value="${scri.searchType == null ? 'selected' : ''}"/>>-----</option>
@@ -62,7 +71,7 @@
 				</td>
 				<td>${studyroom.captain}</td>
 				<td>${studyroom.memberLimit}</td>
-				<td>${studyroom.subject }</td>
+				<td>${studyroom.subjectDto.subject }</td>
 				<td>${studyroom.regdate}</td>
 				<td>${studyroom.cnt}</td>
 			</tr>
@@ -72,7 +81,7 @@
 		</c:choose>
 
 	<a href="<c:url value="/studyroom/create" />">[스터디룸 만들기]</a>
-	
+
 <div>
   <ul>
     <c:if test="${pageMaker.prev}">

@@ -9,14 +9,20 @@ import com.mycompany.myapp.utils.SearchCriteria;
 public interface StudyroomService {
 	//과목 목록 가져오기
 	public abstract List<SubjectDto> getSubjectList();
+	//과목 추가
+	public abstract void addSubject(String addSubject);
 	//스터디룸 만들기
 	public abstract void createStudyroom(StudyroomDto studyroomDto);
 	//스터디룸 리스트 가져오기
 	public abstract List<StudyroomDto> listStudyroom(SearchCriteria scri);
+	//스터디룸 리스트 가져오기
+	public abstract List<StudyroomDto> listStudyroom(int num);
 	//스터디룸 세부정보 보기
 	public abstract StudyroomDto readStudyroom(int num);
 	//스터디룸에 등록된 과목 이름정보 가져오기
 	public abstract SubjectDto getSubject(int subjNum);
+	//과목이름으로 과목 번호 가져오기
+	public abstract int getSubjectByName(String addSubject);
 	//스터디룸 수정하기
 	public abstract int editStudyroom(StudyroomDto studyroomDto);
 	//스터디룸 삭제하기

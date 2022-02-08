@@ -76,7 +76,7 @@
 		</tr>
 		<tr>
 			<th>과목정보</th>
-			<td colspan="4">${studyroomDto.subject }</td>
+			<td colspan="4">${studyroomDto.subjectDto.subject }</td>
 		</tr>
 		<tr>
 			<th>등록일</th>
