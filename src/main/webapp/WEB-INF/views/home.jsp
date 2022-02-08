@@ -8,7 +8,10 @@
 <h1>
 	Hello world!  
 </h1>
-
+<c:if test="${!empty user}">
+	<p> ${user.id}
+</c:if>
+user= ${user.id}
 <P>  The time on the server is ${serverTime}. </P>
 </body>
 </html>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "=//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="service">
+	<select id="list" resultType="quizDto">
+		SELECT * FROM BOOK
+	</select>
+	<select id="searchQuiz" parameterType="String" resultType="quizDto">
+		select * from QUIZ_INFO where QUESTION=#{title}
+	</select>
+	<select id="selectOneQuizByNum" parameterType="long" resultType="quizDto">
+		select * from QUIZ_INFO where NUM=#{num}
+	</select>
+	<select id="selectQuizListBySubjectNum" parameterType="long" resultType="quizDto">
+		select * from QUIZ_INFO where SUBJECT_NUM=#{subjectNum}
+	</select>
+	<select id="selectQuizListByMakerNum" parameterType="long" resultType="quizDto">
+		select * from QUIZ_INFO where MAKER_NUM=#{makerNum}
+	</select>
+	<insert id="insertQuiz" parameterType="quizDto">
+		insert into QUIZ_INFO 
+		(NUM,ROOM_NUM,MAKER_NUM,SUBJECT_NUM,QUIZ_TYPE,QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,OPTION5,ANSWER,EXPLANATION,NUM_OF_QUIZ,NUM_OF_ANSWER) 
+		values 
+		(QUIZ_NUM_SEQ.nextval,#{roomNum},#{makerNum},#{subjectNum},#{quizType},#{question},#{option1},#{option2},#{option3},#{option4},#{option5},#{answer},#{explanation},#{numOfQuiz},#{numOfAnswser})
+		
+	</insert>
+	<!-- 
+	<update id="update" parameterType="dto">
+		update MEMBER set NAME=#{name},PASSWORD=#{password} where EMAIL=#{email}
+	</update> -->
+	<update id="updateQuiz" parameterType="quizDto">
+		update QUIZ_INFO set
+		ROOM_NUM=#{roomNum},MAKER_NUM=#{makerNum},SUBJECT_NUM=#{subjectNum},
+		QUIZ_TYPE=#{quizType},QUESTION=#{question},OPTION1=#{option1},OPTION2=#{option2},OPTION3=#{option3},OPTION4=#{option4},OPTION5=#{option5},ANSWER=#{answer},
+		EXPLANATION=#{explanation},NUM_OF_QUIZ=#{numOfQuiz},NUM_OF_ANSWER=#{numOfAnswser} where NUM=#{num}
+	</update>
+	<update id="countUpNOQ" parameterType="long">
+		update QUIZ_INFO set NUM_OF_QUIZ=NUM_OF_QUIZ+1 where NUM=#{num}
+	</update>
+	<update id="countUpNOA" parameterType="long">
+		update QUIZ_INFO set NUM_OF_ANSWER=NUM_OF_ANSWER+1 where NUM=#{num}
+	</update>
+	<delete id="deleteAll">
+		delete from BOOK
+	</delete>
+	<delete id="deleteQuiz" parameterType="long">
+		delete from QUIZ_INFO where NUM=#{NUM}
+	</delete>
+	
+</mapper>
