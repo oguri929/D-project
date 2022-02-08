@@ -10,7 +10,7 @@
 </head>
 <body>
 	<H3>회원 로그인</H3>
-	<form action="${contextPath}/user/logincheck.do" method="post">
+	<form action="${contextPath}/login.do" method="post">
 		<table>
 			<tr>
 				<th>아이디</th>

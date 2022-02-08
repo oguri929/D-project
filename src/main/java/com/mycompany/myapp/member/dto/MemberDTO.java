@@ -3,8 +3,10 @@ package com.mycompany.myapp.member.dto;
 import java.sql.Date;
 
 import org.apache.ibatis.type.Alias;
+import org.springframework.stereotype.Repository;
 
 @Alias("memberDTO")
+@Repository
 public class MemberDTO {
 	private int num;
 	private String id;
