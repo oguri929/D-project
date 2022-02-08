@@ -6,9 +6,7 @@ import org.apache.ibatis.type.Alias;
 public class SubjectDto {
 	private int num;
 	private String subject;
-	
-	
-	
+
 	public SubjectDto() {}
 
 	public SubjectDto(int num, String subject) {

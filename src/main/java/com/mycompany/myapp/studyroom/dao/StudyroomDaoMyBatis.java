@@ -21,7 +21,12 @@ public class StudyroomDaoMyBatis implements StudyroomDao{
 	public List<SubjectDto> selectAllSubject() {
 		return sqlSessionTemplate.selectList("selectAllSubject");
 	}
-
+	
+	@Override
+	public void insertSubject(String addSubject) {
+		sqlSessionTemplate.insert("insertSubject", addSubject);
+	}
+	
 	@Override
 	public void insertStudyroom(StudyroomDto studyroomDto) {
 		sqlSessionTemplate.insert("insertStudyroom", studyroomDto);
@@ -30,6 +35,11 @@ public class StudyroomDaoMyBatis implements StudyroomDao{
 	@Override
 	public List<StudyroomDto> selectAllStudyroom(SearchCriteria scri) {
 		return sqlSessionTemplate.selectList("selectAllStudyroom", scri);
+	}
+	
+	@Override
+	public List<StudyroomDto> selectStudyroomByTag(int num) {
+		return sqlSessionTemplate.selectList("selectStudyroomByTag", num);
 	}
 
 	@Override
@@ -40,6 +50,11 @@ public class StudyroomDaoMyBatis implements StudyroomDao{
 	@Override
 	public SubjectDto selectSubject(int subjNum) {
 		return sqlSessionTemplate.selectOne("selectSubject", subjNum);
+	}
+	
+	@Override
+	public int selectSubjectByName(String addSubject) {
+		return sqlSessionTemplate.selectOne("selectSubjectByName", addSubject);
 	}
 
 	@Override

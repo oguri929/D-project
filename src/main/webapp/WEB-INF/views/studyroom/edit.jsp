@@ -39,10 +39,8 @@
 		<tr>
 			<th>과목정보</th>
 			<td colspan="3">
-				기존 과목 : ${studyroomDto.subject }<br>
-				과목 추가 :
 				<c:forEach var="sub" items="${subjectList }">
-					<input type="checkbox" name="subject" value="${sub.subject}">${sub.subject}				
+					<input type="radio" name="subject" value="${sub.num}">${sub.subject}				
 				</c:forEach>
 			</td>
 		</tr>
