@@ -27,9 +27,9 @@
 </c:if>
 
 <br>
-<a>공지사항 게시판 바로 가기</a>
+<a href="<c:url value='/board/list'/> ">공지사항 게시판 바로 가기</a>
 <br>
-<a href="<c:url value='/board/list'/> ">매칭 게시판 바로 가기</a><br>
+<a href="<c:url value='/studyroom/list'/> ">매칭 게시판 바로 가기</a><br>
 
 </body>
 </html>
