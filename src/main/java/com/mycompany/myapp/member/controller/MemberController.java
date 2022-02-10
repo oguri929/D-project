@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -111,7 +112,21 @@ public class MemberController {
 
 //	@RequestMapping(value="user/idCheck.do",method=RequestMethod.POST)
 //	public String idCheckPOST(MemberDTO dto,)
-	
+	// id 찾기
+	@RequestMapping(value="/user/findId.do",method=RequestMethod.GET)
+	public String findIdGET(MemberDTO dto) {
+		
+		return "findId";
+	}
+	@RequestMapping(value="/user/findId.do",method=RequestMethod.POST)
+	public String findIdPOST(MemberDTO dto,Model model) throws Exception {
+		MemberDTO login=memberService.login(dto);
+		if (dto.getEmail()==login.getEmail() && dto.getBirth()==login.getBirth()) {
+			model.addAttribute("msg","아이디는 "+login.getId()+"입니다.");
+			
+		}
+		return "findId";
+	}
 	// 회원정보 수정 GET
 	@RequestMapping(value="/update.do",method = RequestMethod.GET)
 	public String registerUpdateView() throws Exception {
