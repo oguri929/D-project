@@ -11,7 +11,7 @@
 <h1>
 	회원가입
 </h1>
-<form action="${contextPath}/user/registerCheck.do" method="post">
+<form action="${contextPath}/user/register.do" method="post">
 
 	<p>
 		<label for="id">아이디</label>

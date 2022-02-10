@@ -1,10 +1,12 @@
 package com.mycompany.myapp.studyroom.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.mycompany.myapp.member.dto.MemberDTO;
 import com.mycompany.myapp.studyroom.domain.StudyroomDto;
 import com.mycompany.myapp.studyroom.domain.SubjectDto;
 import com.mycompany.myapp.utils.SearchCriteria;
@@ -76,6 +78,31 @@ public class StudyroomDaoMyBatis implements StudyroomDao{
 	public int selectTotStudyroom(SearchCriteria scri) {
 		return sqlSessionTemplate.selectOne("selectTotStudyroom", scri);
 	}
+
+	@Override
+	public void insertMember(Map<String, Integer> matchInfo) {
+		sqlSessionTemplate.insert("insertMember", matchInfo);	
+	}
+
+	@Override
+	public List<MemberDTO> selectAllMember(int num) {
+		return sqlSessionTemplate.selectList("selectAllMember", num);
+	}
+
+	@Override
+	public boolean isMember(Map<String, Integer> matchInfo) {
+		return sqlSessionTemplate.selectOne("isMember", matchInfo);
+	}
+
+	@Override
+	public int deleteMember(Map<String, Integer> matchInfo) {
+		return sqlSessionTemplate.delete("deleteMember", matchInfo);
+	}
+	
+
+	
+	
+	
 	
 	
 	

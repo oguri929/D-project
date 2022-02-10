@@ -96,7 +96,7 @@ public class MemberController {
 	}
 	
 	// 회원가입 POST
-	@RequestMapping(value="/user/registerCheck.do",method = RequestMethod.POST)
+	@RequestMapping(value="/user/register.do",method = RequestMethod.POST)
 	public String registerPOST(MemberDTO dto,RedirectAttributes redirectAttributes) throws Exception {
 		System.out.println("resgister post");
 		String hashedPw = BCrypt.hashpw(dto.getPw(),BCrypt.gensalt());
@@ -104,7 +104,7 @@ public class MemberController {
 		memberService.register(dto);
 		redirectAttributes.addFlashAttribute("msg","REGISTERED");
 		
-		return "redirect:/user/login.do";
+		return "redirect:/login.do";
 	}
 	
 	// 회원정보 수정 GET
