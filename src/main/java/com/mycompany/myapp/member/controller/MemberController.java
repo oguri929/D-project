@@ -34,12 +34,18 @@ public class MemberController {
 	
 	
     
-	
+	// 로그인
 	@RequestMapping("login.do")
 	public String login(MemberDTO dto) {
 		logger.info("post login");
 		
 		return "user/login";
+	}
+	
+	//마이페이지
+	@RequestMapping(value="/mypage.do")
+	public String myPage() {
+		return "/user/mypage";
 	}
 	
 	
@@ -52,6 +58,8 @@ public class MemberController {
 		
 		MemberDTO login = memberService.login(dto);
 		
+		System.out.println(dto.getPw());
+		System.out.println(login.getPw());
 		if(!BCrypt.checkpw(dto.getPw(), login.getPw())) {
 			// 세션 저장
 			session.setAttribute("user", null);
@@ -65,7 +73,7 @@ public class MemberController {
 			//rttr.addFlashAttribute("user",login);
 			return "redirect:/";
 	}
-	return "redirect:../login.do";
+	return "redirect:/login.do";
 	
 	/*로그인이 실패하면 어떠한 값도 넘어오지 않으니 null이 되고
 	 * 성공하면 매퍼에 있는 쿼리문에 대한 결과가 넘어오게 된다.
@@ -108,16 +116,20 @@ public class MemberController {
 	}
 	
 	// 회원정보 수정 GET
-	@RequestMapping(value="/update.do",method = RequestMethod.GET)
-	public String registerUpdateView() throws Exception {
+	@RequestMapping(value="/user/update.do",method = RequestMethod.GET)
+	public String registerUpdateView(HttpSession session,Model model) throws Exception {
+		MemberDTO mDto=(MemberDTO) session.getAttribute("user");
+		model.addAttribute("user",mDto);
 		return "user/update";
 	}
 	
 	// 회원정보 수정 POST
-	@RequestMapping(value="memberUpdate", method=RequestMethod.POST)
+	@RequestMapping(value="/user/update.do", method=RequestMethod.POST)
 	public String registerUpdate(MemberDTO dto, HttpSession session) throws Exception {
+		String hashedPw = BCrypt.hashpw(dto.getPw(),BCrypt.gensalt());
+		dto.setPw(hashedPw);
 		memberService.memberUpdate(dto);
 		session.invalidate();
-		return "redirect:/";
+		return "redirect:/login.do";
 	}
 }

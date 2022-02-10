@@ -27,8 +27,7 @@
 		<br><br>
 		   <a href="#">아이디 찾기</a>  | 
 		   <a href="#">비밀번호 찾기</a> | 
-		   <a href="${contextPath}/user/register.do">회원가입</a>    | 
-		   <a href="${contextPath}/user/update.do">마이페이지</a>
+		   <a href="${contextPath}/user/register.do">회원가입</a>  
 					   
 	</form>	
 
