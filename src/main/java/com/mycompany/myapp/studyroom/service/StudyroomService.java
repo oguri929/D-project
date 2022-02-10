@@ -1,7 +1,9 @@
 package com.mycompany.myapp.studyroom.service;
 
 import java.util.List;
+import java.util.Map;
 
+import com.mycompany.myapp.member.dto.MemberDTO;
 import com.mycompany.myapp.studyroom.domain.StudyroomDto;
 import com.mycompany.myapp.studyroom.domain.SubjectDto;
 import com.mycompany.myapp.utils.SearchCriteria;
@@ -29,4 +31,10 @@ public interface StudyroomService {
 	public abstract int deleteStudyroom(int num);
 	//스터디룸 전체 개수 가져오기
 	public abstract int countTotStudyroom(SearchCriteria scri);
+	//스터디룸에 멤버 등록
+	public abstract void addMember(Map<String, Integer> matchInfo);
+	//스터디룸에 속해 있는 멤버 정보 가져오기
+	public abstract List<MemberDTO> getMemberList(int num);
+	//스터디룸에서 멤버 삭제
+	public abstract int deleteMember(Map<String, Integer> matchInfo);
 }

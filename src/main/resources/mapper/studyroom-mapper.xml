@@ -5,19 +5,19 @@
   
 <mapper namespace="mapper.studyroom">
 	<select id="selectAllSubject" resultType="subjectDto">
-		SELECT * FROM SUBJECT_INFO
+		SELECT * FROM SUBJECT
 	</select>
 	
 	<select id="selectSubject" resultType="subjectDto" parameterType="int">
-		SELECT * FROM SUBJECT_INFO WHERE NUM = #{subjNum} 
+		SELECT * FROM SUBJECT WHERE SUBJECT_NUM = #{subjNum} 
 	</select>
 	
 	<select id="selectSubjectByName" resultType="int" parameterType="String">
-		SELECT NUM FROM SUBJECT_INFO WHERE SUBJECT = #{addSubject} 
+		SELECT SUBJECT_NUM FROM SUBJECT WHERE SUBJECT = #{addSubject} 
 	</select>
 	
 	<insert id="insertSubject" parameterType="String">
-		INSERT INTO SUBJECT_INFO(NUM, SUBJECT)
+		INSERT INTO SUBJECT(SUBJECT_NUM, SUBJECT)
 		VALUES(SUBJECT_SEQ.NEXTVAL, #{addSubject})
 	</insert>
 	
@@ -30,7 +30,7 @@
 			ROOMDISCRIPT,
 			MEMBERLIMIT,
 			CAPTAIN,
-			SUBJECT) 
+			SUBJECT_NUM) 
 		VALUES(
 			#{num}, 
 			#{pw}, 
@@ -39,11 +39,33 @@
 			#{roomDiscript},
 			#{memberLimit},
 			#{captain},
-			#{subject})
+			#{subjectNum})
 		<selectKey keyProperty="num" resultType="Integer" order="BEFORE">
 			SELECT STUDYROOM_SEQ.NEXTVAL FROM DUAL
 		</selectKey>	
 	</insert>
+	
+	<insert id="insertMember" parameterType="Map">
+		INSERT INTO MATCHTABLE(CHATROOM_NUM, MEMBER_NUM)
+		VALUES(#{chatroomNum},#{memberNum})
+	</insert>
+	
+	<select id="selectAllMember" parameterType="int" resultType="memberDTO">
+		SELECT A.* 
+		FROM MEMBER A, MATCHTABLE B 
+		WHERE A.NUM = B.MEMBER_NUM AND B.CHATROOM_NUM=#{num}
+	</select>
+	
+	<select id="isMember" parameterType="Map" resultType="boolean">
+		SELECT COUNT(*)
+		FROM MATCHTABLE
+		WHERE MEMBER_NUM=#{memberNum} and CHATROOM_NUM=#{chatroomNum}
+	</select>
+	
+	<delete id="deleteMember" parameterType="Map">
+		DELETE FROM MATCHTABLE 
+		WHERE MEMBER_NUM=#{memberNum} and CHATROOM_NUM=#{chatroomNum}
+	</delete>
 	
 	<select id="selectAllStudyroom" resultType="studyroomDto" parameterType="criteria">
 		SELECT * 
@@ -61,7 +83,7 @@
 	</select>
 	
 	<select id="selectStudyroomByTag" resultType="studyroomDto" parameterType="int">
-		SELECT * FROM STUDYROOM WHERE SUBJECT = #{num}
+		SELECT * FROM STUDYROOM WHERE SUBJECT_NUM = #{num}
 	</select>
 	
 	<select id="selectOneStudyroom" resultType="studyroomDto" parameterType="int">
@@ -79,7 +101,7 @@
 			ROOMNAME = #{roomName},
 			ROOMDISCRIPT = #{roomDiscript},
 			MEMBERLIMIT = #{memberLimit},
-			SUBJECT = #{subject}
+			SUBJECT_NUM = #{subjectNum}
 		WHERE NUM=#{num}
 	</update>
 	

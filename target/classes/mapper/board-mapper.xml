@@ -57,7 +57,7 @@
 	</delete>
 	
 	<insert id="insertFile" parameterType="hashMap">
-		INSERT INTO BOARD_FILE_INFO(
+		INSERT INTO BOARD_FILE(
 			FILE_NUM,
 			BOARD_NUM,
 			ORG_FILE_NAME,
@@ -76,7 +76,7 @@
 		SELECT FILE_NUM,
 			   ORG_FILE_NAME,
 			   ROUND(FILE_SIZE/1024,1) AS FILE_SIZE
-		  FROM BOARD_FILE_INFO
+		  FROM BOARD_FILE
 		 WHERE BOARD_NUM = #{num}
 		 ORDER BY FILE_NUM ASC
 	</select>
@@ -86,11 +86,11 @@
 			BOARD_NUM, 
 			STORED_FILE_NAME,
 			ORG_FILE_NAME
-		FROM BOARD_FILE_INFO
+		FROM BOARD_FILE
 		WHERE FILE_NUM = #{fileNum}
 	</select>
 	
 	<delete id="deleteFile" parameterType="int">
-		DELETE FROM BOARD_FILE_INFO WHERE BOARD_NUM = #{num} 
+		DELETE FROM BOARD_FILE WHERE BOARD_NUM = #{num} 
 	</delete>
 </mapper>
