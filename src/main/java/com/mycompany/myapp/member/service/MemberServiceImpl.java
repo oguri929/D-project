@@ -37,6 +37,12 @@ public class MemberServiceImpl implements MemberService {
 		memberDao.memberUpdate(dto);
 		
 	}
+
+	@Override
+	public MemberDTO findId(MemberDTO dto) throws Exception {
+		// TODO Auto-generated method stub
+		return memberDao.findId(dto);
+	}
 	
 	
 

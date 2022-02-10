@@ -36,7 +36,7 @@ public class StudyroomController {
 	@RequestMapping(value = "/studyroom/create", method = RequestMethod.POST)
 	public String createStudyroom(StudyroomDto studyroomDto, HttpServletRequest req) {
 		String addSubject = req.getParameter("addSubject");
-		
+		System.out.println(addSubject);
 		if(addSubject != null) {
 			studyroomService.addSubject(addSubject);
 			int subject = studyroomService.getSubjectByName(addSubject);

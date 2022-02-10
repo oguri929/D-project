@@ -14,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.mycompany.myapp.member.dto.MemberDTO;
+
 /**
  * Handles requests for the application home page.
  */
@@ -35,6 +37,8 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		if(session !=null) {
 			model.addAttribute("user",session.getAttribute("user"));
+			MemberDTO mDto=(MemberDTO) session.getAttribute("user");
+			System.out.println("homeController "+mDto);
 		}
 		model.addAttribute("serverTime", formattedDate );
 		

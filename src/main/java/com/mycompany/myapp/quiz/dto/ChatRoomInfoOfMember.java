@@ -1,5 +1,8 @@
 package com.mycompany.myapp.quiz.dto;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("chatRoomInfoOfMember")
 public class ChatRoomInfoOfMember {
 	private long chatroomNum;
 	private String roomName;

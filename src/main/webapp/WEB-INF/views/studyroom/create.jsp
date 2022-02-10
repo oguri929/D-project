@@ -6,6 +6,20 @@
 <head>
 <meta charset="UTF-8">
 <title>createStudyroom</title>
+<script>
+	
+	function change_sub(obj){
+		var add_subject=document.getElementById("add_subject");
+		
+		var itemValue=obj.options[add_subject.selectedIndex].value;
+		alert(itemValue);
+		if(itemValue==-1){
+			document.getElementById("add_subject").style.display="";
+		}else{
+			document.getElementById("add_subject").style.display="none";
+		}
+	}
+</script>
 </head>
 <body>
 	<form method="post" action="<c:url value="/studyroom/create"/>">
@@ -20,10 +34,12 @@
 			<th>채팅방 비밀번호</th>
 			<td><input type="password" name="pw"></td>
 		</tr>
+		<!-- 
 		<tr>
 			<th>방장</th>
 			<td colspan="4"><input type="text" name="captain"></td>
 		</tr>
+		 -->
 		<tr>
 			<th>지역</th>
 			<td colspan="4"><input type="text" name="local"></td>
@@ -35,6 +51,15 @@
 		<tr>
 			<th>과목정보</th>
 			<td colspan="3">
+				<select name="subject" onChange="change_sub(this);">
+					<c:forEach var="sub" items="${subjectList}">
+						<option value="${sub.num }">${sub.subject }</option>
+					</c:forEach>
+					<option value=1>test</option>
+					<option value=-1>기타</option>
+				
+				</select>
+					<input type="text" id="add_subject" name="addSubject" style="display:none;"/>
 				<c:forEach var="sub" items="${subjectList}">
 					<c:choose>
 						<c:when test="${sub.subject eq '기타' }">

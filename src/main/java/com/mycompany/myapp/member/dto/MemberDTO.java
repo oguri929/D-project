@@ -80,7 +80,10 @@ public class MemberDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+	@Override
+	public String toString() {
+		return "id: "+getId()+" num: "+getNum();
+	}
 	
 
 }

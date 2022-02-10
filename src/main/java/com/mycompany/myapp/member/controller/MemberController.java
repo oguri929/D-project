@@ -31,13 +31,14 @@ public class MemberController {
 		this.memberService = memberService;
 	}
 	
-	
-	
-    
-	
 	@RequestMapping("login.do")
-	public String login(MemberDTO dto) {
+	public String login(MemberDTO dto,HttpServletRequest request) {
 		logger.info("post login");
+		HttpSession session=request.getSession();
+		MemberDTO memberDto=(MemberDTO) session.getAttribute("user");
+		if(memberDto!=null) {
+			return "redirect:/";
+		}
 		
 		return "user/login";
 	}
@@ -65,7 +66,7 @@ public class MemberController {
 			//rttr.addFlashAttribute("user",login);
 			return "redirect:/";
 	}
-	return "redirect:../login.do";
+	return "redirect:/login.do";
 	
 	/*로그인이 실패하면 어떠한 값도 넘어오지 않으니 null이 되고
 	 * 성공하면 매퍼에 있는 쿼리문에 대한 결과가 넘어오게 된다.
@@ -106,6 +107,10 @@ public class MemberController {
 		
 		return "redirect:/user/login.do";
 	}
+	//id check post 구현 필요
+
+//	@RequestMapping(value="user/idCheck.do",method=RequestMethod.POST)
+//	public String idCheckPOST(MemberDTO dto,)
 	
 	// 회원정보 수정 GET
 	@RequestMapping(value="/update.do",method = RequestMethod.GET)

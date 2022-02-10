@@ -6,13 +6,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="member">
 	  <!-- 로그인 -->
 	  <select id="login" resultType="memberDTO" parameterType="memberDTO">
-        SELECT ID,NAME
+        SELECT *
 		FROM
 		MEMBER_INFO
 		WHERE ID=#{id}
-		AND PW=#{pw}  
    	  </select>
-   	  
+   	  <select id="findId" resultType="memberDTO" parameterType="memberDTO">
+        SELECT *
+		FROM
+		MEMBER_INFO
+		WHERE BIRTH=#{birth} and EMAIL=#{email}
+   	  </select>
    	  <!-- 회원가입 -->
    	  <insert id="register"  parameterType="memberDTO">
 		insert into MEMBER_INFO (NUM,ID,PW,LOCAL,BIRTH,GENDER,NICKNAME,EMAIL,ADMIN,NAME)

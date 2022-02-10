@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mycompany.myapp.member.dto.MemberDTO;
+import com.mycompany.myapp.quiz.dto.ChatRoomInfoOfMember;
 import com.mycompany.myapp.quiz.dto.QuizDto;
 import com.mycompany.myapp.quiz.dto.SelectQuizNumAndSubjectVO;
 import com.mycompany.myapp.quiz.dto.SolveQuizVo;
@@ -35,8 +36,12 @@ public class QuizController {
 	@RequestMapping(value="/makeQuiz", method=RequestMethod.GET)
 	public String getMakeQuiz(QuizDto dto,HttpServletRequest request,Model model) {
 		HttpSession session=request.getSession();
+		
 		MemberDTO memberDto=(MemberDTO) session.getAttribute("user");
-		model.addAttribute("chatroomList",ser.getChatroomListofMember(memberDto.getNum()));
+		System.out.println(memberDto.getNum());
+		List<ChatRoomInfoOfMember> chatRoomList=ser.getChatroomListofMember(memberDto.getNum());
+		System.out.println(chatRoomList.size());
+		model.addAttribute("chatroomList",chatRoomList);
 		return "Quiz/makeQuiz";
 	}
 	@RequestMapping(value="/makeQuiz", method=RequestMethod.POST)

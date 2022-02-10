@@ -24,10 +24,12 @@
 			<th>조회수</th>
 			<td>${studyroomDto.cnt }</td>
 		</tr>
+		
 		<tr>
 			<th>방장</th>
 			<td colspan="3">${studyroomDto.captain }</td>
 		</tr>
+		 
 		<tr>
 			<th>지역</th>
 			<td colspan="3"><input type="text" name="local" value="${studyroomDto.local }"></td>

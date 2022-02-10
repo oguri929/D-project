@@ -44,6 +44,12 @@ public class MemberDAOImpl implements MemberDAO {
 		sqlSessionTemplate.update("memberUpdate", dto);
 		
 	}
+
+	@Override
+	public MemberDTO findId(MemberDTO dto) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne(NAMESPACE + "findId", dto);
+	}
 	
 	
 	
