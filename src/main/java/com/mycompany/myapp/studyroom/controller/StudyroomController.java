@@ -78,7 +78,7 @@ public class StudyroomController {
 		return "/studyroom/list";
 	}
 	
-	@RequestMapping(value="/studyroom/read/{num}")
+	@RequestMapping(value="/studyroom/read/{num}", method = RequestMethod.GET)
 	public String readStudyroom(@PathVariable int num, Model model) {
 		StudyroomDto studyroomDto = studyroomService.readStudyroom(num);
 		SubjectDto subjectDto = studyroomService.getSubject(studyroomDto.getSubjectNum());
@@ -159,7 +159,7 @@ public class StudyroomController {
 		
 		model.addAttribute(studyroomDto);
 		model.addAttribute(memberList);
-		return "/studyroom/read";
+		return "redirect:/studyroom/read/"+chatroomNum;
 	}
 	
 	@RequestMapping(value = "/studyroom/leave")
@@ -179,7 +179,7 @@ public class StudyroomController {
 		
 		model.addAttribute(studyroomDto);
 		model.addAttribute(memberList);
-		return "/studyroom/read";
+		return "redirect:/studyroom/read/"+chatroomNum;
 	}
 		
 }
