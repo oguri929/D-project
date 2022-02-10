@@ -13,11 +13,14 @@
 	</style>
 </head>
 <body>
+	<h2>스터디룸 리스트</h2>
+	${sessionScope.user.id }님 환영합니다!<br></br>
+	
 	<table border="1">
 		<tr>
 			<td>
 			<c:forEach var="sub" items="${subjectList }">
-				<a href="<c:url value="/studyroom/search/${sub.num }" />">${sub.subject }</a>
+				<a href="<c:url value="/studyroom/search/${sub.subjectNum }" />">${sub.subject }</a>
 			</c:forEach>
 			</td>
 		</tr>

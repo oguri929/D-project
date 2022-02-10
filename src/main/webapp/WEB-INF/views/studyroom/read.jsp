@@ -47,6 +47,7 @@
 </head>
 <body>
 	<form>
+	<h2>스터디룸 정보</h2>
 		<table border="1">
 		<tr>
 			<th>방번호</th>
@@ -90,8 +91,23 @@
 			</td>
 		</tr>
 		</table>
+		<input type="button" value="스터디가입" onclick="location.href='<c:url value="/studyroom/register?memberNum=${sessionScope.user.num }&chatroomNum=${studyroomDto.num }"/>'">
+		<input type="button" value="스터디탈퇴" onclick="location.href='<c:url value="/studyroom/leave?memberNum=${sessionScope.user.num }&chatroomNum=${studyroomDto.num }"/>'">
+		
 	</form>
+	<br></br>
+	
+	현재 가입된 회원 목록
+	<table border="1">
+		<c:forEach var="mem" items="${memberList }">
+			<tr>
+				<td>${mem.id }</td>
+			</tr>
+		</c:forEach>
+	</table>
+	<br></br>
 
+모임 장소 찾기<br>
 *동네+스터디카페로 검색해주세요!
 <div class="map_wrap">
   	<div id="map" style="width:50%;height:100%;position:relative;overflow:hidden;"></div>

@@ -22,7 +22,8 @@
 		</tr>
 		<tr>
 			<th>방장</th>
-			<td colspan="4"><input type="text" name="captain"></td>
+			<td colspan="4">${sessionScope.user.id}</td>
+							<input type="hidden" name="captain" value="${sessionScope.user.num }" />
 		</tr>
 		<tr>
 			<th>지역</th>
@@ -36,15 +37,7 @@
 			<th>과목정보</th>
 			<td colspan="3">
 				<c:forEach var="sub" items="${subjectList}">
-					<c:choose>
-						<c:when test="${sub.subject eq '기타' }">
-							<input type="radio" name="subject" value="${sub.num}">${sub.subject}
-							<input type="text" name="addSubject"><br>
-						</c:when>
-						<c:otherwise>
-							<input type="radio" name="subject" value="${sub.num}">${sub.subject}
-						</c:otherwise>
-					</c:choose>
+					<input type="radio" name="subjectNum" value="${sub.subjectNum}">${sub.subject}
 				</c:forEach>
 			</td>
 		</tr>

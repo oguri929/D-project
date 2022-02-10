@@ -1,9 +1,11 @@
 package com.mycompany.myapp.studyroom.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.mycompany.myapp.member.dto.MemberDTO;
 import com.mycompany.myapp.studyroom.dao.StudyroomDao;
 import com.mycompany.myapp.studyroom.domain.StudyroomDto;
 import com.mycompany.myapp.studyroom.domain.SubjectDto;
@@ -73,6 +75,31 @@ public class StudyroomServiceImpl implements StudyroomService {
 		return studyroomDao.selectTotStudyroom(scri);
 	}
 
+	@Override
+	public void addMember(Map<String, Integer> matchInfo) {
+		studyroomDao.insertMember(matchInfo);
+	}
+
+	@Override
+	public List<MemberDTO> getMemberList(int num) {
+		return studyroomDao.selectAllMember(num);
+	}
+
+	@Override
+	public int deleteMember(Map<String, Integer> matchInfo) {
+		boolean isMember = studyroomDao.isMember(matchInfo);
+		
+		int result = 0;
+		if(isMember) {
+			result = studyroomDao.deleteMember(matchInfo);
+		}
+		
+		return result;
+	}
+
+	
+	
+	
 
 	
 	
