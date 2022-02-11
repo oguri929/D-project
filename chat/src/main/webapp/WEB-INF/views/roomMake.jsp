@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
     
 <!DOCTYPE html>
 <html>
@@ -9,48 +9,54 @@
 	<title>방만들기</title>
 </head>
 <body>
-	<form action="<c:url value="/roomMake"/>" method="post">
-		<table border="1">
+	<form method="post" action="<c:url value="/roomMake"/>">
+		<table border="1"> 
 			<tr>
-				<th>방제목</th>
-				<td><input type="text" name="roomname"></td>	
+				<th>스터디이름</th>
+				<td colspan="4"><input type="text" name="roomname"></td>
 			</tr>
 			
 			<tr>
-				<th>지역</th>
-				<td><input type="text" name="local"></td>	
+				<th>제한인원</th>
+				<td><input type="number" name="memberlimit"></td>
 			</tr>
 			
-			<tr>
-				<th>암호</th>
-				<td><input type="password" name="password"></td>	
-			</tr>
-			
-			<tr>
-				<th>부가설명</th>
-				<td><input type="text" name="roomdiscript"></td>	
-			</tr>
-			
-			<tr>
-				<th>멤버제한</th>
-				<td><input type="text" name="memberlimit"></td>	
+			<tr>	
+				<th>비밀번호</th>
+				<td><input type="password" name="password"></td>
 			</tr>
 			
 			<tr>
 				<th>방장</th>
-				<td><input type="text" name="captain"></td>	
+				<td colspan="4">
+					<input type="number" name="captain"/>
+				</td>			
 			</tr>
-			
-			<tr>
-				<th>과목코드</th>
-				<td><input type="text" name="subjectnum"></td>	
-			</tr>
-		</table>
+		<tr>
+			<th>지역</th>
+			<td colspan="4"><input type="text" name="local"></td>
+		</tr>
 		
-		<div>
-			<input type="submit" value="개설하기">
-			<input type="button" value="취소" onclick="location.href='<c:url value="/roomList"/>'">
-		</div>
+		<tr>
+			<th>스터디정보</th>
+			<td colspan="4"><textarea name="roomdiscript" cols="100" rows="20"></textarea></td>
+		</tr>
+		
+		<tr>
+			<th>과목정보</th>
+			<td colspan="3">
+				<input type="text" name="subjectnum"/>
+			</td>
+		</tr>
+		
+		<tr style="text-align:center">
+			<td colspan="4">
+				<input type="submit" value="등록" />
+				<input type="button" value="취소" onClick="location.href='<c:url value="/roomList"/>'"
+				style="margin-left:20px;">
+			</td>
+		</tr>
+		</table>
 	</form>
 </body>
 </html>

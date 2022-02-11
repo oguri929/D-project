@@ -24,7 +24,7 @@
 		<c:forEach var="room" items="${roomList}" varStatus="loop">
 			<tr>
 				<td>${room.code}</td>
-				<td><a href="<c:url value="/comfirm"/>">${room.roomname}</a></td>
+				<td><a href="<c:url value="/chat?roomname=${room.roomname}"/>">${room.roomname}</a></td>
 				<td>${room.local}</td>
 				<td>${room.roomdiscript}</td>
 				<td>${room.memberlimit}</td>

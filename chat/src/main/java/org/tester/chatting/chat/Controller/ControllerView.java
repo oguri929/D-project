@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 public class ControllerView {
 		// 채팅방 입장
 		@RequestMapping(value = "/chat", method = RequestMethod.GET)
-		public String chat(HttpServletRequest request, HttpServletResponse response, Model model) 
+		public String chat() 
 		throws Exception {
 			return "chat";
 		}

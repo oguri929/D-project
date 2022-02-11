@@ -11,5 +11,6 @@
 	
 	<typeAliases>
 		<typeAlias alias="roomVO" type="org.tester.chatting.room.domain.RoomVO"/>
+		<typeAlias alias="chatVO" type="org.tester.chatting.chat.domain.ChatVO"/>
 	</typeAliases>
 </configuration>

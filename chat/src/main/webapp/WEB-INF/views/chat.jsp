@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,6 +21,7 @@
 			sendChat: function() {
 				this._sendMessage($('#message').val());
 				$('#message').val('');
+				
 			},
 			receiveMessage: function(str) {
 				$('#divChatData').append('<div>' + str + '</div>');				
@@ -58,10 +61,10 @@
 		<div id="divChatData"></div>
 	</div>
 	
-	<div style="width: 100%; height: 10%; padding: 10px; text-align:center;">
-		<input type="text" id="message" size="120" onkeypress="if(event.keyCode==13){webSocket.sendChat();}" />
-		<input type="button" id="btnSend" value="채팅 전송" onclick="webSocket.sendChat()" />
-		<input type="button" value="파일 올리기" onclick="location.href='<c:url value="/file"/>'"/>
+	<div style="margin-left:160px;">
+	 <input type="text" id="message" size="150" onkeypress="if(event.keyCode==13){webSocket.sendChat();}" />
+	 <input type="button" id="btnSend" value="채팅 전송" onclick="webSocket.sendChat();" />
+	 <input type="button" value="파일 올리기" onclick="location.href='<c:url value="/file"/>'"/>
 	</div>
 </body>
 </html>
