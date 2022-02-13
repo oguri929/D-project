@@ -67,6 +67,14 @@
 		WHERE MEMBER_NUM=#{memberNum} and CHATROOM_NUM=#{chatroomNum}
 	</delete>
 	
+	<delete id="deleteAllMember" parameterType="int">
+		DELETE FROM MATCHTABLE WHERE CHATROOM_NUM=#{chatroomNum}
+	</delete>
+	
+	<select id="countTotMember" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM MATCHTABLE WHERE CHATROOM_NUM=#{chatroomNum}
+	</select>
+	
 	<select id="selectAllStudyroom" resultType="studyroomDto" parameterType="criteria">
 		SELECT * 
 		FROM (
@@ -109,7 +117,7 @@
 		DELETE FROM STUDYROOM WHERE NUM = #{num}
 	</delete>
 	
-	<select id="selectTotStudyroom" resultType="int">
+	<select id="selectTotStudyroom" resultType="int" parameterType="criteria">
 		SELECT COUNT(*) 
 			FROM STUDYROOM 
 			WHERE 1=1 

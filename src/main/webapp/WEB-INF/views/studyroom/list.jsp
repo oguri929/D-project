@@ -59,7 +59,7 @@
 			<th>NO</th>
 			<th>방제목</th>
 			<th>방장</th>
-			<th>제한인원</th>
+			<th>현재인원/제한인원</th>
 			<th>과목정보</th>
 			<th>작성일</th>
 			<th>조회수</th>
@@ -72,8 +72,8 @@
 					<a href="/studyroom/read/${studyroom.num}">
 					${studyroom.roomName }</a>
 				</td>
-				<td>${studyroom.captain}</td>
-				<td>${studyroom.memberLimit}</td>
+				<td>${studyroom.memberDto.id}</td>
+				<td>${studyroom.totMember}/${studyroom.memberLimit}</td>
 				<td>${studyroom.subjectDto.subject }</td>
 				<td>${studyroom.regdate}</td>
 				<td>${studyroom.cnt}</td>

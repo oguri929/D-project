@@ -77,7 +77,11 @@ public class StudyroomServiceImpl implements StudyroomService {
 
 	@Override
 	public void addMember(Map<String, Integer> matchInfo) {
-		studyroomDao.insertMember(matchInfo);
+		boolean isMember = studyroomDao.isMember(matchInfo);
+		
+		if(!isMember) {			
+			studyroomDao.insertMember(matchInfo);
+		}
 	}
 
 	@Override
@@ -96,6 +100,20 @@ public class StudyroomServiceImpl implements StudyroomService {
 		
 		return result;
 	}
+
+	@Override
+	public int countTotMember(int chatroomNum) {
+		return studyroomDao.countTotMember(chatroomNum);
+	}
+
+	@Override
+	public int deleteAllMember(int chatroomNum) {
+		return studyroomDao.deleteAllMember(chatroomNum);
+	}
+	
+	
+	
+	
 
 	
 	

@@ -8,6 +8,7 @@
 <title>deleteBoard</title>
 </head>
 <body>
+	<h2>공지사항 삭제</h2>
 	<form action="<c:url value="/board/delete" />" method="post">
 		<input size="1" name="num" value="${num }">번 게시글을 삭제하시겠습니까?
 	<input type="submit" value="예">

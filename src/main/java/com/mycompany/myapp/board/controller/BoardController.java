@@ -5,10 +5,10 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,18 +20,23 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.mycompany.myapp.board.domain.BoardDto;
 import com.mycompany.myapp.board.service.BoardService;
+import com.mycompany.myapp.member.dto.MemberDTO;
+import com.mycompany.myapp.member.service.MemberService;
 import com.mycompany.myapp.utils.Criteria;
 import com.mycompany.myapp.utils.PageMaker;
 
 @Controller("boardController")
 public class BoardController {
 	private static final String filePath="C:\\board\\file";
-	
-	@Inject
-	private BoardService boardService;
 
-	public BoardController(BoardService boardService) {
+	private BoardService boardService;
+	private MemberService memberService;
+	
+	@Autowired
+	public BoardController(BoardService boardService, MemberService memberService) {
+		super();
 		this.boardService = boardService;
+		this.memberService = memberService;
 	}
 
 	@RequestMapping(value="/board/write", method = RequestMethod.GET)
@@ -52,30 +57,40 @@ public class BoardController {
 	
 	@RequestMapping(value="/board/read/{num}")
 	public String readBoard(Model model, @PathVariable int num) throws Exception {
-		model.addAttribute("boardDto", boardService.readBoard(num));
-		
-		List<Map<String, Object>> fileList = boardService.selectFileList(num);
+		BoardDto boardDto = boardService.readBoard(num);
+		MemberDTO memberDto = memberService.selectMemberByNum(boardDto.getWriter());
+		boardDto.setMemberDto(memberDto);
+		model.addAttribute("boardDto", boardDto);
+
+		List<Map<String, Object>> fileList = boardService.selectFileList(num);		
 		model.addAttribute("fileList", fileList);
 		return "/board/read";
 	}
 	
-	@RequestMapping(value = "/board/list")
-	public String listBoard( Model model, Criteria criteria) {
+	@RequestMapping(value = "/board/list", method = RequestMethod.GET)
+	public String listBoard( Model model, Criteria criteria) throws Exception {
 		List<BoardDto> boardList = boardService.listBoard(criteria);
+		
+		for(int i=0; i<boardList.size(); i++) {
+			BoardDto boardDto = boardList.get(i);
+			MemberDTO memberDto = memberService.selectMemberByNum(boardDto.getWriter());
+			boardDto.setMemberDto(memberDto);
+		}
 		model.addAttribute("boardList", boardList);
 		
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(criteria);
 		pageMaker.setTotalCount(boardService.countTotBoard());
-		
-		model.addAttribute("pageMaker", pageMaker);
-		
+		model.addAttribute("pageMaker", pageMaker);		
+
 		return "/board/list";
 	}
 	
 	@RequestMapping(value="/board/edit/{num}", method = RequestMethod.GET)
 	public String editBoard(Model model, @PathVariable int num) throws Exception {
 		BoardDto boardDto = boardService.readBoard(num);
+		MemberDTO memberDto = memberService.selectMemberByNum(boardDto.getWriter());
+		boardDto.setMemberDto(memberDto);
 		model.addAttribute("boardDto", boardDto);
 		
 		List<Map<String, Object>> fileList = boardService.selectFileList(num);
@@ -90,7 +105,7 @@ public class BoardController {
 			return "/board/edit";
 		}
 		boardService.editBoard(boardDto, mpRequest);
-		return "redirect:/board/list";
+		return "redirect:/board/read/"+boardDto.getNum();
 
 	}
 	
@@ -103,7 +118,7 @@ public class BoardController {
 	@RequestMapping(value="/board/delete", method = RequestMethod.POST)
 	public String deleteBoard(int num) throws Exception {
 		boardService.deleteFile(num);
-		boardService.deleteBoard(num);	
+		boardService.deleteBoard(num);
 		
 		File fileDir = new File(filePath + "\\" + num);
 		if(fileDir.exists()) {
@@ -113,9 +128,9 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
-	@RequestMapping(value="/board/downFile/{FILE_NUM}")
+	@RequestMapping(value="/board/downFile/{FILE_NO}")
 	public void downFile(@RequestParam Map<String, Object> map, HttpServletResponse response,
-						@PathVariable("FILE_NUM") int fileNum) throws Exception{
+						@PathVariable("FILE_NO") int fileNum) throws Exception{
 		Map<String, Object> resultMap = boardService.getFileInfoByFileNum(fileNum);
 		String storedFileName = (String) resultMap.get("STORED_FILE_NAME");
 		String originalFileName = (String) resultMap.get("ORG_FILE_NAME");
@@ -133,8 +148,8 @@ public class BoardController {
 		
 	}
 	
-	@RequestMapping(value="/board/delFile/{FILE_NUM}")
-	public String delFile(@PathVariable("FILE_NUM") int fileNum, Model model) throws Exception {
+	@RequestMapping(value="/board/delFile/{FILE_NO}")
+	public String delFile(@PathVariable("FILE_NO") int fileNum, Model model) throws Exception {
 		Map<String, Object> resultMap = boardService.getFileInfoByFileNum(fileNum);
 		String storedFileName = (String) resultMap.get("STORED_FILE_NAME");
 		int boardNum = Integer.parseInt(String.valueOf(resultMap.get("BOARD_NUM")));
@@ -144,9 +159,8 @@ public class BoardController {
 			target.delete();
 		}
 		boardService.deleteFile(boardNum);
-		model.addAttribute("boardNum", boardNum);
 		
-		return "redirect:/board/edit/{boardNum}";
+		return "redirect:/board/edit/"+boardNum;
 	}
 }
 

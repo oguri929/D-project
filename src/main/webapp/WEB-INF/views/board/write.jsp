@@ -8,7 +8,8 @@
 <title>writeBoard</title>
 </head>
 <body>
-	<form method="post" action="/board/write" enctype="multipart/form-data">
+	<h2>공지사항 쓰기</h2>
+	<form method="post" action="<c:url value="/board/write"/>" enctype="multipart/form-data">
 		<table border="1">
 		<tr>
 			<th>제목</th>
@@ -16,7 +17,8 @@
 		</tr>
 		<tr>
 			<th>작성자</th>
-			<td colspan="2"><input type="text" name="writer"></td>
+			<td colspan="2">${sessionScope.user.id }</td>
+			<input type="hidden" name="writer" value="${sessionScope.user.num }">
 		</tr>
 		<tr>
 			<th>내용</th>

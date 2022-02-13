@@ -34,7 +34,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ADMIN=#{admin},
    	  	NAME=#{name} WHERE ID=#{id}
    	  </update>
-
-	
+		
+		<!-- 회원번호로 회원 조회 -->
+		<select id="selectMemberByNum" parameterType="int" resultType="memberDTO">
+		SELECT * FROM MEMBER WHERE NUM=#{memberNum}
+		</select>
   
 </mapper>

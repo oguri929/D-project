@@ -8,6 +8,7 @@
 <title>readBoard</title>
 </head>
 <body>
+	<h2>공지사항 읽기</h2>
 	<form>
 		<table border="1">
 		<tr>
@@ -20,7 +21,7 @@
 		</tr>
 		<tr>
 			<th>작성자</th>
-			<td>${boardDto.writer }</td>
+			<td>${boardDto.memberDto.id }</td>
 		</tr>
 		<tr>
 			<th>내용</th>
@@ -30,7 +31,7 @@
 			<th>첨부파일</th>
 			<td>
 				<c:forEach var="file" items="${fileList}">
-					<a href="<c:url value="/board/downFile/${file.FILE_NUM}"/>">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)<br>
+					<a href="<c:url value="/board/downFile/${file.FILE_NO}"/>">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)<br>
 				</c:forEach>
 			</td>
 		</tr>
@@ -43,9 +44,11 @@
 			<td>${boardDto.regdate }</td>
 		</tr>
 		</table>
-		<a href="<c:url value="/board/edit/${boardDto.num}"/>">[수정]</a>
-		<a href="<c:url value="/board/delete/${boardDto.num}"/>">[삭제]</a>
-		<input type="button" value="목록보기" onClick="location.href='<c:url value="/board/list"/>'">
+		<c:if test="${sessionScope.user.id eq 'admin' }">
+			<a href="<c:url value="/board/edit/${boardDto.num}"/>">[수정]</a>
+			<a href="<c:url value="/board/delete/${boardDto.num}"/>">[삭제]</a>
+			<input type="button" value="목록보기" onClick="location.href='<c:url value="/board/list"/>'">
+		</c:if>
 	</form>
 </body>
 </html>

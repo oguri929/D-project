@@ -12,6 +12,7 @@
 	</style>
 </head>
 <body>
+	<h2>공지사항 리스트</h2>
 	<c:choose>
 	<c:when test="${empty boardList }">
 		<tr>
@@ -36,7 +37,7 @@
 					<a href="<c:url value="/board/read/${board.num}" />">
 					${board.title }</a>
 				</td>
-				<td>${board.writer}</td>
+				<td>${board.memberDto.id}</td>
 				<td>${board.regdate}</td>
 				<td>${board.cnt}</td>
 			</tr>
@@ -44,9 +45,10 @@
 		</table>
 		</c:when>
 		</c:choose>
-
-	<a href="<c:url value="/board/write" />">[새 글 쓰기]</a>
 	
+	<c:if test="${sessionScope.user.id eq 'admin' }">
+		<a href="<c:url value="/board/write" />">[새 글 쓰기]</a>
+	</c:if>
 <div>
   <ul>
     <c:if test="${pageMaker.prev}">

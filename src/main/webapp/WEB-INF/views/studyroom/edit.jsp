@@ -26,7 +26,8 @@
 		</tr>
 		<tr>
 			<th>방장</th>
-			<td colspan="4">${studyroomDto.captain }</td>
+			<td colspan="4">${studyroomDto.memberDto.id }</td>
+			<input type="hidden" name="captain" value="${studyroomDto.memberDto.num }">
 		</tr>
 		<tr>
 			<th>지역</th>
@@ -40,7 +41,7 @@
 			<th>과목정보</th>
 			<td colspan="3">
 				<c:forEach var="sub" items="${subjectList }">
-					<input type="radio" name="subject" value="${sub.num}">${sub.subject}				
+					<input type="radio" name="subjectNum " value="${sub.subjectNum}">${sub.subject}				
 				</c:forEach>
 			</td>
 		</tr>
