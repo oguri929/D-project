@@ -4,18 +4,21 @@ import java.sql.Date;
 
 import org.apache.ibatis.type.Alias;
 
+import com.mycompany.myapp.member.dto.MemberDTO;
+
 @Alias("boardDto")
 public class BoardDto {
 	private int num;
 	private String title;
-	private String writer;
+	private int writer;
 	private String content;
 	private int cnt;
 	private Date regdate;
+	private MemberDTO memberDto;
 
 	public BoardDto() {}
 
-	public BoardDto(String title, String writer, String content) {
+	public BoardDto(String title, int writer, String content) {
 		this.title = title;
 		this.writer = writer;
 		this.content = content;
@@ -37,11 +40,11 @@ public class BoardDto {
 		this.title = title;
 	}
 
-	public String getWriter() {
+	public int getWriter() {
 		return writer;
 	}
 
-	public void setWriter(String writer) {
+	public void setWriter(int writer) {
 		this.writer = writer;
 	}
 
@@ -69,6 +72,22 @@ public class BoardDto {
 		this.regdate = regdate;
 	}
 
+	public MemberDTO getMemberDto() {
+		return memberDto;
+	}
+
+	public void setMemberDto(MemberDTO memberDto) {
+		this.memberDto = memberDto;
+	}
+
+	@Override
+	public String toString() {
+		return "BoardDto [num=" + num + ", title=" + title + ", writer=" + writer + ", content=" + content + ", cnt="
+				+ cnt + ", regdate=" + regdate + ", memberDto=" + memberDto + "]";
+	}
+
+	
+	
 	
 	
 	

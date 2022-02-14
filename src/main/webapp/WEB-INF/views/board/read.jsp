@@ -5,10 +5,37 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <title>readBoard</title>
 </head>
+<script type="text/javascript">
+$(document).ready(function(){
+    var formObj = $("form[name='readForm']");
+    //수정
+    $(".edit_btn").on("click", function(){
+        formObj.attr("action", "/board/edit");
+        formObj.attr("method", "get");
+        formObj.submit();
+    })
+  
+    //삭제
+    $(".delete_btn").on("click", function(){
+        formObj.attr("action", "/board/delete");
+        formObj.attr("method", "post");
+        formObj.submit();
+    })
+    
+    //목록으로 돌아가기
+    $(".list_btn").on("click", function(){	
+		location.href = "/board/list";
+	})
+})
+</script>
 <body>
-	<form>
+	<h2>공지사항 읽기</h2>
+	<form name="readForm" method="post">
+		<input type="hidden" name="num" value="${boardDto.num }"/>
+	</form>
 		<table border="1">
 		<tr>
 			<th>글번호</th>
@@ -20,7 +47,7 @@
 		</tr>
 		<tr>
 			<th>작성자</th>
-			<td>${boardDto.writer }</td>
+			<td>${boardDto.memberDto.id }</td>
 		</tr>
 		<tr>
 			<th>내용</th>
@@ -30,7 +57,7 @@
 			<th>첨부파일</th>
 			<td>
 				<c:forEach var="file" items="${fileList}">
-					<a href="<c:url value="/board/downFile/${file.FILE_NUM}"/>">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)<br>
+					<a href="<c:url value="/board/downFile/${file.FILE_NO}"/>">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)<br>
 				</c:forEach>
 			</td>
 		</tr>
@@ -43,9 +70,10 @@
 			<td>${boardDto.regdate }</td>
 		</tr>
 		</table>
-		<a href="<c:url value="/board/edit/${boardDto.num}"/>">[수정]</a>
-		<a href="<c:url value="/board/delete/${boardDto.num}"/>">[삭제]</a>
-		<input type="button" value="목록보기" onClick="location.href='<c:url value="/board/list"/>'">
-	</form>
+		<c:if test="${sessionScope.user.id eq 'admin' }">
+			<button type="submit" class="edit_btn">수정</button>
+			<button type="submit" class="delete_btn">삭제</button>
+			<button type="submit" class="list_btn">목록</button>
+		</c:if>
 </body>
 </html>

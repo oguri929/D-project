@@ -98,6 +98,18 @@ public class StudyroomDaoMyBatis implements StudyroomDao{
 	public int deleteMember(Map<String, Integer> matchInfo) {
 		return sqlSessionTemplate.delete("deleteMember", matchInfo);
 	}
+
+	@Override
+	public int countTotMember(int chatroomNum) {
+		return sqlSessionTemplate.selectOne("countTotMember", chatroomNum);
+	}
+
+	@Override
+	public int deleteAllMember(int chatroomNum) {
+		return sqlSessionTemplate.delete("deleteAllMember", chatroomNum);
+	}
+
+	
 	
 
 	

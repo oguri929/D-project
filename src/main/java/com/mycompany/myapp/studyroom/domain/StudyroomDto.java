@@ -4,6 +4,8 @@ import java.sql.Date;
 
 import org.apache.ibatis.type.Alias;
 
+import com.mycompany.myapp.member.dto.MemberDTO;
+
 @Alias("studyroomDto")
 public class StudyroomDto {
 	private int num;
@@ -17,6 +19,8 @@ public class StudyroomDto {
 	private int cnt;
 	private int subjectNum;
 	private SubjectDto subjectDto;
+	private MemberDTO memberDto;
+	private int totMember;
 
 	public StudyroomDto() {}
 
@@ -119,5 +123,31 @@ public class StudyroomDto {
 	public void setSubjectDto(SubjectDto subjectDto) {
 		this.subjectDto = subjectDto;
 	}
+	
+	public MemberDTO getMemberDto() {
+		return memberDto;
+	}
+
+	public void setMemberDto(MemberDTO memberDto) {
+		this.memberDto = memberDto;
+	}
+
+	public int getTotMember() {
+		return totMember;
+	}
+
+	public void setTotMember(int totMember) {
+		this.totMember = totMember;
+	}
+
+	@Override
+	public String toString() {
+		return "StudyroomDto [num=" + num + ", pw=" + pw + ", local=" + local + ", roomName=" + roomName
+				+ ", roomDiscript=" + roomDiscript + ", memberLimit=" + memberLimit + ", regdate=" + regdate
+				+ ", captain=" + captain + ", cnt=" + cnt + ", subjectNum=" + subjectNum + ", subjectDto=" + subjectDto
+				+ ", memberDto=" + memberDto + ", totMember=" + totMember + "]";
+	}
+	
+	
 
 }

@@ -58,7 +58,7 @@
 	
 	<insert id="insertFile" parameterType="hashMap">
 		INSERT INTO BOARD_FILE(
-			FILE_NUM,
+			FILE_NO,
 			BOARD_NUM,
 			ORG_FILE_NAME,
 			STORED_FILE_NAME,
@@ -73,12 +73,12 @@
     </insert>
     
     <select id="selectFileList" parameterType="int" resultType="hashMap">
-		SELECT FILE_NUM,
+		SELECT FILE_NO,
 			   ORG_FILE_NAME,
 			   ROUND(FILE_SIZE/1024,1) AS FILE_SIZE
 		  FROM BOARD_FILE
 		 WHERE BOARD_NUM = #{num}
-		 ORDER BY FILE_NUM ASC
+		 ORDER BY FILE_NO ASC
 	</select>
 	
 	<select id="selectFileInfoByFileNum" parameterType="int" resultType="hashMap">
@@ -87,7 +87,7 @@
 			STORED_FILE_NAME,
 			ORG_FILE_NAME
 		FROM BOARD_FILE
-		WHERE FILE_NUM = #{fileNum}
+		WHERE FILE_NO = #{fileNum}
 	</select>
 	
 	<delete id="deleteFile" parameterType="int">

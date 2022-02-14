@@ -16,5 +16,7 @@ public interface MemberDAO {
 	// 회원정보 수정
 	public void memberUpdate(MemberDTO dto) throws Exception;
 	
+	//회원번호로 회원 조회
+	public MemberDTO selectMemberByNum(int memberNum) throws Exception;
 	
 }

@@ -37,6 +37,13 @@ public class MemberServiceImpl implements MemberService {
 		memberDao.memberUpdate(dto);
 		
 	}
+
+	@Override
+	public MemberDTO selectMemberByNum(int memberNum) throws Exception {
+		return memberDao.selectMemberByNum(memberNum);
+	}
+	
+	
 	
 	
 

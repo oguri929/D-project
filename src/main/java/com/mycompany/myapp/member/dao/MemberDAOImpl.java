@@ -45,6 +45,12 @@ public class MemberDAOImpl implements MemberDAO {
 		
 	}
 
+	@Override
+	public MemberDTO selectMemberByNum(int memberNum) throws Exception {
+		return sqlSessionTemplate.selectOne("selectMemberByNum", memberNum);
+	}
+
+	
 	
 	
 	
