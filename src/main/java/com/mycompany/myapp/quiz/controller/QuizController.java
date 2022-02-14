@@ -171,6 +171,6 @@ public class QuizController {
 	public String getDeleteQuiz(QuizDto quizDto,Model model,@PathVariable("num") long num) {
 		//session을 이용하여 작성자가 맞는지 확인 필요
 		ser.deletQuiz(quizDto);
-		return "redirect:/updateQuiz";
+		return "redirect:/listQuiz";
 	}
 }

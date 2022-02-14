@@ -55,6 +55,7 @@
 			<th>작성자</th>
 			<th>출제수</th>
 			<th>정답률</th>
+			<th>삭제버튼</th>
 		</tr>
 		
 		<c:forEach var="quiz" items="${quizList }" varStatus="quizListStatus">
@@ -62,13 +63,13 @@
 				<td>${quizListStatus.count}</td>
 				<td>
 					
-					${quiz.subjectName }</a>
+					${quiz.subjectName }
 				</td>
-				<td><a href="/updateQuizDetail/num/${quiz.num}">${quiz.question}</td>
+				<td><a href="/updateQuizDetail/num/${quiz.num}">${quiz.question}</a></td>
 				<td>${quiz.nickName }</td>
 				<td>${quiz.numOfQuiz}</td>
 				<td>${quiz.correctRate}</td>
-				
+				<td><button type="button" onClick="location.href='/deleteQuiz/num/${quiz.num}'" >삭제</button></td>
 			</tr>
 		</c:forEach>
 		</table>
