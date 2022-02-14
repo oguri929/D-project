@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mycompany.myapp.member.dto.MemberDTO;
+import com.mycompany.myapp.member.dto.MemberDtoContainStudyroom;
+import com.mycompany.myapp.member.service.MemberService;
 import com.mycompany.myapp.studyroom.domain.StudyroomDto;
 import com.mycompany.myapp.studyroom.domain.SubjectDto;
 import com.mycompany.myapp.studyroom.service.StudyroomService;
@@ -22,9 +25,11 @@ import com.mycompany.myapp.utils.SearchCriteria;
 @Controller("studyroomController")
 public class StudyroomController {
 	private StudyroomService studyroomService;
+	private MemberService memberService;
 
-	public StudyroomController(StudyroomService studyroomService) {
+	public StudyroomController(StudyroomService studyroomService,MemberService memberService) {
 		this.studyroomService = studyroomService;
+		this.memberService=memberService;
 	}
 	
 	@RequestMapping(value = "/studyroom/create", method = RequestMethod.GET)
@@ -150,8 +155,19 @@ public class StudyroomController {
 		Map<String, Integer> matchInfo = new HashMap<String, Integer>();
 		matchInfo.put("memberNum", memberNum);
 		matchInfo.put("chatroomNum", chatroomNum);
-		
 		studyroomService.addMember(matchInfo);
+		
+		HttpSession session=req.getSession();
+		MemberDTO user=(MemberDTO) session.getAttribute("user");
+		List<MemberDtoContainStudyroom> chatroomList=memberService.getMemList(user);
+		session.setAttribute("chatroomList", chatroomList);
+		Map<Integer,String> subList=new HashMap<Integer,String>();
+		for (MemberDtoContainStudyroom sub : chatroomList) {
+			if(!subList.containsKey(sub.getSubjectNum())) {
+				subList.put(sub.getSubjectNum(), sub.getSubject());
+			}
+		}
+		session.setAttribute("subList", subList);
 		
 		StudyroomDto studyroomDto = studyroomService.readStudyroom(chatroomNum);
 		SubjectDto subjectDto = studyroomService.getSubject(studyroomDto.getSubjectNum());
@@ -172,6 +188,18 @@ public class StudyroomController {
 		matchInfo.put("chatroomNum", chatroomNum);
 		
 		studyroomService.deleteMember(matchInfo);
+		
+		HttpSession session=req.getSession();
+		MemberDTO user=(MemberDTO) session.getAttribute("user");
+		List<MemberDtoContainStudyroom> chatroomList=memberService.getMemList(user);
+		session.setAttribute("chatroomList", chatroomList);
+		Map<Integer,String> subList=new HashMap<Integer,String>();
+		for (MemberDtoContainStudyroom sub : chatroomList) {
+			if(!subList.containsKey(sub.getSubjectNum())) {
+				subList.put(sub.getSubjectNum(), sub.getSubject());
+			}
+		}
+		session.setAttribute("subList", subList);
 		
 		StudyroomDto studyroomDto = studyroomService.readStudyroom(chatroomNum);
 		SubjectDto subjectDto = studyroomService.getSubject(studyroomDto.getSubjectNum());
