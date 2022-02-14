@@ -94,6 +94,13 @@
 		SELECT * FROM STUDYROOM WHERE SUBJECT_NUM = #{num}
 	</select>
 	
+	<select id="selectStudyroomByMemberDto" resultType="memberDtoCS" parameterType="memberDTO">
+		SELECT  * FROM MATCHTABLE MAT 
+		JOIN STUDYROOM STR ON (MAT.CHATROOM_NUM=STR.NUM)
+		JOIN SUBJECT SUB ON (SUB.SUBJECT_NUM=STR.SUBJECT_NUM)
+		WHERE MAT.MEMBER_NUM=#{num} 
+	</select>
+	
 	<select id="selectOneStudyroom" resultType="studyroomDto" parameterType="int">
 		SELECT * FROM STUDYROOM WHERE NUM = #{num}
 	</select>

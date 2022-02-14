@@ -29,6 +29,8 @@
 <a href="<c:url value='/solveQuiz'/> ">퀴즈 풀기 바로 가기</a><br>
 <br>
 <a href="<c:url value='/mypage.do'/> ">마이페이지</a><br>
+<br>
+<a href="<c:url value='/listQuiz'/> ">퀴즈 리스트 바로 가기</a><br>
 	</c:when>
 	<c:otherwise>
 	<a href="<c:url value='/login.do'/> ">로그인</a>

@@ -1,7 +1,10 @@
 package com.mycompany.myapp.member.dao;
 
 
+import java.util.List;
+
 import com.mycompany.myapp.member.dto.MemberDTO;
+import com.mycompany.myapp.member.dto.MemberDtoContainStudyroom;
 
 
 public interface MemberDAO {
@@ -18,5 +21,8 @@ public interface MemberDAO {
 	
 	//회원번호로 회원 조회
 	public MemberDTO selectMemberByNum(int memberNum) throws Exception;
+	
+	//회원번호로 스터디룸 정보 조회
+	public List<MemberDtoContainStudyroom> getStudyroomInfo(MemberDTO dto);
 	
 }

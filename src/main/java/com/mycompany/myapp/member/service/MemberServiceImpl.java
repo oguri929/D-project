@@ -2,10 +2,13 @@ package com.mycompany.myapp.member.service;
 
 
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.mycompany.myapp.member.dao.MemberDAO;
 import com.mycompany.myapp.member.dto.MemberDTO;
+import com.mycompany.myapp.member.dto.MemberDtoContainStudyroom;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -41,6 +44,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public MemberDTO selectMemberByNum(int memberNum) throws Exception {
 		return memberDao.selectMemberByNum(memberNum);
+	}
+	
+	@Override
+	public List<MemberDtoContainStudyroom> getMemList(MemberDTO dto) {
+		return memberDao.getStudyroomInfo(dto);
 	}
 	
 	

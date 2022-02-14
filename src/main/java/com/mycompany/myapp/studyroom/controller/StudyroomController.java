@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mycompany.myapp.member.dto.MemberDTO;
+import com.mycompany.myapp.member.dto.MemberDtoContainStudyroom;
 import com.mycompany.myapp.member.service.MemberService;
 import com.mycompany.myapp.studyroom.domain.StudyroomDto;
 import com.mycompany.myapp.studyroom.domain.SubjectDto;
@@ -84,7 +86,7 @@ public class StudyroomController {
 			MemberDTO memberDto = memberService.selectMemberByNum(studyroomDto.getCaptain());
 			studyroomDto.setMemberDto(memberDto);
 		}
-		
+		model.addAttribute("scri",scri);
 		model.addAttribute("studyroomList", studyroomList);
 		model.addAttribute("subjectList", subjectList);
 		model.addAttribute("pageMaker", pageMaker);
@@ -164,18 +166,36 @@ public class StudyroomController {
 		Map<String, Integer> matchInfo = new HashMap<String, Integer>();
 		matchInfo.put("memberNum", memberNum);
 		matchInfo.put("chatroomNum", chatroomNum);
+		studyroomService.addMember(matchInfo);
+		
+		HttpSession session = req.getSession();
+		MemberDTO user = (MemberDTO)session.getAttribute("user");
+		List<MemberDtoContainStudyroom> chatroomList = memberService.getMemList(user);
+		session.setAttribute("chatroomList", chatroomList);
+		Map<Integer,String> subList=new HashMap<Integer,String>();
+		for (MemberDtoContainStudyroom sub : chatroomList) {
+			if(!subList.containsKey(sub.getSubjectNum())) {
+				subList.put(sub.getSubjectNum(), sub.getSubject());
+			}
+		}
+		session.setAttribute("subList", subList);
+		
+//		int memberLimit = studyroomDto.getMemberLimit();
+//		int totMember = studyroomService.countTotMember(chatroomNum);
+//		if(totMember < memberLimit) {			
+//			studyroomService.addMember(matchInfo);
+//			return "redirect:/studyroom/read/"+chatroomNum;
+//		}
 		
 		StudyroomDto studyroomDto = studyroomService.readStudyroom(chatroomNum);
-		int memberLimit = studyroomDto.getMemberLimit();
-		int totMember = studyroomService.countTotMember(chatroomNum);
-		if(totMember < memberLimit) {			
-			studyroomService.addMember(matchInfo);
-			return "redirect:/studyroom/read/"+chatroomNum;
-		}else {
-			model.addAttribute("msg", "이미 스터디 모집이 완료되었습니다.");
-			return "redirect:/studyroom/read/"+chatroomNum;
-		}
+		SubjectDto subjectDto = studyroomService.getSubject(studyroomDto.getSubjectNum());
+		studyroomDto.setSubjectDto(subjectDto);
+		List<MemberDTO> memberList = studyroomService.getMemberList(chatroomNum);
 		
+		model.addAttribute(studyroomDto);
+		model.addAttribute(memberList);	
+		
+		return "/studyroom/read";
 		
 	}
 	
@@ -188,8 +208,27 @@ public class StudyroomController {
 		matchInfo.put("chatroomNum", chatroomNum);
 		
 		studyroomService.deleteMember(matchInfo);
-	
-		return "redirect:/studyroom/read/"+chatroomNum;
+		
+		HttpSession session = req.getSession();
+		MemberDTO user = (MemberDTO)session.getAttribute("user");
+		List<MemberDtoContainStudyroom> chatroomList = memberService.getMemList(user);
+		session.setAttribute("chatroomList", chatroomList);
+		Map<Integer,String> subList=new HashMap<Integer,String>();
+		for (MemberDtoContainStudyroom sub : chatroomList) {
+			if(!subList.containsKey(sub.getSubjectNum())) {
+				subList.put(sub.getSubjectNum(), sub.getSubject());
+			}
+		}
+		session.setAttribute("subList", subList);
+		
+		StudyroomDto studyroomDto = studyroomService.readStudyroom(chatroomNum);
+		SubjectDto subjectDto = studyroomService.getSubject(studyroomDto.getSubjectNum());
+		studyroomDto.setSubjectDto(subjectDto);
+		List<MemberDTO> memberList = studyroomService.getMemberList(chatroomNum);
+		
+		model.addAttribute(studyroomDto);
+		model.addAttribute(memberList);
+		return "/studyroom/read";
 	}
 		
 }

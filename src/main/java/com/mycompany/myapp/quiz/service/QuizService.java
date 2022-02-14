@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import com.mycompany.myapp.quiz.dao.QuizDao;
 import com.mycompany.myapp.quiz.dto.ChatRoomInfoOfMember;
 import com.mycompany.myapp.quiz.dto.QuizDto;
+import com.mycompany.myapp.quiz.dto.QuizDtoForList;
 import com.mycompany.myapp.quiz.dto.SolveQuizVo;
+import com.mycompany.myapp.utils.QuizSearchCriteria;
 
 @Service
 public class QuizService implements QuizServiceInterface{
@@ -22,12 +24,15 @@ public class QuizService implements QuizServiceInterface{
 	}
 	
 	@Override
-	public void insertQuiz(List<QuizDto> dtos) {
+	public void insertQuiz(List<QuizDto> dtos,long memberNum) {
 		// TODO Auto-generated method stub
 		System.out.println("service: "+dtos);
 		for(QuizDto dto : dtos) {
 			System.out.println("servce: "+dto);
-			System.out.println("service: "+dto.getQuestion());
+			System.out.println("service: "+dto.getChatroomNum());
+			
+			System.out.println("service: "+dto.getsSubjectNum());
+			dto.setMakerNum(memberNum);
 			dao.insertQuiz(dto);
 		}
 		
@@ -86,7 +91,10 @@ public class QuizService implements QuizServiceInterface{
 		Iterator<Integer> iter=quizNum.iterator();
 		int i=0;
 		while(iter.hasNext()) {
-			selectMap.put(i, quizList.get(iter.next()));
+			QuizDto quiz=quizList.get(iter.next());
+			dao.countUPNOQ(quiz.getNum());
+			selectMap.put(i, quiz);
+			
 			
 			i+=1;
 		}
@@ -110,9 +118,15 @@ public class QuizService implements QuizServiceInterface{
 				result=true;
 			}
 		}else {
+			System.out.println(solveVo.getAnswer().equals(quizDto.getAnswer()));
+			System.out.println(quizDto.getAnswer());
+			System.out.println(solveVo.getAnswer());
 			if(solveVo.getAnswer().equals(quizDto.getAnswer())) {
 				result=true;
 			}
+		}
+		if(result) {
+			dao.countUpNOA(quizDto.getNum());
 		}
 		return result;
 	}
@@ -127,7 +141,22 @@ public class QuizService implements QuizServiceInterface{
 	@Override
 	public List<ChatRoomInfoOfMember> getChatroomListofMember(long memberNum) {
 		// TODO Auto-generated method stub
+		List<ChatRoomInfoOfMember> result=dao.selectAllChatroomOfMember(memberNum);
+		System.out.println("service");
+		System.out.println(result.get(0).getSubject());
 		return dao.selectAllChatroomOfMember(memberNum);
+	}
+
+	@Override
+	public int countTotQuiz(QuizSearchCriteria qscri) {
+		// TODO Auto-generated method stub
+		return dao.selectTotQuiz(qscri);
+	}
+
+	@Override
+	public List<QuizDtoForList> getQuizListforLit(QuizSearchCriteria qscri) {
+		// TODO Auto-generated method stub
+		return dao.selectAllQuiz(qscri);
 	}
 	
 

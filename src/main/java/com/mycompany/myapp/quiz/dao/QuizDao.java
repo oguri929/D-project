@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.mycompany.myapp.quiz.dto.ChatRoomInfoOfMember;
 import com.mycompany.myapp.quiz.dto.QuizDto;
+import com.mycompany.myapp.quiz.dto.QuizDtoForList;
+import com.mycompany.myapp.utils.QuizSearchCriteria;
 
 @Repository
 public class QuizDao implements QuizDaoInterface {
@@ -48,7 +50,7 @@ public class QuizDao implements QuizDaoInterface {
 	}
 	@Override
 	public List<ChatRoomInfoOfMember> selectAllChatroomOfMember(long memberNum) {
-		return sqlSessiontemplate.selectList("getChatRoomNames", memberNum);
+		return sqlSessiontemplate.selectList(NAMESPACE+"getChatRoomNames", memberNum);
 	}
 	@Override
 	public void countUpNOA(long num) {
@@ -57,7 +59,7 @@ public class QuizDao implements QuizDaoInterface {
 	}
 
 	@Override
-	public void sountUPNOQ(long num) {
+	public void countUPNOQ(long num) {
 		// TODO Auto-generated method stub
 		sqlSessiontemplate.update("countUpNOQ",num);
 		
@@ -78,6 +80,16 @@ public class QuizDao implements QuizDaoInterface {
 	public List<QuizDto> selectQuizListByMakerNum(long makertNum) {
 		// TODO Auto-generated method stub
 		return sqlSessiontemplate.selectList("selectQuizListByMakerNum",makertNum);
+	}
+	@Override
+	public int selectTotQuiz(QuizSearchCriteria qscri) {
+		// TODO Auto-generated method stub
+		return sqlSessiontemplate.selectOne("selectTotQuiz",qscri);
+	}
+	@Override
+	public List<QuizDtoForList> selectAllQuiz(QuizSearchCriteria qscri) {
+		// TODO Auto-generated method stub
+		return sqlSessiontemplate.selectList("selectAllQuiz",qscri);
 	}
 
 

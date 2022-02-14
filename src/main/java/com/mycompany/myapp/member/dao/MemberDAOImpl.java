@@ -1,9 +1,12 @@
 package com.mycompany.myapp.member.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.mycompany.myapp.member.dto.MemberDTO;
+import com.mycompany.myapp.member.dto.MemberDtoContainStudyroom;
 
 
 @Repository // 현재 클라스를 dao bean 으로 등록
@@ -50,6 +53,10 @@ public class MemberDAOImpl implements MemberDAO {
 		return sqlSessionTemplate.selectOne("selectMemberByNum", memberNum);
 	}
 
+	@Override
+	public List<MemberDtoContainStudyroom> getStudyroomInfo(MemberDTO dto) {
+		return sqlSessionTemplate.selectList("mapper.studyroom.selectStudyroomByMemberDto",dto);
+	}
 	
 	
 	
