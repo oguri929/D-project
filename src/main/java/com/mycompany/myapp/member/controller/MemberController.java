@@ -6,6 +6,10 @@ package com.mycompany.myapp.member.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mycompany.myapp.member.dto.MemberDTO;
+import com.mycompany.myapp.member.dto.MemberDtoContainStudyroom;
 import com.mycompany.myapp.member.service.MemberService;
 
 
@@ -30,11 +35,6 @@ public class MemberController {
 	public MemberController(MemberService memberService) {
 		this.memberService = memberService;
 	}
-	
-	
-	
-    
-	
 	@RequestMapping("login.do")
 	public String login(MemberDTO dto) {
 		logger.info("post login");
@@ -49,23 +49,38 @@ public class MemberController {
 		
 		// 세션 생성
 		HttpSession session = request.getSession();
-		
 		MemberDTO login = memberService.login(dto);
 		
 		if(!BCrypt.checkpw(dto.getPw(), login.getPw())) {
 			// 세션 저장
+			
 			session.setAttribute("user", null);
+			
 			rttr.addFlashAttribute("msg", false);
 			// 조건문에 의해 login 값이 null 이라면, msg 라는 정보에 false라는
 			// 값이 들어가서 전송된다. 이 값은 다른 페이지로 이동하거나 새로고침을 하면 없어지는 일회용값이다.
 	} else {
 			System.out.println("login succece");
+			
+			List<MemberDtoContainStudyroom> chatroomList=memberService.getMemList(login);
+			System.out.println("login session: " +chatroomList.size());
+			Map<Integer,String> subList=new HashMap<Integer,String>();
+			for (MemberDtoContainStudyroom sub : chatroomList) {
+				if(!subList.containsKey(sub.getSubjectNum())) {
+					subList.put(sub.getSubjectNum(), sub.getSubject());
+				}
+			}
+			System.out.println("login session: " +subList.size());
+			
+			session.setAttribute("chatroomList", chatroomList);
+			session.setAttribute("subList", subList);
+			
 			session.setAttribute("user", login);
 			model.addAttribute("user", login);
 			//rttr.addFlashAttribute("user",login);
 			return "redirect:/";
 	}
-	return "redirect:../login.do";
+	return "redirect:/login.do";
 	
 	/*로그인이 실패하면 어떠한 값도 넘어오지 않으니 null이 되고
 	 * 성공하면 매퍼에 있는 쿼리문에 대한 결과가 넘어오게 된다.
@@ -99,6 +114,7 @@ public class MemberController {
 	@RequestMapping(value="/user/register.do",method = RequestMethod.POST)
 	public String registerPOST(MemberDTO dto,RedirectAttributes redirectAttributes) throws Exception {
 		System.out.println("resgister post");
+		System.out.println(dto.getId());
 		String hashedPw = BCrypt.hashpw(dto.getPw(),BCrypt.gensalt());
 		dto.setPw(hashedPw);
 		memberService.register(dto);

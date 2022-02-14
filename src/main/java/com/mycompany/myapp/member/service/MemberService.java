@@ -3,7 +3,11 @@ package com.mycompany.myapp.member.service;
 
 
 
+import java.util.List;
+
 import com.mycompany.myapp.member.dto.MemberDTO;
+import com.mycompany.myapp.member.dto.MemberDtoContainStudyroom;
+import com.mycompany.myapp.member.dto.MemberDtoContainSubjectAndRoomList;
 
 public interface MemberService {	
 	//회원가입
@@ -13,6 +17,6 @@ public interface MemberService {
 	
 	//회원정보 수정
 	public void memberUpdate(MemberDTO dto) throws Exception;
-	
+	public  List<MemberDtoContainStudyroom> getMemList(MemberDTO dto);
 	
 }

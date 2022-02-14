@@ -14,7 +14,17 @@
 	<table>
 	
 		<tr>
-			<td>과목이름</td><td><input type="number" name="subjectNum"/></td>
+			<td>과목이름</td><td>
+			<c:if test="${ subList.size()!=0}">
+				<select name="subjectNum">
+					<c:forEach var="sub" items="${subList }">
+						<option value="${sub.key }">${sub.value }</option>
+					</c:forEach>
+					
+				</select>
+			</c:if>
+			
+			</td>
 		</tr>
 		<tr>
 			<td>문제수</td><td><input type="number" name="numOfQuestion"/></td>
@@ -27,14 +37,11 @@
 		<form method="post" action=<c:url value="/resultQuiz"/>>
 		<table>
 		<c:forEach var="dto" items="${dtos}" varStatus="status">
-		<tr>
-			<td>퀴즈 고유번호</td>
-			<td><input type="number" name="answerList[${dto.key}].num" value="${dto.value.num}" /></td>
-		</tr>
-		<tr>
-			<td>과목 명</td>
-			<td><input type="number" name="answerList[${dto.key}].subjectNum" value="${dto.value.subjectNum}" /></td>
-		</tr>
+		
+			
+		<input type="hidden" name="answerList[${dto.key}].num" value="${dto.value.num}" />
+		<input type="hidden" name="answerList[${dto.key}].subjectNum" value="${dto.value.subjectNum}" />
+		
 		<tr>
 		
 			<td>문제타입</td>

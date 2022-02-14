@@ -2,17 +2,20 @@ package com.mycompany.myapp.member.service;
 
 
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.mycompany.myapp.member.dao.MemberDAO;
 import com.mycompany.myapp.member.dto.MemberDTO;
+import com.mycompany.myapp.member.dto.MemberDtoContainStudyroom;
+import com.mycompany.myapp.member.dto.MemberDtoContainSubjectAndRoomList;
 
 @Service
 public class MemberServiceImpl implements MemberService {
 	
 	private MemberDAO memberDao;
 	
-
 	public MemberServiceImpl(MemberDAO memberDao) {
 		this.memberDao = memberDao;
 	}
@@ -35,7 +38,14 @@ public class MemberServiceImpl implements MemberService {
 	public void memberUpdate(MemberDTO dto) throws Exception {
 		// 받은 dto를 DAO로 보내준다
 		memberDao.memberUpdate(dto);
+	}
+
+	@Override
+	public List<MemberDtoContainStudyroom> getMemList(MemberDTO dto) {
+		// TODO Auto-generated method stub
 		
+		
+		return memberDao.getStudyroomInfo(dto);
 	}
 	
 	

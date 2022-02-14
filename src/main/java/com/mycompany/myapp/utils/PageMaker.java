@@ -21,7 +21,9 @@ public class PageMaker {
 	
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;
+		System.out.println("pagemaker stat");
 		calcData();
+		
 	}
 	
 	public int getTotalCount() {
@@ -51,19 +53,22 @@ public class PageMaker {
 	public Criteria getCri() {
 		return cri;
 	}
-	 
+	// 
 	private void calcData() {
 		endPage = (int) (Math.ceil(cri.getPage() / (double)displayPageNum) * displayPageNum);
 		startPage = (endPage - displayPageNum) + 1;
-	  
+		System.out.println("endPage: "+ endPage);
+		System.out.println("startPage: "+ startPage);
 		int tempEndPage = (int) (Math.ceil(totalCount / (double)cri.getPerPageNum()));
+		System.out.println("totalCount: "+totalCount);
+		System.out.println("tempEndPage: "+tempEndPage);
 		if (endPage > tempEndPage) {
 			endPage = tempEndPage;
 		}
 		prev = startPage == 1 ? false : true;
 		next = endPage * cri.getPerPageNum() >= totalCount ? false : true;
 	}
-	
+	//page,perpageNum을 url로 사용
 	public String makeQuery(int page) {
 		UriComponents uriComponents =
 		UriComponentsBuilder.newInstance()
@@ -86,7 +91,12 @@ public class PageMaker {
 	            .build(); 
 	    return uriComponents.toUriString();  
 	}
-
+	public String MakeQuery(String page) {
+		int intPage=Integer.parseInt(page);
+		String result=makeQuery(intPage);
+		return result;
+	}
+	//키워드가 없으면 ""를 있으면 UTF-8로 인코딩
 	private String encoding(String keyword) {
 		if(keyword == null || keyword.trim().length() == 0) { 
 			return "";

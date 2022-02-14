@@ -43,6 +43,7 @@ public class StudyroomDaoMyBatis implements StudyroomDao{
 	public List<StudyroomDto> selectStudyroomByTag(int num) {
 		return sqlSessionTemplate.selectList("selectStudyroomByTag", num);
 	}
+	
 
 	@Override
 	public StudyroomDto selectOneStudyroom(int num) {

@@ -6,11 +6,22 @@ import org.apache.ibatis.type.Alias;
 
 @Alias("quizDto")
 public class QuizDto {
+	
 	private long num;
 	private long chatroomNum;
 	private long makerNum;
 	private long subjectNum;
+	private String sSubjectNum;
+//	private List<String> sSubjectNum;
+//	
+//	public List<String> getsSubjectNum() {
+//		return sSubjectNum;
+//	}
+//	public void setsSbjectNum(List<String> sSubjectNum) {
+//		this.sSubjectNum = sSubjectNum;
+//	}
 	private long quizType;
+
 	private String question;
 	private String option1;
 	private String option2;
@@ -49,6 +60,25 @@ public class QuizDto {
 	}
 	public void setNum(long num) {
 		this.num = num;
+	}
+	public void setSubjectNum(String num) {
+		this.subjectNum=Long.parseLong(num);
+	}
+	public String getsSubjectNum() {
+		return sSubjectNum;
+	}
+	public void setsSubjectNum(String sSubjectNum) {
+		String[] tem=sSubjectNum.split(",");
+		this.subjectNum = Long.parseLong(tem[0]);
+		this.chatroomNum=Long.parseLong(tem[1]);
+		
+//		this.subjectNum=Long.parseLong(sSubjectNum);
+	}
+	public String getSubject() {
+		return subject;
+	}
+	public void setSubject(String subject) {
+		this.subject = subject;
 	}
 	public long getChatroomNum() {
 		return chatroomNum;
@@ -124,7 +154,7 @@ public class QuizDto {
 	}
 	@Override
 	public String toString() {
-		return "question: "+this.question;
+		return "question: "+this.quizType+" subjectNum: "+this.subjectNum+" sSubjectNum : "+this.sSubjectNum;
 	}
 	
 }

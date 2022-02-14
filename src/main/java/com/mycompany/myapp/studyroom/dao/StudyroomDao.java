@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.mycompany.myapp.member.dto.MemberDTO;
+import com.mycompany.myapp.member.dto.MemberDtoContainStudyroom;
 import com.mycompany.myapp.studyroom.domain.StudyroomDto;
 import com.mycompany.myapp.studyroom.domain.SubjectDto;
 import com.mycompany.myapp.utils.SearchCriteria;
@@ -41,4 +42,6 @@ public interface StudyroomDao {
 	public abstract boolean isMember(Map<String, Integer> matchInfo);
 	//스터디룸에서 멤버 삭제
 	public abstract int deleteMember(Map<String, Integer> matchInfo);
+	
+	
 }

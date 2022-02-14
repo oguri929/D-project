@@ -57,6 +57,7 @@ public class StudyroomController {
 	
 	@RequestMapping(value =  "/studyroom/list", method = RequestMethod.GET)
 	public String listStudyroom(Model model, SearchCriteria scri) {
+		
 		List<StudyroomDto> studyroomList = studyroomService.listStudyroom(scri);
 		
 		List<SubjectDto> subjectList =  studyroomService.getSubjectList();
@@ -71,7 +72,7 @@ public class StudyroomController {
 			SubjectDto subjectDto = studyroomService.getSubject(subjNum);
 			studyroomDto.setSubjectDto(subjectDto);
 		}
-		
+		model.addAttribute("scri",scri);
 		model.addAttribute("subjectList", subjectList);
 		model.addAttribute("studyroomList", studyroomList);
 		model.addAttribute("pageMaker", pageMaker);
