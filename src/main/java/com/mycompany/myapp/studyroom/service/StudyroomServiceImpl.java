@@ -67,6 +67,7 @@ public class StudyroomServiceImpl implements StudyroomService {
 
 	@Override
 	public int deleteStudyroom(int num) {
+		studyroomDao.deleteAllMember(num);
 		return studyroomDao.deleteStudyroom(num);
 	}
 
@@ -106,10 +107,6 @@ public class StudyroomServiceImpl implements StudyroomService {
 		return studyroomDao.countTotMember(chatroomNum);
 	}
 
-	@Override
-	public int deleteAllMember(int chatroomNum) {
-		return studyroomDao.deleteAllMember(chatroomNum);
-	}
 	
 	
 	

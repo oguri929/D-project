@@ -5,11 +5,37 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <title>readBoard</title>
 </head>
+<script type="text/javascript">
+$(document).ready(function(){
+    var formObj = $("form[name='readForm']");
+    //수정
+    $(".edit_btn").on("click", function(){
+        formObj.attr("action", "/board/edit");
+        formObj.attr("method", "get");
+        formObj.submit();
+    })
+  
+    //삭제
+    $(".delete_btn").on("click", function(){
+        formObj.attr("action", "/board/delete");
+        formObj.attr("method", "post");
+        formObj.submit();
+    })
+    
+    //목록으로 돌아가기
+    $(".list_btn").on("click", function(){	
+		location.href = "/board/list";
+	})
+})
+</script>
 <body>
 	<h2>공지사항 읽기</h2>
-	<form>
+	<form name="readForm" method="post">
+		<input type="hidden" name="num" value="${boardDto.num }"/>
+	</form>
 		<table border="1">
 		<tr>
 			<th>글번호</th>
@@ -45,10 +71,9 @@
 		</tr>
 		</table>
 		<c:if test="${sessionScope.user.id eq 'admin' }">
-			<a href="<c:url value="/board/edit/${boardDto.num}"/>">[수정]</a>
-			<a href="<c:url value="/board/delete/${boardDto.num}"/>">[삭제]</a>
-			<input type="button" value="목록보기" onClick="location.href='<c:url value="/board/list"/>'">
+			<button type="submit" class="edit_btn">수정</button>
+			<button type="submit" class="delete_btn">삭제</button>
+			<button type="submit" class="list_btn">목록</button>
 		</c:if>
-	</form>
 </body>
 </html>

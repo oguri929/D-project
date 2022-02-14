@@ -39,6 +39,4 @@ public interface StudyroomService {
 	public abstract int deleteMember(Map<String, Integer> matchInfo);
 	//스터디룸에 있는 멤버 수 세기
 	public abstract int countTotMember(int chatroomNum);
-	//스터디룸의 모든 멤버 삭제
-	public abstract int deleteAllMember(int chatroomNum);
 }

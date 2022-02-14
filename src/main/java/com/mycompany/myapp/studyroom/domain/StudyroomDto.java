@@ -139,6 +139,14 @@ public class StudyroomDto {
 	public void setTotMember(int totMember) {
 		this.totMember = totMember;
 	}
+
+	@Override
+	public String toString() {
+		return "StudyroomDto [num=" + num + ", pw=" + pw + ", local=" + local + ", roomName=" + roomName
+				+ ", roomDiscript=" + roomDiscript + ", memberLimit=" + memberLimit + ", regdate=" + regdate
+				+ ", captain=" + captain + ", cnt=" + cnt + ", subjectNum=" + subjectNum + ", subjectDto=" + subjectDto
+				+ ", memberDto=" + memberDto + ", totMember=" + totMember + "]";
+	}
 	
 	
 

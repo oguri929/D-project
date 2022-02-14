@@ -80,6 +80,14 @@ public class MemberDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
+	@Override
+	public String toString() {
+		return "MemberDTO [num=" + num + ", id=" + id + ", pw=" + pw + ", local=" + local + ", birth=" + birth
+				+ ", gender=" + gender + ", nickname=" + nickname + ", email=" + email + ", admin=" + admin + ", name="
+				+ name + "]";
+	}
+	
+	
 	
 	
 

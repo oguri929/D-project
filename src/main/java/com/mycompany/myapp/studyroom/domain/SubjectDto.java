@@ -31,6 +31,11 @@ public class SubjectDto {
 		this.subject = subject;
 	}
 
+	@Override
+	public String toString() {
+		return "SubjectDto [subjectNum=" + subjectNum + ", subject=" + subject + "]";
+	}
+
 	
 	
 	

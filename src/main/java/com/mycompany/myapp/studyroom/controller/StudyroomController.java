@@ -44,13 +44,13 @@ public class StudyroomController {
 	
 	@RequestMapping(value = "/studyroom/create", method = RequestMethod.POST)
 	public String createStudyroom(StudyroomDto studyroomDto, HttpServletRequest req) {
-		String addSubject = req.getParameter("addSubject");
-		
-		if(addSubject != null) {
-			studyroomService.addSubject(addSubject);
-			int subjectNum = studyroomService.getSubjectByName(addSubject);
-			studyroomDto.setSubjectNum(subjectNum);
-		}
+//		String addSubject = req.getParameter("addSubject");
+//		
+//		if(addSubject != null) {
+//			studyroomService.addSubject(addSubject);
+//			int subjectNum = studyroomService.getSubjectByName(addSubject);
+//			studyroomDto.setSubjectNum(subjectNum);
+//		}
 		
 		studyroomService.createStudyroom(studyroomDto);
 		Map<String, Integer> matchInfo = new HashMap<String, Integer>();
@@ -108,9 +108,9 @@ public class StudyroomController {
 		return "/studyroom/read";
 	}
 	
-	@RequestMapping(value="/studyroom/edit/{num}", method = RequestMethod.GET)
-	public String editStudyroom(@PathVariable int num, Model model) throws Exception {
-		StudyroomDto studyroomDto = studyroomService.readStudyroom(num);
+	@RequestMapping(value="/studyroom/edit", method = RequestMethod.GET)
+	public String editStudyroom(StudyroomDto sdto, Model model) throws Exception {
+		StudyroomDto studyroomDto = studyroomService.readStudyroom(sdto.getNum());
 		MemberDTO memberDto = memberService.selectMemberByNum(studyroomDto.getCaptain());
 		studyroomDto.setMemberDto(memberDto);
 		model.addAttribute("studyroomDto", studyroomDto);
@@ -118,27 +118,22 @@ public class StudyroomController {
 		List<SubjectDto> subjectList = studyroomService.getSubjectList();
 		model.addAttribute("subjectList", subjectList);
 		
+		List<MemberDTO> memberList = studyroomService.getMemberList(studyroomDto.getNum());
+		model.addAttribute("memberList", memberList);
+		
 		return "/studyroom/edit";
 	}
 	
-	@RequestMapping(value = "/studyroom/edit/{num}", method = RequestMethod.POST)
+	@RequestMapping(value = "/studyroom/edit", method = RequestMethod.POST)
 	public String editStudyroom(StudyroomDto studyroomDto, HttpServletRequest request) {
 		studyroomService.editStudyroom(studyroomDto);
 	
 		return "redirect:/studyroom/list";
 	}
 	
-	@RequestMapping(value = "/studyroom/delete/{num}", method = RequestMethod.GET)
-	public String deleteStudyroom(@PathVariable int num, Model model) {
-		model.addAttribute("num", num);
-		
-		return "/studyroom/delete";
-	}
-	
 	@RequestMapping(value = "/studyroom/delete", method = RequestMethod.POST)
-	public String deleteStudyroom(int num) {
-		studyroomService.deleteAllMember(num);
-		studyroomService.deleteStudyroom(num);
+	public String deleteStudyroom(StudyroomDto studyroomDto) {
+		studyroomService.deleteStudyroom(studyroomDto.getNum());
 
 		return "redirect:/studyroom/list";
 	}

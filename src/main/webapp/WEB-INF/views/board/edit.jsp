@@ -5,15 +5,26 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <title>editBoard</title>
 </head>
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+		$(".list_btn").on("click", function(){
+			event.preventDefault();
+			location.href = "/board/list";
+		})
+	})
+</script>
 <body>
 	<h2>공지사항 수정</h2>
-	<form method="post" action="<c:url value="/board/edit/${boardDto.num}"/>" enctype="multipart/form-data">
+	<form method="post" action="<c:url value="/board/edit"/>" enctype="multipart/form-data">
 		<table border="1">
 		<tr>
 			<th>글번호</th>
 			<td>${boardDto.num }</td>
+			<input type="hidden" name=num value="${boardDto.num }" />
 		</tr>
 		<tr>
 			<th>제목</th>
@@ -22,7 +33,7 @@
 		<tr>
 			<th>작성자</th>
 			<td>${boardDto.memberDto.id }</td>
-			<hidden type="text" name="writer" value="${boardDto.memberDto.id }">
+			<hidden type="text" name="writer" value="${boardDto.memberDto.id }" />
 		</tr>
 		<tr>
 			<th>내용</th>
@@ -49,9 +60,9 @@
 			<td>${boardDto.regdate }</td>
 		</tr>
 		</table>
-			<input type="submit" value="수정완료">
+			<button type="submit" class="edit_btn">수정완료</button>
 			<input type="reset" value="다시작성">
-			<input type="button" value="목록보기" onClick="location.href='<c:url value="/board/list"/>'">
+			<button type="submit" class="list_btn">목록</button>
 	</form>
 </body>
 </html>

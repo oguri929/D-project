@@ -47,9 +47,34 @@
 	#pagination .on {font-weight: bold; cursor: default;color:#777;}
 	</style>
 </head>
+<script type="text/javascript">
+$(document).ready(function(){
+    var formObj = $("form[name='readForm']");
+    //수정
+     $(".edit_btn").on("click", function(){
+        formObj.attr("action", "/studyroom/edit");
+        formObj.attr("method", "get");
+        formObj.submit();
+    })
+    
+    //삭제
+    $(".delete_btn").on("click", function(){
+        formObj.attr("action", "/studyroom/delete");
+        formObj.attr("method", "post");
+        formObj.submit();
+    })
+    
+    //리스트로 돌아가기
+     $(".list_btn").on("click", function(){
+        location.href="/studyroom/list";
+    })
+})
+</script>
 <body>
-	<form>
-	<h2>스터디룸 정보</h2>
+	<form name="readForm" method="post">
+		<input type="hidden" name="num" value="${studyroomDto.num }"/>
+	</form>
+		<h2>스터디룸 정보</h2>
 		<table border="1">
 		<tr>
 			<th>방번호</th>
@@ -87,15 +112,18 @@
 		</tr>
 		<tr>
 			<td colspan="4">
-				<a href="<c:url value="/studyroom/edit/${studyroomDto.num}"/>">[수정]</a>
-				<a href="<c:url value="/studyroom/delete/${studyroomDto.num}"/>">[삭제]</a>
-				<a href="<c:url value="/studyroom/list"/>">[목록]</a>
+				<c:if test="${sessionScope.user.num == studyroomDto.captain }">
+					<button type="submit" class="edit_btn">수정</button>
+					<button type="submit" class="delete_btn">삭제</button>
+				</c:if>
+					<button type="submit" class="list_btn">목록</button>
 			</td>
 		</tr>
-		</table>
+	</table>
+		<c:if test="${sessionScope.user.num != studyroomDto.captain }">
 			<input type="button" value="스터디가입" onclick="location.href='<c:url value="/studyroom/register?memberNum=${sessionScope.user.num }&chatroomNum=${studyroomDto.num }"/>'">
-			<input type="button" value="스터디탈퇴" onclick="location.href='<c:url value="/studyroom/leave?memberNum=${sessionScope.user.num }&chatroomNum=${studyroomDto.num }"/>'">			
-	</form>
+			<input type="button" value="스터디탈퇴" onclick="location.href='<c:url value="/studyroom/leave?memberNum=${sessionScope.user.num }&chatroomNum=${studyroomDto.num }"/>'">					
+		</c:if>
 	<br></br>
 	
 	현재 가입된 회원 목록

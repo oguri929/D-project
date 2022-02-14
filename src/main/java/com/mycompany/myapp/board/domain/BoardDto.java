@@ -80,6 +80,13 @@ public class BoardDto {
 		this.memberDto = memberDto;
 	}
 
+	@Override
+	public String toString() {
+		return "BoardDto [num=" + num + ", title=" + title + ", writer=" + writer + ", content=" + content + ", cnt="
+				+ cnt + ", regdate=" + regdate + ", memberDto=" + memberDto + "]";
+	}
+
+	
 	
 	
 	

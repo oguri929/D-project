@@ -22,6 +22,7 @@ import com.mycompany.myapp.board.domain.BoardDto;
 import com.mycompany.myapp.board.service.BoardService;
 import com.mycompany.myapp.member.dto.MemberDTO;
 import com.mycompany.myapp.member.service.MemberService;
+import com.mycompany.myapp.studyroom.domain.StudyroomDto;
 import com.mycompany.myapp.utils.Criteria;
 import com.mycompany.myapp.utils.PageMaker;
 
@@ -86,19 +87,19 @@ public class BoardController {
 		return "/board/list";
 	}
 	
-	@RequestMapping(value="/board/edit/{num}", method = RequestMethod.GET)
-	public String editBoard(Model model, @PathVariable int num) throws Exception {
-		BoardDto boardDto = boardService.readBoard(num);
+	@RequestMapping(value="/board/edit", method = RequestMethod.GET)
+	public String editBoard(BoardDto bdto, Model model) throws Exception {
+		BoardDto boardDto = boardService.readBoard(bdto.getNum());
 		MemberDTO memberDto = memberService.selectMemberByNum(boardDto.getWriter());
 		boardDto.setMemberDto(memberDto);
 		model.addAttribute("boardDto", boardDto);
 		
-		List<Map<String, Object>> fileList = boardService.selectFileList(num);
+		List<Map<String, Object>> fileList = boardService.selectFileList(boardDto.getNum());
 		model.addAttribute("fileList", fileList);
 		return "/board/edit";
 	}
 	
-	@RequestMapping(value="/board/edit/{num}", method = RequestMethod.POST)
+	@RequestMapping(value="/board/edit", method = RequestMethod.POST)
 	public String editBoard(Model model, BoardDto boardDto, MultipartHttpServletRequest mpRequest,
 							BindingResult bindingResult) throws Exception {
 		if(bindingResult.hasErrors()) {
@@ -109,18 +110,13 @@ public class BoardController {
 
 	}
 	
-	@RequestMapping(value="/board/delete/{num}", method = RequestMethod.GET)
-	public String deleteBoard(Model model, @PathVariable int num) {
-		model.addAttribute("num", num);
-		return "/board/delete";
-	}
-	
 	@RequestMapping(value="/board/delete", method = RequestMethod.POST)
-	public String deleteBoard(int num) throws Exception {
-		boardService.deleteFile(num);
-		boardService.deleteBoard(num);
+	public String deleteBoard(StudyroomDto studyroomDto) throws Exception {
+		boardService.deleteFile(studyroomDto.getNum());
+		boardService.deleteBoard(studyroomDto.getNum());
 		
-		File fileDir = new File(filePath + "\\" + num);
+		
+		File fileDir = new File(filePath + "\\" + studyroomDto.getNum());
 		if(fileDir.exists()) {
 			FileUtils.deleteDirectory(fileDir);
 		}
