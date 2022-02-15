@@ -77,9 +77,9 @@ public class QuizDao implements QuizDaoInterface {
 		return sqlSessiontemplate.selectList("selectQuizListBySubjectNum",subjectNum);
 	}
 	@Override
-	public List<QuizDto> selectQuizListByMakerNum(long makertNum) {
+	public List<QuizDto> selectQuizListByMakerNum(long makerNum) {
 		// TODO Auto-generated method stub
-		return sqlSessiontemplate.selectList("selectQuizListByMakerNum",makertNum);
+		return sqlSessiontemplate.selectList("selectQuizListByMakerNum",makerNum);
 	}
 	@Override
 	public int selectTotQuiz(QuizSearchCriteria qscri) {

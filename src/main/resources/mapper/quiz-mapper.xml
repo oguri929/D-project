@@ -41,7 +41,7 @@
 		from MATCHTABLE MAT 
 		join STUDYROOM STR on (MAT.CHATROOM_NUM=STR.NUM) 
 		join SUBJECT SINFO on (STR.SUBJECT_NUM=SINFO.SUBJECT_NUM)
-		where MEMBER_NUM=#{member_num}
+		where MEMBER_NUM=#{memberNum}
 	</select>
 	<!-- 
 	<update id="update" parameterType="dto">
@@ -63,7 +63,7 @@
 		delete from BOOK
 	</delete>
 	<delete id="deleteQuiz" parameterType="long">
-		delete from QUIZ_INFO where NUM=#{NUM}
+		delete from QUIZ_INFO where NUM=#{num}
 	</delete>
 	<select id="selectAllQuiz" resultType="quizDtoForList" parameterType="criteria">
 		SELECT A.*,STR.ROOMNAME,SUB.SUBJECT as SUBJECT_NAME, MEM.NICKNAME

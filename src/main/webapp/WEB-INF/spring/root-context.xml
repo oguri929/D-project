@@ -36,6 +36,7 @@
       			<value>classpath:mapper/member-mapper.xml</value>
 				<value>classpath:mapper/board-mapper.xml</value>
 				<value>classpath:mapper/studyroom-mapper.xml</value>
+				<value>classpath:mapper/quiz-mapper.xml</value>
 			</list>
 		</property>
 	</bean>

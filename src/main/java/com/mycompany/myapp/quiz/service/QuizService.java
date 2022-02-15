@@ -82,7 +82,7 @@ public class QuizService implements QuizServiceInterface{
 		HashSet<Integer> quizNum=new HashSet<Integer>();
 		Random ran = new Random();
 		while(quizNum.size()<numOfQuestion) {
-			int ranNum=ran.nextInt(quizList.size()-1);
+			int ranNum=ran.nextInt(quizList.size());
 			quizNum.add(ranNum);
 			System.out.println(ranNum);
 		}
