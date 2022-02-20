@@ -48,7 +48,9 @@
 					<input type="button" value="삭제" onclick="location.href='<c:url value="/board/delFile/${file.FILE_NO}"/>'">
 					<br>
 				</c:forEach>
-				<input type="file" name="file">
+				<c:if test="${empty fileList}">
+					<input type="file" name="file">
+				</c:if>
 			</td>
 		</tr>
 		<tr>
