@@ -16,15 +16,22 @@
 	<h2>스터디룸 리스트</h2>
 	${sessionScope.user.id }님 환영합니다!<br></br>
 	
+	<div class="searchByTag">
 	<table border="1">
 		<tr>
 			<td>
-			<c:forEach var="sub" items="${subjectList }">
-				<a href="<c:url value="/studyroom/search/${sub.subjectNum }" />">${sub.subject }</a>
+			<c:forEach var="sub" items="${subjectList }" varStatus="idx">
+				<button type="button" onclick="reply_click(this.value)" value="${sub.subjectNum }">${sub.subject }</button>
 			</c:forEach>
+		<script>
+	      function reply_click(checked_value){
+	  	       self.location = "list" + '${pageMaker.makeQuery(1)}' + "&searchType=tag" + "&subjectNum=" + checked_value;
+	      }  
+	    </script>
 			</td>
 		</tr>
 	</table>
+	</div>
 		
 	<c:choose>
 	<c:when test="${empty studyroomList }">
@@ -40,7 +47,9 @@
 	      <option value="t"<c:out value="${scri.searchType eq 't' ? 'selected' : ''}"/>>제목</option>
 	      <option value="c"<c:out value="${scri.searchType eq 'c' ? 'selected' : ''}"/>>내용</option>
 	      <option value="w"<c:out value="${scri.searchType eq 'w' ? 'selected' : ''}"/>>작성자</option>
+	      <option value="l"<c:out value="${scri.searchType eq 'l' ? 'selected' : ''}"/>>지역</option>
 	      <option value="tc"<c:out value="${scri.searchType eq 'tc' ? 'selected' : ''}"/>>제목+내용</option>
+	      <option value="tcl"<c:out value="${scri.searchType eq 'tcl' ? 'selected' : ''}"/>>제목+내용+지역</option>
 	    </select>
 	
 	    <input type="text" name="keyword" id="keywordInput" value="${scri.keyword}"/>
@@ -61,6 +70,7 @@
 			<th>방장</th>
 			<th>현재인원/제한인원</th>
 			<th>과목정보</th>
+			<th>지역</th>
 			<th>작성일</th>
 			<th>조회수</th>
 		</tr>
@@ -69,12 +79,19 @@
 			<tr>
 				<td>${studyroomNum.count}</td>
 				<td>
-					<a href="/studyroom/read/${studyroom.num}">
-					${studyroom.roomName }</a>
+					<c:choose>
+						<c:when test="${studyroom.totMember == studyroom.memberLimit }">
+							(모집마감)${studyroom.roomName }
+						</c:when>
+						<c:otherwise>
+							<a href="/studyroom/read/${studyroom.num}">${studyroom.roomName }</a>
+						</c:otherwise>
+					</c:choose>
 				</td>
 				<td>${studyroom.memberDto.id}</td>
 				<td>${studyroom.totMember}/${studyroom.memberLimit}</td>
 				<td>${studyroom.subjectDto.subject }</td>
+				<td>${studyroom.local }</td>
 				<td>${studyroom.regdate}</td>
 				<td>${studyroom.cnt}</td>
 			</tr>

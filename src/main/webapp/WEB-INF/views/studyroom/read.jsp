@@ -121,8 +121,14 @@ $(document).ready(function(){
 		</tr>
 	</table>
 		<c:if test="${sessionScope.user.num != studyroomDto.captain }">
-			<input type="button" value="스터디가입" onclick="location.href='<c:url value="/studyroom/register?memberNum=${sessionScope.user.num }&chatroomNum=${studyroomDto.num }"/>'">
-			<input type="button" value="스터디탈퇴" onclick="location.href='<c:url value="/studyroom/leave?memberNum=${sessionScope.user.num }&chatroomNum=${studyroomDto.num }"/>'">					
+			<c:choose>
+				<c:when test="${isMember }">				
+					<input type="button" value="스터디탈퇴" onclick="location.href='<c:url value="/studyroom/leave?memberNum=${sessionScope.user.num }&chatroomNum=${studyroomDto.num }"/>'">				
+				</c:when>
+				<c:otherwise>
+					<input type="button" value="스터디가입" onclick="location.href='<c:url value="/studyroom/register?memberNum=${sessionScope.user.num }&chatroomNum=${studyroomDto.num }"/>'">													
+				</c:otherwise>
+			</c:choose>	
 		</c:if>
 	<br></br>
 	

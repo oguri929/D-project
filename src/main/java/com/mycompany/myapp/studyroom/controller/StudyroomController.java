@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.mycompany.myapp.member.dto.MemberDTO;
 import com.mycompany.myapp.member.dto.MemberDtoContainStudyroom;
 import com.mycompany.myapp.member.service.MemberService;
+import com.mycompany.myapp.quiz.dto.ChatRoomInfoOfMember;
+import com.mycompany.myapp.quiz.service.QuizService;
 import com.mycompany.myapp.studyroom.domain.StudyroomDto;
 import com.mycompany.myapp.studyroom.domain.SubjectDto;
 import com.mycompany.myapp.studyroom.service.StudyroomService;
@@ -29,12 +31,12 @@ public class StudyroomController {
 	private MemberService memberService;
 
 	@Autowired
-	public StudyroomController(StudyroomService studyroomService, MemberService memberService) {
-		super();
+	public StudyroomController(StudyroomService studyroomService, MemberService memberService,
+			QuizService quizService) {
 		this.studyroomService = studyroomService;
 		this.memberService = memberService;
 	}
-
+	
 	@RequestMapping(value = "/studyroom/create", method = RequestMethod.GET)
 	public String createStudyroom(Model model) {
 		List<SubjectDto> subjectList = studyroomService.getSubjectList();
@@ -44,17 +46,14 @@ public class StudyroomController {
 		return "/studyroom/create";
 	}
 	
+
 	@RequestMapping(value = "/studyroom/create", method = RequestMethod.POST)
 	public String createStudyroom(StudyroomDto studyroomDto, HttpServletRequest req) {
-//		String addSubject = req.getParameter("addSubject");
-//		
-//		if(addSubject != null) {
-//			studyroomService.addSubject(addSubject);
-//			int subjectNum = studyroomService.getSubjectByName(addSubject);
-//			studyroomDto.setSubjectNum(subjectNum);
-//		}
-		
+		String h_area1 = req.getParameter("h_area1");
+		String h_area2 = req.getParameter("h_area2");
+		studyroomDto.setLocal(h_area1 + " " + h_area2);
 		studyroomService.createStudyroom(studyroomDto);
+		
 		Map<String, Integer> matchInfo = new HashMap<String, Integer>();
 		matchInfo.put("chatroomNum", studyroomDto.getNum());
 		matchInfo.put("memberNum", studyroomDto.getCaptain());
@@ -94,7 +93,7 @@ public class StudyroomController {
 	}
 	
 	@RequestMapping(value="/studyroom/read/{num}", method = RequestMethod.GET)
-	public String readStudyroom(@PathVariable int num, Model model) throws Exception {
+	public String readStudyroom(@PathVariable int num, HttpServletRequest req, Model model) throws Exception {
 		StudyroomDto studyroomDto = studyroomService.readStudyroom(num);
 		SubjectDto subjectDto = studyroomService.getSubject(studyroomDto.getSubjectNum());
 		studyroomDto.setSubjectDto(subjectDto);
@@ -106,6 +105,14 @@ public class StudyroomController {
 		
 		List<MemberDTO> memberList = studyroomService.getMemberList(num);
 		model.addAttribute("memberList", memberList);
+		
+		HttpSession session = req.getSession();
+		MemberDTO user = (MemberDTO)session.getAttribute("user");
+		Map<String, Integer> matchInfo = new HashMap<String, Integer>();
+		matchInfo.put("chatroomNum", studyroomDto.getNum());
+		matchInfo.put("memberNum", user.getNum());
+		boolean isMember = studyroomService.isMember(matchInfo);
+		model.addAttribute("isMember", isMember);
 	
 		return "/studyroom/read";
 	}
@@ -140,26 +147,7 @@ public class StudyroomController {
 		return "redirect:/studyroom/list";
 	}
 	
-	@RequestMapping(value = "/studyroom/search/{num}")
-	public String searchByTag(@PathVariable int num, Model model) {
-		List<StudyroomDto> studyroomList = studyroomService.listStudyroom(num);
-		
-		List<SubjectDto> subjectList =  studyroomService.getSubjectList();
-		
-		for(int i=0; i<studyroomList.size(); i++) {
-			StudyroomDto studyroomDto = studyroomList.get(i);
-			int subjNum = studyroomDto.getSubjectNum();
-			SubjectDto subjectDto = studyroomService.getSubject(subjNum);
-			studyroomDto.setSubjectDto(subjectDto);
-		}
-		
-		model.addAttribute("subjectList", subjectList);
-		model.addAttribute("studyroomList", studyroomList);
-		
-		return "/studyroom/list";
-	}
-	
-	@RequestMapping(value = "/studyroom/register")
+	@RequestMapping(value = "/studyroom/register", method = RequestMethod.GET)
 	public String registerMember(HttpServletRequest req, Model model) {
 		int memberNum = Integer.valueOf(req.getParameter("memberNum"));
 		int chatroomNum = Integer.valueOf(req.getParameter("chatroomNum"));
@@ -180,26 +168,10 @@ public class StudyroomController {
 		}
 		session.setAttribute("subList", subList);
 		
-//		int memberLimit = studyroomDto.getMemberLimit();
-//		int totMember = studyroomService.countTotMember(chatroomNum);
-//		if(totMember < memberLimit) {			
-//			studyroomService.addMember(matchInfo);
-//			return "redirect:/studyroom/read/"+chatroomNum;
-//		}
-		
-		StudyroomDto studyroomDto = studyroomService.readStudyroom(chatroomNum);
-		SubjectDto subjectDto = studyroomService.getSubject(studyroomDto.getSubjectNum());
-		studyroomDto.setSubjectDto(subjectDto);
-		List<MemberDTO> memberList = studyroomService.getMemberList(chatroomNum);
-		
-		model.addAttribute(studyroomDto);
-		model.addAttribute(memberList);	
-		
-		return "/studyroom/read";
-		
+		return "redirect:/studyroom/read/"+chatroomNum;		
 	}
 	
-	@RequestMapping(value = "/studyroom/leave")
+	@RequestMapping(value = "/studyroom/leave", method = RequestMethod.GET)
 	public String deleteMember(HttpServletRequest req, Model model) {
 		int memberNum = Integer.valueOf(req.getParameter("memberNum"));
 		int chatroomNum = Integer.valueOf(req.getParameter("chatroomNum"));
@@ -221,14 +193,7 @@ public class StudyroomController {
 		}
 		session.setAttribute("subList", subList);
 		
-		StudyroomDto studyroomDto = studyroomService.readStudyroom(chatroomNum);
-		SubjectDto subjectDto = studyroomService.getSubject(studyroomDto.getSubjectNum());
-		studyroomDto.setSubjectDto(subjectDto);
-		List<MemberDTO> memberList = studyroomService.getMemberList(chatroomNum);
-		
-		model.addAttribute(studyroomDto);
-		model.addAttribute(memberList);
-		return "/studyroom/read";
+		return "redirect:/studyroom/read/"+chatroomNum;
 	}
 		
 }

@@ -3,7 +3,7 @@ package com.mycompany.myapp.utils;
 public class SearchCriteria extends Criteria {
 	private String searchType = "";
 	private String keyword = ""; 
-	private int subjNum;
+	private int subjectNum;
 	
 	public String getSearchType() {
 		return searchType;
@@ -17,11 +17,11 @@ public class SearchCriteria extends Criteria {
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
-	public int getSubjNum() {
-		return subjNum;
+	public int getSubjectNum() {
+		return subjectNum;
 	}
-	public void setSubjNum(int subjNum) {
-		this.subjNum = subjNum;
+	public void setSubjectNum(int subjectNum) {
+		this.subjectNum = subjectNum;
 	}
 	@Override
 	public String toString() {

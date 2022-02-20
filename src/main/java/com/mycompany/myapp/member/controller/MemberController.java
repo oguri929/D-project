@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.mycompany.myapp.member.dto.MemberDTO;
 import com.mycompany.myapp.member.dto.MemberDtoContainStudyroom;
 import com.mycompany.myapp.member.service.MemberService;
+import com.mycompany.myapp.quiz.dto.ChatRoomInfoOfMember;
+import com.mycompany.myapp.quiz.service.QuizService;
 
 
 @Controller
@@ -30,15 +33,14 @@ public class MemberController {
 	private Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
 	private MemberService memberService;
+	private QuizService quizService;
 	
-
-	public MemberController(MemberService memberService) {
+	@Autowired
+	public MemberController(MemberService memberService, QuizService quizService) {
 		this.memberService = memberService;
+		this.quizService = quizService;
 	}
-	
-	
-	
-    
+
 	// 로그인
 	@RequestMapping("login.do")
 	public String login(MemberDTO dto) {
@@ -47,6 +49,7 @@ public class MemberController {
 		return "user/login";
 	}
 	
+
 	//마이페이지
 	@RequestMapping(value="/mypage.do")
 	public String myPage() {
@@ -150,5 +153,16 @@ public class MemberController {
 		memberService.memberUpdate(dto);
 		session.invalidate();
 		return "redirect:/login.do";
+	}
+	
+	//내가 가입한 스터디룸 목록 가져오기
+	@RequestMapping(value="/user/getStudyrooms", method = RequestMethod.GET)
+	public String getMyStudyrooms(HttpServletRequest req, Model model) {
+		HttpSession session = req.getSession();
+		MemberDTO user = (MemberDTO)session.getAttribute("user");
+		List<ChatRoomInfoOfMember> chatroomList = quizService.getChatroomListofMember(user.getNum());
+		model.addAttribute("chatroomList", chatroomList);
+		
+		return "/user/chatroomList";
 	}
 }

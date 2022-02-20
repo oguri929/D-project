@@ -40,8 +40,8 @@ public class StudyroomServiceImpl implements StudyroomService {
 	}
 	
 	@Override
-	public List<StudyroomDto> listStudyroom(int num) {
-		return studyroomDao.selectStudyroomByTag(num);
+	public List<StudyroomDto> listStudyroomByTag(SearchCriteria scri) {
+		return studyroomDao.selectStudyroomByTag(scri);
 	}
 
 	@Override
@@ -106,6 +106,13 @@ public class StudyroomServiceImpl implements StudyroomService {
 	public int countTotMember(int chatroomNum) {
 		return studyroomDao.countTotMember(chatroomNum);
 	}
+
+	@Override
+	public boolean isMember(Map<String, Integer> matchInfo) {
+		return studyroomDao.isMember(matchInfo);
+	}
+	
+	
 
 	
 	

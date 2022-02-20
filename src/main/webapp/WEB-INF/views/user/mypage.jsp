@@ -12,7 +12,8 @@
 	<H3>마이페이지</H3>
 	<form action="${contextPath}/mypage.do" method="post">
 	
-	  <a href="${contextPath}/user/update.do">개인정보 수정</a>    
+	  <a href="${contextPath}/user/update.do">개인정보 수정</a><br>
+	  <a href="${contextPath}/user/getStudyrooms">가입한 채팅 목록 가져오기</a>
 	</form>
 </body>
 </html>

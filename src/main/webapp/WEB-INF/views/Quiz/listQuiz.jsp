@@ -16,7 +16,7 @@
    <h2>스터디룸 리스트</h2>
    ${sessionScope.user.id }님 환영합니다!<br></br>
    <a href="<c:url value="/makeQuiz" />">[퀴즈 만들기]</a><br>
-   <a href="<c:url value='/solveQuiz'/> ">[퀴즈 풀기 바로 가기]</a>
+   <a href="<c:url value='/solveQuiz'/> ">[퀴즈 풀기 바로 가기]</a><br>
 
       
    <c:choose>
