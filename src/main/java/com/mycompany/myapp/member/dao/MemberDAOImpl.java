@@ -1,9 +1,11 @@
 package com.mycompany.myapp.member.dao;
 
+
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
+
 
 import com.mycompany.myapp.member.dto.MemberDTO;
 import com.mycompany.myapp.member.dto.MemberDtoContainStudyroom;
@@ -57,6 +59,51 @@ public class MemberDAOImpl implements MemberDAO {
 	public List<MemberDtoContainStudyroom> getStudyroomInfo(MemberDTO dto) {
 		return sqlSessionTemplate.selectList("mapper.studyroom.selectStudyroomByMemberDto",dto);
 	}
+	
+	//아이디 중복체크	
+	@Override
+	public int idCheck(String id) throws Exception {
+		int result = sqlSessionTemplate.selectOne("idCheck", id);
+		return result;
+	}
+	
+	// 아이디 찾기
+	@Override
+	public MemberDTO userFindId(MemberDTO dto) throws Exception {
+		return sqlSessionTemplate.selectOne("userFindId", dto);
+	}
+	
+	// 회원 조회
+	@Override
+	public MemberDTO readMember(String id) throws Exception {
+		return sqlSessionTemplate.selectOne("readMember", id);
+	}
+	
+	// 비밀번호 변경
+	@Override
+	public int userFindPw(MemberDTO dto) throws Exception {
+		return sqlSessionTemplate.update("userFindPw", dto);
+	}
+	
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
+
+	
+	
 	
 	
 	

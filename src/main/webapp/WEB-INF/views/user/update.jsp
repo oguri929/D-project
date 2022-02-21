@@ -25,13 +25,12 @@
 		<input type="text" id="name" name="name" value="${user.name }" />
 	</P>
 	<p>
-		<label for="pw">비밀번호</label>
+		<label for="pw">*비밀번호</label>
 		<input type="password" id="pw" name="pw"/>
 	</P>
-	
 	<p>
 		<label for="nickname">닉네임</label>
-		<input type="text" id="nickname" name="nickname"/>
+		<input type="text" id="nickname" name="nickname" value="${user.nickname }"/>
 	</P>	
 	<p>
 		<label for="gender">성별</label>
@@ -48,8 +47,8 @@
 		
 	</p>
 	<p>
-		<label for="local">지역</label>
-		<input type="text" id="local" name="local"/>
+		<label for="local">*지역</label>
+		<input type="text" id="local" name="local" value="${user.local }"/>
 	</P>	
 	<p>
 		<label for="birth">생년월일</label>
@@ -61,7 +60,7 @@
 	</P>
 		
 	<button type="submit">수정하기</button>
-	<p><a href="/user/login.do">취소</a></p>
+	<p><a href="../login.do">취소</a></p>
 	
 	
 

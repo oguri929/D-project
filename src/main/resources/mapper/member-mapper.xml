@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="member">
 	  <!-- 로그인 -->
-	  <select id="login" resultType="memberDTO" parameterType="memberDTO">
+	  <select id="login" resultType="memberDTO" parameterType="String">
         SELECT *
         FROM
         MEMBER
@@ -33,11 +33,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    	  	EMAIL=#{email},
 		ADMIN=#{admin},
    	  	NAME=#{name} WHERE ID=#{id}
-   	  </update>
+   	    </update>
 		
 		<!-- 회원번호로 회원 조회 -->
 		<select id="selectMemberByNum" parameterType="int" resultType="memberDTO">
 		SELECT * FROM MEMBER WHERE NUM=#{memberNum}
 		</select>
-  
+		
+		<!-- 아이디 중복 체크 -->
+		<!-- 테이블에 해당 아이디가 없으면 0을 반환, 있으면 한명만 있을테니 1을 반환한다 -->
+		<select id="idCheck" resultType="int">
+	      SELECT COUNT(*) FROM MEMBER
+	      WHERE
+	      ID = #{id}
+		</select>
+		
+		<!-- 아이디 찾기 -->
+		<!-- 아이디 찾기 할때 이메일과 생일로 아이디를 조회한다 -->
+		<select id="userFindId" resultType="memberDTO">
+		SELECT ID FROM MEMBER WHERE EMAIL=#{email} AND BIRTH=#{birth}
+		</select>
+		
+		<!-- 회원정보 -->
+		<select id="readMember" resultType="memberDTO">
+		SELECT * FROM MEMBER WHERE ID=#{id}
+		</select>
+		
+		<!--비밀번호 찾기 -->
+		<update id="userFindPw" parameterType="memberDTO">
+		UPDATE MEMBER SET PW=#{pw} where ID=#{id}
+		</update>
+		
+	
 </mapper>

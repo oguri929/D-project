@@ -25,8 +25,8 @@
 		<input type="submit" value="로그인"> 
 		
 		<br><br>
-		   <a href="#">아이디 찾기</a>  | 
-		   <a href="#">비밀번호 찾기</a> | 
+		   <a href="${contextPath}/user/GoFindId.do">아이디 찾기</a>  | 
+		   <a href="${contextPath}/user/findpw.do">비밀번호 찾기</a> | 
 		   <a href="${contextPath}/user/register.do">회원가입</a>  
 					   
 	</form>	
