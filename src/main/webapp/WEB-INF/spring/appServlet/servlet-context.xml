@@ -25,7 +25,16 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.mycompany.myapp" />
-	
+	<interceptors>
+		<interceptor>
+			<mapping path="/**"/>
+			<exclude-mapping path="/login.do"/>
+			<exclude-mapping path="/"/>
+			<exclude-mapping path="/logout.do"/>
+			<exclude-mapping path="/user/register.do"/>
+			<beans:bean class="com.mycompany.myapp.utils.LoginCheckInterceptor"/>
+		</interceptor>
+	</interceptors>
 	<beans:bean id="boardController" class="com.mycompany.myapp.board.controller.BoardController">
 		<beans:constructor-arg ref="boardService" />	
 	</beans:bean>

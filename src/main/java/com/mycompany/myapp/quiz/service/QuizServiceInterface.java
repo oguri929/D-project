@@ -20,6 +20,7 @@ public interface QuizServiceInterface {
 	public void deletQuiz(QuizDto dto);
 	public QuizDto getQuizOne(long num);
 	public List<QuizDto> getQuizList(long num);
+	public List<QuizDto> getQuizList(long subNum,long roomNum);
 	public List<QuizDto> getQuizListByMakerNum(long makerNum);
 	public Map<Integer,QuizDto> selectQuizList(List<QuizDto> quizList, int numOfQuestion );
 	public boolean checkAnswer(SolveQuizVo solveVo,QuizDto quizDto);

@@ -15,6 +15,12 @@
 	<select id="selectQuizListBySubjectNum" parameterType="long" resultType="quizDto">
 		select * from QUIZ_INFO where SUBJECT_NUM=#{subjectNum}
 	</select>
+	<select id="selectQuizList" parameterType="QNandSN" resultType="quizDto">
+			select * from QUIZ_INFO where SUBJECT_NUM=#{subjectNum}
+			<if test="roomNum !=null and roomNum!=''">
+				and CHATROOM_NUM=#{roomNum}
+			</if>
+	</select>
 	<select id="selectQuizListByMakerNum" parameterType="long" resultType="quizDto">
 		select * from QUIZ_INFO where MAKER_NUM=#{makerNum}
 	</select>

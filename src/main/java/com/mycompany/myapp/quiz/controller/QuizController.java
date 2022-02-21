@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mycompany.myapp.member.dto.MemberDTO;
-import com.mycompany.myapp.member.dto.MemberDtoContainStudyroom;
 import com.mycompany.myapp.quiz.dto.ChatRoomInfoOfMember;
 import com.mycompany.myapp.quiz.dto.QuizDto;
 import com.mycompany.myapp.quiz.dto.QuizDtoForList;
@@ -23,7 +22,6 @@ import com.mycompany.myapp.quiz.dto.SelectQuizNumAndSubjectVO;
 import com.mycompany.myapp.quiz.dto.SolveQuizVo;
 import com.mycompany.myapp.quiz.service.QuizService;
 import com.mycompany.myapp.quiz.service.QuizServiceInterface;
-import com.mycompany.myapp.studyroom.domain.StudyroomDto;
 import com.mycompany.myapp.studyroom.domain.SubjectDto;
 import com.mycompany.myapp.studyroom.service.StudyroomService;
 import com.mycompany.myapp.utils.PageMaker;
@@ -54,8 +52,6 @@ public class QuizController {
 		PageMaker pageMaker=new PageMaker();
 		pageMaker.setCri(qscri);
 		pageMaker.setTotalCount(ser.countTotQuiz(qscri));
-		System.out.println("set totla coiunt: "+ser.countTotQuiz(qscri));
-		System.out.println(quizList);
 		model.addAttribute("scri",qscri);
 		model.addAttribute("quizList",quizList);
 		model.addAttribute("pageMaker",pageMaker);
@@ -78,11 +74,7 @@ public class QuizController {
 		HttpSession session=request.getSession();
 		MemberDTO memberDto=(MemberDTO) session.getAttribute("user");
 		//방번호 있으면 방번호 집어넣기
-		System.out.println("test1");
-		System.out.println(memberDto.getId());
-		System.out.println(memberDto.getNum());
 		//		dto.setMakerNum(memberDto.getNum());
-		System.out.println("test");
 		ser.insertQuiz(dto.getQuizList(),memberDto.getNum());
 		return "redirect:/listQuiz";
 	}
@@ -103,14 +95,12 @@ public class QuizController {
 			System.out.println("resultQuiz Post");
 			
 			String[] temAnswer=quizVo.getAnswer().split(",");
-			System.out.println(temAnswer[0]);
 			if(temAnswer.length==1) {
 				quizVo.setAnswer(temAnswer[0]);
 			}
 			quizVo.setCheckAnswer(ser.checkAnswer(quizVo,ser.getQuizOne(quizVo.getNum())));
 			returnList.put(quizVo, ser.getQuizOne(quizVo.getNum()));
 		}
-		System.out.println("resultQuiz: "+answerList.get(0).getAnswer());
 		model.addAttribute("answerList",returnList);
 		return "Quiz/resultQuiz";
 	}
@@ -126,14 +116,11 @@ public class QuizController {
 //				subList.put(room.getSubjectNum(), room.getSubject());
 //			}
 //		}
-		System.out.println("roomNum: "+request.getParameter("roomNum"));
 		if(request.getParameter("roomNum")!=null) {
 			model.addAttribute("roomNum",request.getParameter("roomNum"));
-			System.out.println("널이 아닙니다"+request.getParameter("roomNum"));
 		}else {
 			model.addAttribute("chatroomList", session.getAttribute("chatroomList"));
 		}
-		System.out.println((Map<Integer,String>)session.getAttribute("subList"));
 		model.addAttribute("subList", (Map<Integer,String>)session.getAttribute("subList"));
 		return "Quiz/solveQuiz";
 	}
@@ -143,12 +130,14 @@ public class QuizController {
 		//long subjectNum=(long)request.getAttribute("subjectNum");
 		
 		System.out.println("postSolveQuiz"+solveVo.getSubjectNum());
-		System.out.println("postSolveQuiz"+solveVo.getRoomNum());
-		if(request.getParameter("roomNum")!=null) {
-			
-		}
-		List<QuizDto> quizList=ser.getQuizList(solveVo.getSubjectNum());
+		System.out.println("postSolveQuiz1 "+request.getParameter("roomNum"));
+		List<QuizDto> quizList;
 		
+		if(request.getParameter("roomNum")!=null) {
+			quizList=ser.getQuizList(solveVo.getSubjectNum(),solveVo.getRoomNum());
+		}else {
+			quizList=ser.getQuizList(solveVo.getSubjectNum());
+		}
 		Map<Integer,QuizDto> selectMap=ser.selectQuizList(quizList, solveVo.getNumOfQuestion());
 		//세션에도 퀴즈 리스트 저장하기
 		
@@ -158,7 +147,6 @@ public class QuizController {
 	@RequestMapping(value="/updateQuiz", method=RequestMethod.GET)
 	public String getUpdateQuiz(Model model) {
 		int makerNum=3;//나중에 삭제
-		System.out.println(ser.getQuizListByMakerNum(makerNum).size());
 		model.addAttribute("quizList",ser.getQuizListByMakerNum(makerNum));
 		return "Quiz/updateQuiz";
 	}

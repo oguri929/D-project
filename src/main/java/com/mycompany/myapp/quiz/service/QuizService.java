@@ -27,12 +27,7 @@ public class QuizService implements QuizServiceInterface{
 	@Override
 	public void insertQuiz(List<QuizDto> dtos,long memberNum) {
 		// TODO Auto-generated method stub
-		System.out.println("service: "+dtos);
 		for(QuizDto dto : dtos) {
-			System.out.println("servce: "+dto);
-			System.out.println("service: "+dto.getChatroomNum());
-			
-			System.out.println("service: "+dto.getsSubjectNum());
 			dto.setMakerNum(memberNum);
 			dao.insertQuiz(dto);
 		}
@@ -73,6 +68,11 @@ public class QuizService implements QuizServiceInterface{
 		
 		return dao.selectQuizList(num);
 	}
+	@Override
+	public List<QuizDto> getQuizList(long subNum, long roomNum) {
+		// TODO Auto-generated method stub
+		return dao.selectQuizList(subNum,roomNum);
+	}
 
 	@Override
 	public Map<Integer,QuizDto> selectQuizList(List<QuizDto> quizList, int numOfQuestion) {
@@ -83,14 +83,8 @@ public class QuizService implements QuizServiceInterface{
 		HashSet<Integer> quizNum=new HashSet<Integer>();
 		Random ran = new Random();
 		while(quizNum.size()<numOfQuestion) {
-			System.out.println("quizListSize: "+quizList.size());
-			System.out.println("numOfQestion: "+numOfQuestion);
-			System.out.println("quizNum: "+quizNum.size());
-			System.out.println(quizList.size()-1);
-			System.out.println(ran.nextInt(quizList.size()));
 			int ranNum=ran.nextInt(quizList.size());
 			quizNum.add(ranNum);
-			System.out.println(ranNum);
 		}
 		//출제 수 올리는 기능 추가
 		Map<Integer,QuizDto> selectMap=new HashMap<Integer,QuizDto>();
@@ -124,9 +118,6 @@ public class QuizService implements QuizServiceInterface{
 				result=true;
 			}
 		}else {
-			System.out.println(solveVo.getAnswer().equals(quizDto.getAnswer()));
-			System.out.println(quizDto.getAnswer());
-			System.out.println(solveVo.getAnswer());
 			if(solveVo.getAnswer().equals(quizDto.getAnswer())) {
 				result=true;
 			}
@@ -148,9 +139,7 @@ public class QuizService implements QuizServiceInterface{
 	public List<ChatRoomInfoOfMember> getChatroomListofMember(long memberNum) {
 		// TODO Auto-generated method stub
 		List<ChatRoomInfoOfMember> result=dao.selectAllChatroomOfMember(memberNum);
-		System.out.println("service");
-		System.out.println(result.get(0).getSubject());
-		return dao.selectAllChatroomOfMember(memberNum);
+		return result;
 	}
 
 	@Override
@@ -166,11 +155,12 @@ public class QuizService implements QuizServiceInterface{
 		for(QuizDtoForList quizDto : result) {
 			if (quizDto.getMakerNum()==memberDto.getNum()) {
 				quizDto.setWriter(true);
-				System.out.println(quizDto.isWriter());
 			}
 		}
 		return result;
 	}
+
+	
 	
 
 }

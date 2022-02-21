@@ -60,17 +60,13 @@ public class MemberController {
 			// 조건문에 의해 login 값이 null 이라면, msg 라는 정보에 false라는
 			// 값이 들어가서 전송된다. 이 값은 다른 페이지로 이동하거나 새로고침을 하면 없어지는 일회용값이다.
 	} else {
-			System.out.println("login succece");
-			
 			List<MemberDtoContainStudyroom> chatroomList=memberService.getMemList(login);
-			System.out.println("login session: " +chatroomList.size());
 			Map<Integer,String> subList=new HashMap<Integer,String>();
 			for (MemberDtoContainStudyroom sub : chatroomList) {
 				if(!subList.containsKey(sub.getSubjectNum())) {
 					subList.put(sub.getSubjectNum(), sub.getSubject());
 				}
 			}
-			System.out.println("login session: " +subList.size());
 			
 			session.setAttribute("chatroomList", chatroomList);
 			session.setAttribute("subList", subList);

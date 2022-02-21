@@ -15,6 +15,7 @@ public interface QuizDaoInterface {
 	public void insertQuiz(QuizDto dto);
 	public void updateQuiz(QuizDto dto);
 	public List<QuizDto> selectQuizList(long subjectNum);
+	public List<QuizDto> selectQuizList(long subjectNum,long roomNum);
 	public List<QuizDto> selectQuizListByMakerNum(long makertNum);
 	//public QuizDto selectOneQuiz(QuizDto dto);
 	public List<QuizDto> searchQuiz(String word);

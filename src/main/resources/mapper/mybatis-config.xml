@@ -19,6 +19,7 @@
 		<typeAlias type="com.mycompany.myapp.quiz.dto.ChatRoomInfoOfMember" alias="chatRoomInfoOfMember"/>
 		<typeAlias type="com.mycompany.myapp.quiz.dto.QuizDtoForList" alias="quizDtoForList"/>
 		<typeAlias alias="memberDtoCS" type="com.mycompany.myapp.member.dto.MemberDtoContainStudyroom" />
+		<typeAlias alias="QNandSN" type="com.mycompany.myapp.quiz.dto.SelectQuizNumAndSubjectVO" />
 		<!-- <typeAlias alias="roomVO" type="com.mycompany.myapp.room.domain.RoomVO"/> -->
 		<typeAlias alias="chatVO" type="com.mycompany.myapp.chat.domain.ChatVO"/>
 	</typeAliases>

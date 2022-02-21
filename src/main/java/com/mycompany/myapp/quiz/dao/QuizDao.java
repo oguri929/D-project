@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.mycompany.myapp.quiz.dto.ChatRoomInfoOfMember;
 import com.mycompany.myapp.quiz.dto.QuizDto;
 import com.mycompany.myapp.quiz.dto.QuizDtoForList;
+import com.mycompany.myapp.quiz.dto.SelectQuizNumAndSubjectVO;
 import com.mycompany.myapp.utils.QuizSearchCriteria;
 
 @Repository
@@ -77,6 +78,14 @@ public class QuizDao implements QuizDaoInterface {
 		return sqlSessiontemplate.selectList("selectQuizListBySubjectNum",subjectNum);
 	}
 	@Override
+	public List<QuizDto> selectQuizList(long subjectNum, long roomNum) {
+		// TODO Auto-generated method stub
+		SelectQuizNumAndSubjectVO vo=new SelectQuizNumAndSubjectVO();
+		vo.setSubjectNum(subjectNum);
+		vo.setRoomNum((int)roomNum);
+		return sqlSessiontemplate.selectList("selectQuizList",vo);
+	}
+	@Override
 	public List<QuizDto> selectQuizListByMakerNum(long makertNum) {
 		// TODO Auto-generated method stub
 		return sqlSessiontemplate.selectList("selectQuizListByMakerNum",makertNum);
@@ -91,6 +100,7 @@ public class QuizDao implements QuizDaoInterface {
 		// TODO Auto-generated method stub
 		return sqlSessiontemplate.selectList("selectAllQuiz",qscri);
 	}
+	
 
 
 }
