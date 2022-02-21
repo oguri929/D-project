@@ -4,39 +4,46 @@ package com.mycompany.myapp.member.controller;
 
 
 import org.slf4j.Logger;
+
 import org.slf4j.LoggerFactory;
+
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+
 import org.mindrot.jbcrypt.BCrypt;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.mycompany.myapp.member.dto.MemberDTO;
 import com.mycompany.myapp.member.dto.MemberDtoContainStudyroom;
 import com.mycompany.myapp.member.service.MemberService;
 
 
+
+
 @Controller
 public class MemberController {
+
 	private Logger logger = LoggerFactory.getLogger(MemberController.class);
-	
 	private MemberService memberService;
 	
-
 	public MemberController(MemberService memberService) {
 		this.memberService = memberService;
 	}
-	
-	
 	
     
 	// 로그인
@@ -46,12 +53,7 @@ public class MemberController {
 		
 		return "user/login";
 	}
-	
-	//마이페이지
-	@RequestMapping(value="/mypage.do")
-	public String myPage() {
-		return "/user/mypage";
-	}
+
 	
 	
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
@@ -114,6 +116,11 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
+	//마이페이지
+		@RequestMapping(value="/mypage.do")
+		public String myPage() {
+			return "/user/mypage";
+		}
 	
 	
 	// 회원가입 GET	
@@ -125,12 +132,24 @@ public class MemberController {
 	// 회원가입 POST
 	@RequestMapping(value="/user/register.do",method = RequestMethod.POST)
 	public String registerPOST(MemberDTO dto,RedirectAttributes redirectAttributes) throws Exception {
-		System.out.println("resgister post");
+		System.out.println("register post");
 		String hashedPw = BCrypt.hashpw(dto.getPw(),BCrypt.gensalt());
 		dto.setPw(hashedPw);
 		memberService.register(dto);
 		redirectAttributes.addFlashAttribute("msg","REGISTERED");
 		
+		int result = memberService.idCheck(hashedPw);
+		try {
+			if(result == 1) {
+				return "/user/login";
+			}else if(result == 0) {
+				memberService.register(dto);
+			}
+			// 여기에서 ~ 입력된 아이디가 존재한다면 -> 다시 회원가입 페이지로 돌아가기
+			// 존재하지 않는다면 -> register
+		} catch(Exception e) {
+			throw new RuntimeException();
+		}
 		return "redirect:/login.do";
 	}
 	
@@ -151,4 +170,53 @@ public class MemberController {
 		session.invalidate();
 		return "redirect:/login.do";
 	}
+	
+	
+	
+	// 아이디 중복체크
+	// ResponseBody는 스프링에서 비동기 처리를 할 때 사용하는 어노테이션이다
+	@ResponseBody
+	@RequestMapping(value="/user/idCheck.do",method=RequestMethod.POST)
+	public int postIdCheck(String id) throws Exception {
+		int result = memberService.idCheck(id);	
+		return result;
+	}
+	
+	// 아이디 찾기 페이지 이동
+	@RequestMapping(value = "/user/GoFindId.do")
+	public String GofindId() throws Exception {
+		return "/user/findIdForm";
+	}
+	
+	// 아이디 찾기 실행
+	@RequestMapping(value="/user/FindId.do", method = RequestMethod.POST)
+	public String findIdAction(MemberDTO dto, Model model) throws Exception{
+		MemberDTO user = memberService.userFindId(dto);
+		
+		if(user == null) {
+			model.addAttribute("check", 1);
+		} else {
+			model.addAttribute("check", 0);
+			model.addAttribute("id", user.getId());
+		}
+		return "/user/findIdForm";
+	}
+	
+	// 비밀번호 찾기 페이지 이동
+	@RequestMapping(value="/user/findpw.do",method = RequestMethod.GET)
+	public String GofindPw() throws Exception {
+		return "/user/findPwForm";
+	}
+	
+	// 비밀번호 찾기 실행
+	@RequestMapping(value ="/user/findpw.do", method = RequestMethod.POST)
+	public void findPwAction(@ModelAttribute MemberDTO dto, HttpServletResponse response) throws Exception{
+		memberService.userFindPw(response, dto);
+
+	}
+	
+	
+	
+	
+
 }
