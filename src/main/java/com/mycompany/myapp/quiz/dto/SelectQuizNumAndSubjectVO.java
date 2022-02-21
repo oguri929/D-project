@@ -2,6 +2,7 @@ package com.mycompany.myapp.quiz.dto;
 
 public class SelectQuizNumAndSubjectVO {
 	private long subjectNum;
+	private int roomNum;
 	private int numOfQuestion;
 	public long getSubjectNum() {
 		return subjectNum;
@@ -14,6 +15,12 @@ public class SelectQuizNumAndSubjectVO {
 	}
 	public void setNumOfQuestion(int numOfQueztion) {
 		this.numOfQuestion = numOfQueztion;
+	}
+	public int getRoomNum() {
+		return roomNum;
+	}
+	public void setRoomNum(int roomNum) {
+		this.roomNum = roomNum;
 	}
 	
 	

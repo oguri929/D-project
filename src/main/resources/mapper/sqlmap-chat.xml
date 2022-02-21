@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="chatDao">
+	<insert id="insert" parameterType="chatVO">
+		insert into chat
+		(num,content,filename)
+		values
+		(chat_seq.nextval,#{content},#{filename})
+		<selectKey keyProperty="code" resultType="Integer">
+			select nvl(max(code),0) from chat
+		</selectKey>
+	</insert>
+	
+</mapper>

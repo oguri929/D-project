@@ -11,6 +11,9 @@
 </head>
 <body>
 	<form method="post">
+	<c:if test="${roomNum !=null }">
+		<input type="hidden" value="${roomNum}"/>
+	</c:if>
 	<table>
 	
 		<tr>

@@ -69,7 +69,7 @@
 			<tr>
 				<td>${studyroomNum.count}</td>
 				<td>
-					<a href="/studyroom/read/${studyroom.num}">
+					<a href="<c:url value='/studyroom/read/${studyroom.num}'/>">
 					${studyroom.roomName }</a>
 				</td>
 				<td>${studyroom.captain}</td>

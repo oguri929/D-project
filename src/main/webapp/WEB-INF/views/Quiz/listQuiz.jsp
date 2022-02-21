@@ -69,7 +69,11 @@
 				<td>${quiz.nickName }</td>
 				<td>${quiz.numOfQuiz}</td>
 				<td>${quiz.correctRate}</td>
-				<td><button type="button" onClick="location.href='/deleteQuiz/num/${quiz.num}'" >삭제</button></td>
+				<td>
+				
+					<button type="button" onClick="location.href='/deleteQuiz/num/${quiz.num}'" >삭제</button>
+				
+				</td>
 			</tr>
 		</c:forEach>
 		</table>

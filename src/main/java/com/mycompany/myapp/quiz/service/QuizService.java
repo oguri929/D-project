@@ -9,6 +9,7 @@ import java.util.Random;
 
 import org.springframework.stereotype.Service;
 
+import com.mycompany.myapp.member.dto.MemberDTO;
 import com.mycompany.myapp.quiz.dao.QuizDao;
 import com.mycompany.myapp.quiz.dto.ChatRoomInfoOfMember;
 import com.mycompany.myapp.quiz.dto.QuizDto;
@@ -82,7 +83,12 @@ public class QuizService implements QuizServiceInterface{
 		HashSet<Integer> quizNum=new HashSet<Integer>();
 		Random ran = new Random();
 		while(quizNum.size()<numOfQuestion) {
-			int ranNum=ran.nextInt(quizList.size()-1);
+			System.out.println("quizListSize: "+quizList.size());
+			System.out.println("numOfQestion: "+numOfQuestion);
+			System.out.println("quizNum: "+quizNum.size());
+			System.out.println(quizList.size()-1);
+			System.out.println(ran.nextInt(quizList.size()));
+			int ranNum=ran.nextInt(quizList.size());
 			quizNum.add(ranNum);
 			System.out.println(ranNum);
 		}
@@ -154,9 +160,16 @@ public class QuizService implements QuizServiceInterface{
 	}
 
 	@Override
-	public List<QuizDtoForList> getQuizListforLit(QuizSearchCriteria qscri) {
+	public List<QuizDtoForList> getQuizListforLit(QuizSearchCriteria qscri,MemberDTO memberDto) {
 		// TODO Auto-generated method stub
-		return dao.selectAllQuiz(qscri);
+		List<QuizDtoForList> result=dao.selectAllQuiz(qscri);
+		for(QuizDtoForList quizDto : result) {
+			if (quizDto.getMakerNum()==memberDto.getNum()) {
+				quizDto.setWriter(true);
+				System.out.println(quizDto.isWriter());
+			}
+		}
+		return result;
 	}
 	
 

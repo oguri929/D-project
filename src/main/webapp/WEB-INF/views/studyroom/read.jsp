@@ -93,7 +93,7 @@
 		</table>
 		<input type="button" value="스터디가입" onclick="location.href='<c:url value="/studyroom/register?memberNum=${sessionScope.user.num }&chatroomNum=${studyroomDto.num }"/>'">
 		<input type="button" value="스터디탈퇴" onclick="location.href='<c:url value="/studyroom/leave?memberNum=${sessionScope.user.num }&chatroomNum=${studyroomDto.num }"/>'">
-		
+		<input type="button" value="채팅방 들어가기" onclick="location.href='<c:url value="/chat?chatroomNum=${studyroomDto.num }"/>'">
 	</form>
 	<br></br>
 	

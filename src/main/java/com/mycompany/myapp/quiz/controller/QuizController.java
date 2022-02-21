@@ -47,7 +47,8 @@ public class QuizController {
 	@RequestMapping(value="/listQuiz", method=RequestMethod.GET)
 	public String getListQuiz(QuizDtoForList dto,HttpServletRequest request,
 			Model model,QuizSearchCriteria qscri) {
-		List<QuizDtoForList> quizList=ser.getQuizListforLit(qscri);
+		MemberDTO memberDto=(MemberDTO) request.getSession().getAttribute("user");
+		List<QuizDtoForList> quizList=ser.getQuizListforLit(qscri,memberDto);
 		
 		
 		PageMaker pageMaker=new PageMaker();
@@ -125,8 +126,14 @@ public class QuizController {
 //				subList.put(room.getSubjectNum(), room.getSubject());
 //			}
 //		}
+		System.out.println("roomNum: "+request.getParameter("roomNum"));
+		if(request.getParameter("roomNum")!=null) {
+			model.addAttribute("roomNum",request.getParameter("roomNum"));
+			System.out.println("널이 아닙니다"+request.getParameter("roomNum"));
+		}else {
+			model.addAttribute("chatroomList", session.getAttribute("chatroomList"));
+		}
 		System.out.println((Map<Integer,String>)session.getAttribute("subList"));
-		model.addAttribute("chatroomList", session.getAttribute("chatroomList"));
 		model.addAttribute("subList", (Map<Integer,String>)session.getAttribute("subList"));
 		return "Quiz/solveQuiz";
 	}
@@ -135,8 +142,13 @@ public class QuizController {
 			HttpServletRequest request,Model model,SolveQuizVo answerVo) {
 		//long subjectNum=(long)request.getAttribute("subjectNum");
 		
-		
+		System.out.println("postSolveQuiz"+solveVo.getSubjectNum());
+		System.out.println("postSolveQuiz"+solveVo.getRoomNum());
+		if(request.getParameter("roomNum")!=null) {
+			
+		}
 		List<QuizDto> quizList=ser.getQuizList(solveVo.getSubjectNum());
+		
 		Map<Integer,QuizDto> selectMap=ser.selectQuizList(quizList, solveVo.getNumOfQuestion());
 		//세션에도 퀴즈 리스트 저장하기
 		

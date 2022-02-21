@@ -86,6 +86,7 @@ public class StudyroomController {
 	
 	@RequestMapping(value="/studyroom/read/{num}")
 	public String readStudyroom(@PathVariable int num, Model model) {
+		System.out.println("read start");
 		StudyroomDto studyroomDto = studyroomService.readStudyroom(num);
 		SubjectDto subjectDto = studyroomService.getSubject(studyroomDto.getSubjectNum());
 		studyroomDto.setSubjectDto(subjectDto);

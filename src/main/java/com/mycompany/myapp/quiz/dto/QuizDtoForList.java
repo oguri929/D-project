@@ -5,7 +5,14 @@ public class QuizDtoForList extends QuizDto{
 	private String nickName;
 	private String subjectName;
 	private long correctRate;
+	private boolean writer;
 	
+	public boolean isWriter() {
+		return writer;
+	}
+	public void setWriter(boolean writer) {
+		this.writer = writer;
+	}
 	public String getRoomName() {
 		return roomName;
 	}
