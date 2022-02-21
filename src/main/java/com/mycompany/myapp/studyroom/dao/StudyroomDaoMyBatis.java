@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.mycompany.myapp.member.dto.MemberDTO;
 import com.mycompany.myapp.studyroom.domain.StudyroomDto;
 import com.mycompany.myapp.studyroom.domain.SubjectDto;
+import com.mycompany.myapp.utils.Criteria;
 import com.mycompany.myapp.utils.SearchCriteria;
 
 @Repository
@@ -40,8 +41,8 @@ public class StudyroomDaoMyBatis implements StudyroomDao{
 	}
 	
 	@Override
-	public List<StudyroomDto> selectStudyroomByTag(int num) {
-		return sqlSessionTemplate.selectList("selectStudyroomByTag", num);
+	public List<StudyroomDto> selectStudyroomByTag(SearchCriteria scri) {
+		return sqlSessionTemplate.selectList("selectStudyroomByTag", scri);
 	}
 
 	@Override

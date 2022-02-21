@@ -173,4 +173,5 @@ public class QuizController {
 		ser.deletQuiz(quizDto);
 		return "redirect:/listQuiz";
 	}
+	
 }

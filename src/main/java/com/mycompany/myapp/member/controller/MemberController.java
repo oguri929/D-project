@@ -31,6 +31,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.mycompany.myapp.member.dto.MemberDTO;
 import com.mycompany.myapp.member.dto.MemberDtoContainStudyroom;
 import com.mycompany.myapp.member.service.MemberService;
+import com.mycompany.myapp.quiz.dto.ChatRoomInfoOfMember;
+import com.mycompany.myapp.quiz.service.QuizService;
 
 
 
@@ -40,22 +42,16 @@ public class MemberController {
 
 	private Logger logger = LoggerFactory.getLogger(MemberController.class);
 	private MemberService memberService;
+	private QuizService quizService;
 	
+
 	public MemberController(MemberService memberService) {
 		this.memberService = memberService;
-	}
-	
-    
-	// 로그인
-	@RequestMapping("login.do")
-	public String login(MemberDTO dto) {
-		logger.info("post login");
-		
-		return "user/login";
+		this.quizService = quizService;
 	}
 
 	
-	
+	//
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
 	public String login(MemberDTO dto, HttpServletRequest request, Model model,RedirectAttributes rttr) throws Exception {
 		logger.info("post login");
@@ -171,7 +167,17 @@ public class MemberController {
 		return "redirect:/login.do";
 	}
 	
-	
+
+	//내가 가입한 스터디룸 목록 가져오기
+	@RequestMapping(value="/user/getStudyrooms", method = RequestMethod.GET)
+	public String getMyStudyrooms(HttpServletRequest req, Model model) {
+		HttpSession session = req.getSession();
+		MemberDTO user = (MemberDTO)session.getAttribute("user");
+		List<ChatRoomInfoOfMember> chatroomList = quizService.getChatroomListofMember(user.getNum());
+		model.addAttribute("chatroomList", chatroomList);
+		
+		return "/user/chatroomList";
+	}
 	
 	// 아이디 중복체크
 	// ResponseBody는 스프링에서 비동기 처리를 할 때 사용하는 어노테이션이다
@@ -218,5 +224,4 @@ public class MemberController {
 	
 	
 	
-
 }

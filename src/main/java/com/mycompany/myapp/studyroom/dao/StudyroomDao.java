@@ -18,7 +18,7 @@ public interface StudyroomDao {
 	//모든 스터디룸 조회
 	public abstract List<StudyroomDto> selectAllStudyroom(SearchCriteria scri);
 	//태그에 맞게 스터디룸 조회
-	public abstract List<StudyroomDto> selectStudyroomByTag(int num);
+	public abstract List<StudyroomDto> selectStudyroomByTag(SearchCriteria scri);
 	//스터디룸 한 개 가져오기
 	public abstract StudyroomDto selectOneStudyroom(int num);
 	//스터디룸 조회수 증가시키기
@@ -45,4 +45,5 @@ public interface StudyroomDao {
 	public abstract int countTotMember(int chatroomNum);
 	//스터디룸의 모든 멤버 삭제
 	public abstract int deleteAllMember(int chatroomNum);
+	
 }

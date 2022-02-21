@@ -156,7 +156,7 @@ public class BoardController {
 		}
 		boardService.deleteFile(boardNum);
 		
-		return "redirect:/board/edit/"+boardNum;
+		return "redirect:/board/edit?" + "num=" + boardNum;
 	}
 }
 

@@ -18,7 +18,7 @@ public interface StudyroomService {
 	//스터디룸 리스트 가져오기
 	public abstract List<StudyroomDto> listStudyroom(SearchCriteria scri);
 	//스터디룸 리스트 가져오기
-	public abstract List<StudyroomDto> listStudyroom(int num);
+	public abstract List<StudyroomDto> listStudyroomByTag(SearchCriteria scri);
 	//스터디룸 세부정보 보기
 	public abstract StudyroomDto readStudyroom(int num);
 	//스터디룸에 등록된 과목 이름정보 가져오기
@@ -39,4 +39,6 @@ public interface StudyroomService {
 	public abstract int deleteMember(Map<String, Integer> matchInfo);
 	//스터디룸에 있는 멤버 수 세기
 	public abstract int countTotMember(int chatroomNum);
+	//스터디룸에 멤버 있는지 확인
+	public abstract boolean isMember(Map<String, Integer> matchInfo);
 }
