@@ -136,14 +136,17 @@ public class MemberController {
 	
 	// 회원가입 POST
 	@RequestMapping(value="/user/register.do",method = RequestMethod.POST)
-	public String registerPOST(MemberDTO dto,RedirectAttributes redirectAttributes) throws Exception {
+	public String registerPOST(MemberDTO dto,RedirectAttributes redirectAttributes, HttpServletRequest req) throws Exception {
 		System.out.println("register post");
+		String h_area1 = req.getParameter("h_area1");
+		String h_area2 = req.getParameter("h_area2");
+		dto.setLocal(h_area1 + " " + h_area2);
 		String hashedPw = BCrypt.hashpw(dto.getPw(),BCrypt.gensalt());
 		dto.setPw(hashedPw);
-		memberService.register(dto);
+		//memberService.register(dto);
 		redirectAttributes.addFlashAttribute("msg","REGISTERED");
 		
-		int result = memberService.idCheck(hashedPw);
+		int result = memberService.idCheck(dto.getId());
 		try {
 			if(result == 1) {
 				return "/user/login";
@@ -168,12 +171,17 @@ public class MemberController {
 	
 	// 회원정보 수정 POST
 	@RequestMapping(value="/user/update.do", method=RequestMethod.POST)
-	public String registerUpdate(MemberDTO dto, HttpSession session) throws Exception {
+	public String registerUpdate(MemberDTO dto, HttpSession session, HttpServletRequest req) throws Exception {
+		String h_area1 = req.getParameter("h_area1");
+		String h_area2 = req.getParameter("h_area2");
+		dto.setLocal(h_area1 + " " + h_area2);
+		
 		String hashedPw = BCrypt.hashpw(dto.getPw(),BCrypt.gensalt());
 		dto.setPw(hashedPw);
 		memberService.memberUpdate(dto);
-		session.invalidate();
-		return "redirect:/login.do";
+		//session.invalidate();
+		session.setAttribute("user", dto);
+		return "redirect:/";
 	}
 	
 
