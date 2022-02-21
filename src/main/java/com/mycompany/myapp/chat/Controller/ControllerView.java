@@ -59,15 +59,20 @@ public class ControllerView {
 		            mFile = request.getFile(uploadFileName);
 		            
 		            orgFileName = mFile.getOriginalFilename();    
-		            System.out.println(orgFileName);
+		            System.out.println("orgFileName: "+orgFileName);
+		            System.out.println("contain "+orgFileName.contains("."));
+		            
+		            String extension=orgFileName.substring(orgFileName.lastIndexOf("."));
+		            //String extension=orgFileName.split(".")[1];
 		            
 		            if(orgFileName != null && orgFileName.length() != 0) { //sysFileName 생성
 		                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMDDHHmmss-" + fileLoop);
 		                Calendar calendar = Calendar.getInstance();
 		                sysFileName = simpleDateFormat.format(calendar.getTime()); //sysFileName: 날짜-fileLoop번호
-		    
+		                System.out.println("sysFileName "+sysFileName);
+		                System.out.println("orgFileName "+orgFileName);
 		                try {
-		                    mFile.transferTo(new File(dir + File.separator + sysFileName)); // C:/Upload/file/sysFileName
+		                    mFile.transferTo(new File(dir + File.separator + sysFileName+extension)); // C:/Upload/file/sysFileName
 		                    list.add("원본파일명: " + orgFileName + ", 시스템파일명: " + sysFileName);
 		                    
 		                }catch(Exception e){

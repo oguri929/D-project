@@ -14,9 +14,6 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter{
 		// TODO Auto-generated method stub
 		
 		HttpSession session=request.getSession();
-		System.out.println("interceptor start");
-		System.out.println(session==null);
-		System.out.println("userid"+session.getAttribute("user"));
 		if(session.getAttribute("user") !=null) {
 			return true;
 		}
