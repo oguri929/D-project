@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
 
 
 import org.mindrot.jbcrypt.BCrypt;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
@@ -44,12 +44,20 @@ public class MemberController {
 	private MemberService memberService;
 	private QuizService quizService;
 	
-
-	public MemberController(MemberService memberService) {
+	@Autowired
+	public MemberController(MemberService memberService, QuizService quizService) {
+		super();
 		this.memberService = memberService;
 		this.quizService = quizService;
 	}
 
+	// 로그인
+	@RequestMapping(value="login.do", method=RequestMethod.GET)
+	public String login(MemberDTO dto) {
+		logger.info("post login");
+		
+		return "user/login";
+	}
 	
 	//
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
@@ -100,8 +108,9 @@ public class MemberController {
 	 * user에는 매퍼에 있는 쿼리문의 결과가 들어가 있다.*/ 
 }
 
-	
-	
+
+
+
 	// 로그아웃 처리
 	@RequestMapping(value="logout.do",method=RequestMethod.GET)
 	public String logout(HttpSession session) throws Exception {
