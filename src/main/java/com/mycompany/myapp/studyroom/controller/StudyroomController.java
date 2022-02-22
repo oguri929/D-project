@@ -151,10 +151,19 @@ public class StudyroomController {
 	public String registerMember(HttpServletRequest req, Model model) {
 		int memberNum = Integer.valueOf(req.getParameter("memberNum"));
 		int chatroomNum = Integer.valueOf(req.getParameter("chatroomNum"));
-		Map<String, Integer> matchInfo = new HashMap<String, Integer>();
-		matchInfo.put("memberNum", memberNum);
-		matchInfo.put("chatroomNum", chatroomNum);
-		studyroomService.addMember(matchInfo);
+		int totMember = studyroomService.countTotMember(chatroomNum);
+		StudyroomDto studyroomDto = studyroomService.readStudyroom(chatroomNum);
+		int memberLimit = studyroomDto.getMemberLimit();
+		
+		
+		if(totMember < memberLimit) {
+			Map<String, Integer> matchInfo = new HashMap<String, Integer>();
+			matchInfo.put("memberNum", memberNum);
+			matchInfo.put("chatroomNum", chatroomNum);
+			studyroomService.addMember(matchInfo);
+		}else {
+			System.out.println("정원초과");
+		}
 		
 		HttpSession session = req.getSession();
 		MemberDTO user = (MemberDTO)session.getAttribute("user");
@@ -167,6 +176,8 @@ public class StudyroomController {
 			}
 		}
 		session.setAttribute("subList", subList);
+		
+		
 		
 		return "redirect:/studyroom/read/"+chatroomNum;		
 	}

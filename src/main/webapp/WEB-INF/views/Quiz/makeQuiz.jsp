@@ -70,7 +70,7 @@ function showChoiceOption(){
 		<tr>
 			<td>과목</td><td>
 			<c:if test="${!empty chatroomList}">
-			<select id="test" name="quizList[0].SubjectNum" onChange="selectSunjectNum(this);">
+			<select id="test" name="quizList[0].sSubjectNum" onChange="selectSunjectNum(this);">
 				<c:forEach var="room" items="${chatroomList }" varStatus="status"> 
 					<option value="${room.subjectNum },${room.chatroomNum }">${room.subject},${room.roomName }</option>
 					

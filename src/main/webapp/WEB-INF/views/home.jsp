@@ -11,6 +11,7 @@
 <h1>
 	메인 게시판
 </h1>
+
 <c:if test="${!empty user}">
 	<p> ${user.id} 환영합니다
 	<br>

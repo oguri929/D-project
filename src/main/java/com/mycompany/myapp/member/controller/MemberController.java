@@ -136,29 +136,36 @@ public class MemberController {
 	
 	// 회원가입 POST
 	@RequestMapping(value="/user/register.do",method = RequestMethod.POST)
-	public String registerPOST(MemberDTO dto,RedirectAttributes redirectAttributes, HttpServletRequest req) throws Exception {
+	public String registerPOST(MemberDTO dto,RedirectAttributes redirectAttributes, HttpServletRequest req,Model model) throws Exception {
 		System.out.println("register post");
-		String h_area1 = req.getParameter("h_area1");
-		String h_area2 = req.getParameter("h_area2");
-		dto.setLocal(h_area1 + " " + h_area2);
-		String hashedPw = BCrypt.hashpw(dto.getPw(),BCrypt.gensalt());
-		dto.setPw(hashedPw);
-		//memberService.register(dto);
-		redirectAttributes.addFlashAttribute("msg","REGISTERED");
-		
-		int result = memberService.idCheck(dto.getId());
-		try {
-			if(result == 1) {
-				return "/user/login";
-			}else if(result == 0) {
-				memberService.register(dto);
+		HttpSession session=req.getSession();
+		if(session.getAttribute("idCheck")!=null) {
+			String h_area1 = req.getParameter("h_area1");
+			String h_area2 = req.getParameter("h_area2");
+			dto.setLocal(h_area1 + " " + h_area2);
+			String hashedPw = BCrypt.hashpw(dto.getPw(),BCrypt.gensalt());
+			dto.setPw(hashedPw);
+			//memberService.register(dto);
+			redirectAttributes.addFlashAttribute("msg","REGISTERED");
+			
+			int result = memberService.idCheck(dto.getId());
+			try {
+				if(result == 1) {
+					return "/user/login";
+				}else if(result == 0) {
+					memberService.register(dto);
+				}
+				// 여기에서 ~ 입력된 아이디가 존재한다면 -> 다시 회원가입 페이지로 돌아가기
+				// 존재하지 않는다면 -> register
+			} catch(Exception e) {
+				throw new RuntimeException();
 			}
-			// 여기에서 ~ 입력된 아이디가 존재한다면 -> 다시 회원가입 페이지로 돌아가기
-			// 존재하지 않는다면 -> register
-		} catch(Exception e) {
-			throw new RuntimeException();
+			return "redirect:/login.do";
+		}else {
+			model.addAttribute("msg","오류입니다 다시 진행해주세요");
+			return "/user/register";
+			
 		}
-		return "redirect:/login.do";
 	}
 	
 	// 회원정보 수정 GET
@@ -200,8 +207,10 @@ public class MemberController {
 	// ResponseBody는 스프링에서 비동기 처리를 할 때 사용하는 어노테이션이다
 	@ResponseBody
 	@RequestMapping(value="/user/idCheck.do",method=RequestMethod.POST)
-	public int postIdCheck(String id) throws Exception {
-		int result = memberService.idCheck(id);	
+	public int postIdCheck(String id,HttpSession session) throws Exception {
+		System.out.println("test");
+		int result = memberService.idCheck(id);
+		session.setAttribute("idCheck", result);
 		return result;
 	}
 	

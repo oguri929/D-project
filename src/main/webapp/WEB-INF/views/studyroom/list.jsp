@@ -79,14 +79,7 @@
 			<tr>
 				<td>${studyroomNum.count}</td>
 				<td>
-					<c:choose>
-						<c:when test="${studyroom.totMember == studyroom.memberLimit }">
-							(모집마감)${studyroom.roomName }
-						</c:when>
-						<c:otherwise>
-							<a href="/studyroom/read/${studyroom.num}">${studyroom.roomName }</a>
-						</c:otherwise>
-					</c:choose>
+					<a href="/studyroom/read/${studyroom.num}">${studyroom.roomName }</a>
 				</td>
 				<td>${studyroom.memberDto.id}</td>
 				<td>${studyroom.totMember}/${studyroom.memberLimit}</td>
