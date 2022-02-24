@@ -49,9 +49,9 @@
 	</update> -->
 	<update id="updateQuiz" parameterType="quizDto">
 		update QUIZ_INFO set
-		ROOM_NUM=#{roomNum},MAKER_NUM=#{makerNum},SUBJECT_NUM=#{subjectNum},
+		CHATROOM_NUM=#{chatroomNum},MAKER_NUM=#{makerNum},SUBJECT_NUM=#{subjectNum},
 		QUIZ_TYPE=#{quizType},QUESTION=#{question},OPTION1=#{option1},OPTION2=#{option2},OPTION3=#{option3},OPTION4=#{option4},OPTION5=#{option5},ANSWER=#{answer},
-		EXPLANATION=#{explanation},NUM_OF_QUIZ=#{numOfQuiz},NUM_OF_ANSWER=#{numOfAnswser} where NUM=#{num}
+		EXPLANATION=#{explanation},NUM_OF_QUIZ=#{numOfQuiz},NUM_OF_ANSWERS=#{numOfAnswser} where NUM=#{num}
 	</update>
 	<update id="countUpNOQ" parameterType="long">
 		update QUIZ_INFO set NUM_OF_QUIZ=NUM_OF_QUIZ+1 where NUM=#{num}

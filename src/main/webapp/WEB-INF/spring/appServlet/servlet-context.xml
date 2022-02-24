@@ -32,6 +32,9 @@
 			<exclude-mapping path="/logout.do"/>
 			<exclude-mapping path="/user/register.do"/>
 			<exclude-mapping path="/user/idCheck.do"/>
+			<exclude-mapping path="/user/GoFindId.do"/>
+			<exclude-mapping path="/user/FindId.do"/>
+			<exclude-mapping path="/user/findpw.do"/>
 			<beans:bean class="com.mycompany.myapp.utils.LoginCheckInterceptor"/>
 		</interceptor>
 	</interceptors>

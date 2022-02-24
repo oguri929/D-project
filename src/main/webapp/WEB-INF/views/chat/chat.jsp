@@ -5,13 +5,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	
-	<title>채팅 프로그램</title>
-	
+	<!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
-	
+	<title>chat</title>
+	<style type="text/css">
+		.quiz_btn{
+			position:absolute;
+			top:30px;
+			left:40px;
+		}
+	</style>
 	<script type="text/javascript">
 		var webSocket = {
 			init: function(param) {
@@ -53,10 +62,13 @@
 	</script>
 </head>
 <body>
+	<div class="quiz_btn">
 	<form action="<c:url value='/solveQuiz'/>">
 		<input type="hidden" name="roomNum" value="${roomNum }"/>
-		<input type="submit" value="퀴즈 풀기">
+		<input type="submit" class="btn btn-primary" value="퀴즈 풀기">
 	</form>
+	</div>
+	
 	<div style="text-align:right; margin-right:170px">
 		<a href="<c:url value="/studyroom/list"/>">채팅방 나가기</a>
 	</div>
@@ -67,7 +79,7 @@
 	
 	<div style="margin-left:160px;">
 		 <input type="text" id="message" size="150" onkeypress="if(event.keyCode==13){webSocket.sendChat();}" />
-		 <input type="button" id="btnSend" value="채팅 전송" onclick="webSocket.sendChat();" />
+		 <input type="button" class="btn-primary me-md-2" id="btnSend" value="채팅 전송" onclick="webSocket.sendChat();" />
 	</div>
 </body>
 </html>

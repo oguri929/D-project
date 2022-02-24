@@ -5,14 +5,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<title>detailStudyroom</title>
-	<style>
+	<!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<title>readStudyroom</title>
+	<style type="text/css">
+		body {
+		  padding-top: 5rem;
+		  padding-bottom: 3rem;
+		  color: #5a5a5a;
+		}
+		
+		.table{
+		  width: 100%;
+		  max-width: 1000px;
+		  padding: 15px;
+		  margin: 10px;
+		}
+		
+		.flex-item{
+           width: 700px;
+           text-align: center;
+        }
+        
+        .flex-container{
+           display: inline-flex;
+        }
+      
+        .flex-container.column{
+        	flex-direction: column;
+        }
+		
 	.map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
 	.map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
-	.map_wrap {position:relative;width:100%;height:500px;}
-	#menu_wrap {position:absolute;top:0;left:0;bottom:0;width:250px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
+	.map_wrap {position:absolute;top:100px;left:800px;width:90%;height:500px;}
+	#menu_wrap {position:absolute;top:50px;left:0;bottom:0;width:250px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
 	.bg_white {background:#fff;}
 	#menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
 	#menu_wrap .option{text-align: center;}
@@ -71,97 +102,149 @@ $(document).ready(function(){
 })
 </script>
 <body>
+<header>
+<!-- Navigation-->
+	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+	    <div class="container px-5">
+	        <a class="navbar-brand">StudyMatch</a>
+	        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+	        <div class="collapse navbar-collapse" id="navbarResponsive">
+	            <ul class="navbar-nav ms-auto">
+	                <li class="nav-item">
+	      <a class="nav-link active" aria-current="page" href="<c:url value='/'/>">홈</a>
+	    </li>
+	    <li class="nav-item">
+	      <a class="nav-link" href="<c:url value='/studyroom/list'/>">스터디</a>
+	    </li>
+	    <li class="nav-item">
+	      <a class="nav-link" href="<c:url value='/listQuiz'/> ">퀴즈</a>
+	    </li>
+	    <li class="nav-item">
+	      <a class="nav-link" href="<c:url value='/mypage.do'/>">마이룸</a>
+	    </li>
+	    <c:choose>
+	    	<c:when test="${!empty user }">
+	    		<li class="nav-item">
+	    			${user.id}
+	    		</li>
+	     	<li class="nav-item">
+	        <a class="nav-link" href="<c:url value='/logout.do'/>">로그아웃</a>
+	      </li>
+	    	</c:when>
+	    	<c:otherwise>
+	    		<li class="nav-item">
+	        <a class="nav-link" href="<c:url value='/login.do'/>">로그인</a>
+	      </li>
+	    	</c:otherwise>
+	    </c:choose>
+	            </ul>
+	        </div>
+	    </div>
+	</nav>
+</header>
 	<form name="readForm" method="post">
 		<input type="hidden" name="num" value="${studyroomDto.num }"/>
 	</form>
-		<h2>스터디룸 정보</h2>
-		<table border="1">
+	
+	<h2 class="text-center">스터디 찾기</h2>
+	<div class="flex-container column">
+		<div class="flex-item">
+		<table class="table table-bordered">
 		<tr>
-			<th>방번호</th>
+			<th scope="row" class="w-25 p-3">방번호</th>
 			<td colspan="4">${studyroomDto.num }</td>
 		</tr>
 		<tr>
-			<th>스터디이름</th>
+			<th scope="row" class="w-25 p-3">스터디이름</th>
 			<td colspan="4">${studyroomDto.roomName }</td>
 		</tr>
 		<tr>
-			<th>현재인원/제한인원</th>
+			<th scope="row" class="w-25 p-3">현재인원/제한인원</th>
 			<td>${studyroomDto.totMember}/${studyroomDto.memberLimit }</td>
-			<th>조회수</th>
+			<th scope="row" class="w-25 p-3">조회수</th>
 			<td>${studyroomDto.cnt }</td>
 		</tr>
 		<tr>
-			<th>방장</th>
+			<th scope="row" class="w-25 p-3">방장</th>
 			<td colspan="4">${studyroomDto.memberDto.id }</td>
 		</tr>
 		<tr>
-			<th>지역</th>
+			<th scope="row" class="w-25 p-3">지역</th>
 			<td colspan="4">${studyroomDto.local }</td>
 		</tr>
 		<tr>
-			<th>스터디정보</th>
+			<th scope="row" class="w-25 p-3">스터디정보</th>
 			<td colspan="4">${studyroomDto.roomDiscript }</td>
 		</tr>
 		<tr>
-			<th>과목정보</th>
+			<th scope="row" class="w-25 p-3">과목정보</th>
 			<td colspan="4">${studyroomDto.subjectDto.subject }</td>
 		</tr>
 		<tr>
-			<th>등록일</th>
+			<th scope="row" class="w-25 p-3">등록일</th>
 			<td colspan="4">${studyroomDto.regdate }</td>
 		</tr>
-		<tr>
+		<tr class="col text-center">
 			<td colspan="4">
-				<c:if test="${sessionScope.user.num == studyroomDto.captain }">
-					<button type="submit" class="edit_btn">수정</button>
-					<button type="submit" class="delete_btn">삭제</button>
-				</c:if>
-					<button type="submit" class="list_btn">목록</button>
+			<c:if test="${sessionScope.user.num == studyroomDto.captain }">
+			<button type="submit" class="edit_btn btn-primary me-md-2">수정</button>
+			<button type="submit" class="delete_btn btn-primary me-md-2">삭제</button>
+			</c:if>
+			<button type="submit" class="list_btn btn-primary me-md-2">목록</button>
+			</td>
+		</tr>
+		<tr class="col text-center">
+			<td colspan="4">		
+				<c:choose>
+					<c:when test="${sessionScope.user.num == studyroomDto.captain }">
+						<input type="button" value="채팅방 들어가기" class="btn-primary me-md-2" onclick="location.href='<c:url value="/chat?chatroomNum=${studyroomDto.num }"/>'">
+					</c:when>
+					<c:when test="${isMember }">				
+						<input type="button" value="스터디탈퇴" class="btn-primary me-md-2" onclick="location.href='<c:url value="/studyroom/leave?memberNum=${sessionScope.user.num }&chatroomNum=${studyroomDto.num }"/>'">				
+						<input type="button" value="채팅방 들어가기" class="btn-primary me-md-2" onclick="location.href='<c:url value="/chat?chatroomNum=${studyroomDto.num }"/>'">
+					</c:when>
+					<c:otherwise>
+						<input type="button" value="스터디가입" class="btn-primary me-md-2" onclick="location.href='<c:url value="/studyroom/register?memberNum=${sessionScope.user.num }&chatroomNum=${studyroomDto.num }"/>'">													
+					</c:otherwise>
+				</c:choose>	
 			</td>
 		</tr>
 	</table>
-		<c:if test="${sessionScope.user.num != studyroomDto.captain }">
-			<c:choose>
-				<c:when test="${isMember }">				
-					<input type="button" value="스터디탈퇴" onclick="location.href='<c:url value="/studyroom/leave?memberNum=${sessionScope.user.num }&chatroomNum=${studyroomDto.num }"/>'">				
-					<input type="button" value="채팅방 들어가기" onclick="location.href='<c:url value="/chat?chatroomNum=${studyroomDto.num }"/>'">
-				</c:when>
-				<c:otherwise>
-					<input type="button" value="스터디가입" onclick="location.href='<c:url value="/studyroom/register?memberNum=${sessionScope.user.num }&chatroomNum=${studyroomDto.num }"/>'">													
-				</c:otherwise>
-			</c:choose>	
-		</c:if>
-	<br></br>
+	</div>
+
 	
-	현재 가입된 회원 목록
-	<table border="1">
-		<c:forEach var="mem" items="${memberList }">
+	<div class="flex-item">
+		<table class="table table-bordered">
 			<tr>
-				<td>${mem.id }</td>
+				<th scope="col">멤버 목록</th>
 			</tr>
-		</c:forEach>
-	</table>
-	<br></br>
+			<c:forEach var="mem" items="${memberList }">
+				<tr>
+					<td>${mem.id }</td>
+				</tr>
+			</c:forEach>
+		</table>
+	</div>
+	</div>
 
-모임 장소 찾기<br>
-*동네+스터디카페로 검색해주세요!
-<div class="map_wrap">
-  	<div id="map" style="width:50%;height:100%;position:relative;overflow:hidden;"></div>
+	<div class="map_wrap">
+	  	<div id="map" style="top:30px;width:50%;height:100%;position:relative;overflow:hidden;"></div>
+	
+	    <div id="menu_wrap" class="bg_white">
+	        <div class="option">
+	            <div>
+	                <form onsubmit="searchPlaces(); return false;">
+	                    키워드 : <input type="text" value="신림 스터디카페" id="keyword" size="15"> 
+	                    <button type="submit">검색하기</button> 
+	                </form>
+	            </div>
+	        </div>
+	        <hr>
+	        <ul id="placesList"></ul>
+	        <div id="pagination"></div>
+	    </div>
+	</div>
 
-    <div id="menu_wrap" class="bg_white">
-        <div class="option">
-            <div>
-                <form onsubmit="searchPlaces(); return false;">
-                    키워드 : <input type="text" value="신림 스터디카페" id="keyword" size="15"> 
-                    <button type="submit">검색하기</button> 
-                </form>
-            </div>
-        </div>
-        <hr>
-        <ul id="placesList"></ul>
-        <div id="pagination"></div>
-    </div>
-</div>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9b996c615ec305825fb7b55b32b69ec8&libraries=services"></script>
 <script>

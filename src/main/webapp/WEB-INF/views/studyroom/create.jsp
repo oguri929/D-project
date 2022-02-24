@@ -4,30 +4,91 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<title>createStudyroom</title>
+	<!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<title>createStudyroom</title>
+	<style type="text/css">
+		body {
+		  padding-top: 5rem;
+		  padding-bottom: 3rem;
+		  color: #5a5a5a;
+		}
+		
+		.table{
+		  width: 100%;
+		  max-width: 1000px;
+		  padding: 15px;
+		  margin: auto;
+		}
+	</style>
 </head>
 <body>
+<header>
+<!-- Navigation-->
+	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+	    <div class="container px-5">
+	        <a class="navbar-brand">StudyMatch</a>
+	        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+	        <div class="collapse navbar-collapse" id="navbarResponsive">
+	            <ul class="navbar-nav ms-auto">
+	                <li class="nav-item">
+	      <a class="nav-link active" aria-current="page" href="<c:url value='/'/>">홈</a>
+	    </li>
+	    <li class="nav-item">
+	      <a class="nav-link" href="<c:url value='/studyroom/list'/>">스터디</a>
+	    </li>
+	    <li class="nav-item">
+	      <a class="nav-link" href="<c:url value='/listQuiz'/> ">퀴즈</a>
+	    </li>
+	    <li class="nav-item">
+	      <a class="nav-link" href="<c:url value='/mypage.do'/>">마이룸</a>
+	    </li>
+	    <c:choose>
+	    	<c:when test="${!empty user }">
+	    		<li class="nav-item">
+	    			${user.id}
+	    		</li>
+	     	<li class="nav-item">
+	        <a class="nav-link" href="<c:url value='/logout.do'/>">로그아웃</a>
+	      </li>
+	    	</c:when>
+	    	<c:otherwise>
+	    		<li class="nav-item">
+	        <a class="nav-link" href="<c:url value='/login.do'/>">로그인</a>
+	      </li>
+	    	</c:otherwise>
+	    </c:choose>
+	            </ul>
+	        </div>
+	    </div>
+	</nav>
+</header>
+	<h2 class="text-center">스터디 만들기</h2>
+	
 	<form method="post" action="<c:url value="/studyroom/create"/>">
-		<table border="1">
+		<table class="table table-bordered">
 		<tr>
-			<th>스터디이름</th>
+			<th scope="row" class="w-25 p-3">스터디이름</th>
 			<td colspan="4"><input type="text" name="roomName"></td>
 		</tr>
 		<tr>
-			<th>제한인원</th>
+			<th scope="row" class="w-25 p-3">제한인원</th>
 			<td><input type="number" name="memberLimit"></td>
-			<th>채팅방 비밀번호</th>
+			<th scope="row" class="w-25 p-3">채팅방 비밀번호</th>
 			<td><input type="password" name="pw"></td>
 		</tr>
 		<tr>
-			<th>방장</th>
+			<th scope="row" class="w-25 p-3">방장</th>
 			<td colspan="4">${sessionScope.user.id}</td>
 							<input type="hidden" name="captain" value="${sessionScope.user.num }" />
 		</tr>
 		<tr>
-			<th>지역</th>
+			<th scope="row" class="w-25 p-3">지역</th>
 			<td colspan="4">
 				<select name="h_area1" id="select1">
 					  <option>-선택-</option>
@@ -54,21 +115,21 @@
 			</td>
 		</tr>
 		<tr>
-			<th>스터디정보</th>
-			<td colspan="4"><textarea name="roomDiscript" cols="100" rows="20"></textarea></td>
+			<th scope="row" class="w-25 p-3">스터디정보</th>
+			<td colspan="4"><textarea name="roomDiscript" cols="100" rows="15"></textarea></td>
 		</tr>
 		<tr>
-			<th>과목정보</th>
+			<th scope="row" class="w-25 p-3">과목정보</th>
 			<td colspan="3">
 				<c:forEach var="sub" items="${subjectList}">
 					<input type="radio" name="subjectNum" value="${sub.subjectNum}">${sub.subject}
 				</c:forEach>
 			</td>
 		</tr>
-		<tr>
+		<tr class="col text-center">
 			<td colspan="4">
-				<input type="submit" value="등록" />
-				<input type="button" value="목록보기" onClick="location.href='<c:url value="/studyroom/list"/>'">
+				<input type="submit" value="등록" class="btn-primary me-md-2" />
+				<input type="button" value="목록보기" class="btn-primary me-md-2" onClick="location.href='<c:url value="/studyroom/list"/>'">
 			</td>
 		</tr>
 		</table>

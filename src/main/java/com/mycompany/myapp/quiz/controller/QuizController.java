@@ -163,9 +163,10 @@ public class QuizController {
 		return "Quiz/updateQuizDetail";
 	}
 	@RequestMapping(value="/updateQuizDetail/num/{num}",method=RequestMethod.POST)
-	public String postUpdateQuizDetail(QuizDto quizDto,Model model,@PathVariable("num") long num) {
+	public String postUpdateQuizDetail(QuizDto quizDto,Model model,@PathVariable("num") long num,HttpSession session) {
+		quizDto.setMakerNum(((MemberDTO)session.getAttribute("user")).getNum());
 		ser.updateQuiz(quizDto);
-		return "redirect:/updateQuiz";
+		return "redirect:/listQuiz";
 	}
 	@RequestMapping(value="/deleteQuiz/num/{num}",method=RequestMethod.GET)
 	public String getDeleteQuiz(QuizDto quizDto,Model model,@PathVariable("num") long num) {

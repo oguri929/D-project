@@ -5,88 +5,120 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<title>회원정보 수정하기</title>
+	<title>updateMember</title>
+	<style type="text/css">
+		body {
+		  padding-top: 5rem;
+		  padding-bottom: 3rem;
+		  color: #5a5a5a;
+		}
+		
+		.table {
+	    display: table;
+	    width: 100%;
+		max-width: 1000px;
+		padding: 15px;
+		margin: auto;
+		}
+	</style>
 </head>
 <body>
-<h1>
-	회원정보 수정
-</h1>
-
-
-
+	<h2 class="text-center">회원정보 수정</h2>
 <form action="${contextPath}/user/update.do" method="post">
-
-	<p>
-		<label for="id">아이디 : ${user.id }</label>
-		<input type="hidden" name="id" value="${user.id }">
-	</P>
-	<p>
-		<label for="name">이름</label>
-		<input type="text" id="name" name="name" value="${user.name }" />
-	</P>
-	<p>
-		<label for="pw">*비밀번호</label>
-		<input type="password" id="pw" name="pw"/>
-	</P>
-	<p>
-		<label for="nickname">닉네임</label>
-		<input type="text" id="nickname" name="nickname" value="${user.nickname }"/>
-	</P>	
-	<p>
-		<label for="gender">성별</label>
-		<c:choose>
-		<c:when test="${user.gender eq 'female' }">
-		<input type="radio" name="gender" value="female" checked />여성
-		<input type="radio" name="gender" value="male"/>남성	
-		</c:when>
-		<c:otherwise>
-		<input type="radio" name="gender" value="female"/>여성
-		<input type="radio" name="gender" value="male" checked />남성	
-		</c:otherwise>
-		</c:choose>
-		
-	</p>
-	<p>
-		<label for="local">*지역</label>
-		<select name="h_area1" id="select1">
-					  <option>-선택-</option>
-					  <option>서울</option>
-					  <option>부산</option>
-					  <option>대구</option>
-					  <option>인천</option>
-					  <option>광주</option>
-					  <option>대전</option>
-					  <option>울산</option>
-					  <option>강원</option>
-					  <option>경기</option>
-					  <option>경남</option>
-					  <option>경북</option>
-					  <option >전남</option>
-					  <option>전북</option>
-					  <option>제주</option>
-					  <option>충남</option>
-					  <option>충북</option>
-				</select>
-				<select name="h_area2" id="select2">
-					  <option>-선택-</option>
-				</select>
-	</P>	
-	<p>
-		<label for="birth">생년월일</label>
-		<input type="text" id="birth" name="birth" value="${user.birth }" />
-	</P>
-	<p>
-		<label for="email">이메일</label>
-		<input type="text" id="email" name="email" value="${user.email }"/>
-	</P>
-		
-	<button type="submit">수정하기</button>
-	<p><a href="${contextPath}/mypage.do">취소</a></p>
-	
-	
-
-	
+<table class="table table-bordered">
+	<tr>
+		<th scope="row" class="w-25 p-3">아이디</th>
+		<td>
+			<input type="text" id="id" name="id" value="${user.id }"/>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row" class="w-25 p-3">*비밀번호</th>
+		<td>
+			<input type="password" id="pw" name="pw"/>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row" class="w-25 p-3">이름</th>
+		<td>
+			<input type="text" id="name" name="name" value="${user.name }"/>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row" class="w-25 p-3">닉네임</th>
+		<td>
+			<input type="text" id="nickname" name="nickname" value="${user.nickname }"/>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row" class="w-25 p-3">성별</th>
+		<td>
+			<c:choose>
+				<c:when test="${user.gender eq 'female' }">
+					<input type="radio" name="gender" value="female" checked />여성
+					<input type="radio" name="gender" value="male"/>남성	
+				</c:when>
+				<c:otherwise>
+					<input type="radio" name="gender" value="female"/>여성
+					<input type="radio" name="gender" value="male" checked />남성	
+				</c:otherwise>
+			</c:choose>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row" class="w-25 p-3">지역</th>
+		<td>
+			<label for="local">*지역</label>
+			<select name="h_area1" id="select1">
+				  <option>-선택-</option>
+				  <option>서울</option>
+				  <option>부산</option>
+				  <option>대구</option>
+				  <option>인천</option>
+				  <option>광주</option>
+				  <option>대전</option>
+				  <option>울산</option>
+				  <option>강원</option>
+				  <option>경기</option>
+				  <option>경남</option>
+				  <option>경북</option>
+				  <option >전남</option>
+				  <option>전북</option>
+				  <option>제주</option>
+				  <option>충남</option>
+				  <option>충북</option>
+			</select>
+			<select name="h_area2" id="select2">
+				  <option>-선택-</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row" class="w-25 p-3">생일</th>
+		<td>
+			<input type="text" id="birth" name="birth" value="${user.birth }"/>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row" class="w-25 p-3">이메일</th>
+		<td>
+			<input type="text" id="email" name="email" value="${user.email }"/>
+		</td>
+	</tr>
+	<tr class="col text-center">
+		<td colspan="2">
+			<button type="submit" id="submit" class="btn-primary me-md-2">수정</button>
+			<button type="button" onclick="location.href='<c:url value="/mypage.do" />'" class="btn-primary me-md-2">이전</button>
+		</td>	
+	</tr>
+	</table>
 </form>
 <script type="text/javascript">
  	$(function() {
