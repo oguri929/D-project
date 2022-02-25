@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="chat">
+<select id="selectChatList" resultType="chat">
+ <![CDATA[  
+select * from 
+(select
+ROWNUM,c.*,m.nickname
+from
+chatting c
+join member m on (m.num=c.sender) 
+where sr_no=#{roomNo} and rownum <=10  order by no desc)
+order by no
+    ]]> 
+ </select>
+ <select id="selectFirstChatList" resultType="chat" parameterType="int">
+<![CDATA[  
+select * from 
+(select
+ROWNUM,c.*,m.nickname
+from
+chatting c
+join member m on (m.num=c.sender) 
+where sr_no=#{roomNo} and rownum <=10  order by no desc)
+order by no
+      ]]> 
+ </select>
+  
+ <insert id="insertChat">
+ 	insert into
+ 		chatting
+ 		(NO,SENDER,SR_NO,CHAT_CONTENT,SEND_DATE,SYS_NAME,DATE_TYPE)
+ 	values(
+ 		CHATTING_SEQ.nextval,
+ 		#{sender},
+ 		#{srNo},
+ 		#{chatContent},
+ 		SYSDATE,
+ 		#{sysName, jdbcType=VARCHAR},
+ 		#{dateType}
+ 	)
+ </insert>
+	
+</mapper>

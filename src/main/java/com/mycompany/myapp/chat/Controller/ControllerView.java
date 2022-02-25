@@ -21,13 +21,14 @@ public class ControllerView {
 		@RequestMapping(value = "/chat", method = RequestMethod.GET)
 		public String chat(Model model,HttpServletRequest req) 
 		throws Exception {
-			System.out.println(req.getParameter("chatroomNum"));
+			
 			model.addAttribute("roomNum",req.getParameter("chatroomNum"));
 			return "/chat/chat";
 		}
-		
+		/*
 		@RequestMapping(value = "/file", method = RequestMethod.GET)
 		public String fileUpload() {
+			
 			return "/chat/file";
 		}
 		
@@ -82,6 +83,6 @@ public class ControllerView {
 		        }//while
 
 		        return "/chat/chat";
-		    }
+		    }*/
 
 }

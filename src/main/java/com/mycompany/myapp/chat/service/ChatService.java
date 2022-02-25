@@ -1,7 +1,13 @@
 package com.mycompany.myapp.chat.service;
 
-import com.mycompany.myapp.chat.domain.ChatVO;
+import java.util.List;
+import java.util.Map;
+
+import com.mycompany.myapp.chat.domain.Chat;
 
 public interface ChatService {
-	public abstract void insert(ChatVO chatVO);
+	public List<Chat> selectChatList(Map<String,Object> map);
+	public List<Chat> selectFirtChatList(int roomNo);
+	public int InsertChat(Chat chat);
+	public Chat selectChat(Chat chat);
 }

@@ -61,8 +61,8 @@ public class StudyroomController {
 	}
 	
 	@RequestMapping(value =  "/studyroom/list", method = RequestMethod.GET)
-	public String listStudyroom(Model model, SearchCriteria scri) {
-		
+	public String listStudyroom(Model model, SearchCriteria scri,HttpServletRequest req) {
+		System.out.println("contextpath: "+req.getSession().getServletContext().getRealPath("/"));
 		List<StudyroomDto> studyroomList = studyroomService.listStudyroom(scri);
 		
 		List<SubjectDto> subjectList =  studyroomService.getSubjectList();

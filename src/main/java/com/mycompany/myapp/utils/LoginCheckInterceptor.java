@@ -12,14 +12,14 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		// TODO Auto-generated method stub
-		
-		HttpSession session=request.getSession();
-		if(session.getAttribute("user") !=null) {
-			return true;
-		}
-		response.sendRedirect(request.getContextPath()+"/login.do");
-		return false;
+//		
+//		HttpSession session=request.getSession();
+//		if(session.getAttribute("user") !=null) {
+//			return true;
+//		}
+//		response.sendRedirect(request.getContextPath()+"/login.do");
+//		return false;
+//	}
+	return true;
 	}
-	
-	
 }
