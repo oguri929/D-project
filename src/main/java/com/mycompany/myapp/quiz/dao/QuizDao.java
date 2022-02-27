@@ -91,6 +91,17 @@ public class QuizDao implements QuizDaoInterface {
 		// TODO Auto-generated method stub
 		return sqlSessiontemplate.selectList("selectAllQuiz",qscri);
 	}
+	@Override
+	public int deleteQuizBySr_no(int chatroomNum) {
+		// TODO Auto-generated method stub
+		return sqlSessiontemplate.delete("deleteQuizBySr_no", chatroomNum);
+	}
+	@Override
+	public int deleteQuizByMaker(int makerNum) {
+		// TODO Auto-generated method stub
+		return sqlSessiontemplate.delete("deleteQuizByMaker", makerNum);
+	}
+	
 
 
 }

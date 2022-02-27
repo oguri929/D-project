@@ -97,4 +97,12 @@
 			<if test="searchType == 'tc'.toString()">AND (ROOMNAME LIKE '%' || #{keyword} || '%') or (ROOMDISCRIPT LIKE '%' || #{keyword} || '%')</if>
 		</if>
 	</sql>
+	
+	<delete id="deleteQuizBySr_no" parameterType="int">
+		DELETE FROM QUIZ_INFO WHERE CHATROOM_NUM=#{chatroomNum}
+	</delete>
+	
+	<delete id="deleteQuizByMaker" parameterType="int">
+		DELETE FROM QUIZ_INFO WHERE MAKER_NUM=#{makerNum}
+	</delete>
 </mapper>

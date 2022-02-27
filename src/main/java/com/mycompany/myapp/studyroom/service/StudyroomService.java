@@ -41,4 +41,12 @@ public interface StudyroomService {
 	public abstract int countTotMember(int chatroomNum);
 	//스터디룸에 멤버 있는지 확인
 	public abstract boolean isMember(Map<String, Integer> matchInfo);
+	//방장으로 스터디룸 조회
+	public abstract List<Integer> selectStudyroomByCaptain(int captain);
+	//스터디룸의 모든 멤버 삭제
+	public abstract int deleteAllMember(int chatroomNum);
+	//멤버번호로 매치테이블에서 조회
+	public abstract List<Integer> selectMemberFromAllMatch(int memberNum);
+	//멤버번호로 매치테이블에서 삭제
+	public abstract int deleteMemberFromAllMatch(int memberNum);
 }

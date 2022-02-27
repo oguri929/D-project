@@ -25,6 +25,8 @@ public interface QuizDaoInterface {
 	public List<ChatRoomInfoOfMember> selectAllChatroomOfMember(long num);
 	public abstract int selectTotQuiz(QuizSearchCriteria qscri);
 	public abstract List<QuizDtoForList> selectAllQuiz(QuizSearchCriteria qscri); 
+	public int deleteQuizBySr_no(int chatroomNum);
+	public int deleteQuizByMaker(int makerNum);
 	
 	
 }

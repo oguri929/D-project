@@ -24,6 +24,7 @@ public class HandlerChat extends TextWebSocketHandler{
 		
 		// 채팅방에 접속한 사용자 세션을 리스트에 저장
 		sessionList.add(session);
+		System.out.println("after "+session.getId());
 		Map<String,Object> sessionVal=session.getAttributes();
 		sessionMap.put(session, (MemberDTO)sessionVal.get("user"));
 		String userId=(String)(sessionMap.get(session)).getNickname();
@@ -40,6 +41,7 @@ public class HandlerChat extends TextWebSocketHandler{
 		// 모든 세션에 채팅 전달
 		for (int i = 0; i < sessionList.size(); i++) {
 			WebSocketSession s = sessionList.get(i);
+			System.out.println(i+": "+s.getId());
 			s.sendMessage(new TextMessage(userId + " : " + message.getPayload()));
 		}
 	}

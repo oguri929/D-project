@@ -83,23 +83,73 @@ $(document).ready(function(){
     var formObj = $("form[name='readForm']");
     //수정
      $(".edit_btn").on("click", function(){
-        formObj.attr("action", "/studyroom/edit");
+        formObj.attr("action", "${pageContext.request.contextPath}/studyroom/edit");
         formObj.attr("method", "get");
         formObj.submit();
     })
     
     //삭제
     $(".delete_btn").on("click", function(){
-        formObj.attr("action", "/studyroom/delete");
-        formObj.attr("method", "post");
-        formObj.submit();
+    	var chk = confirm("정말 삭제하시겠습니까?");
+    	if (chk) {
+    		formObj.attr("action", "${pageContext.request.contextPath}/board/delete");
+            formObj.attr("method", "post");
+            formObj.submit();
+		}
     })
     
     //리스트로 돌아가기
      $(".list_btn").on("click", function(){
-        location.href="/studyroom/list";
+        location.href="${pageContext.request.contextPath}/studyroom/list";
     })
+   
 })
+
+ function register(){
+			$.ajax({
+				url : "${pageContext.request.contextPath}/studyroom/register",
+				type : "post",
+				dataType : "json",
+				data : {
+					"memberNum" : $("#memberNum").val(),
+					"chatroomNum" : $("#chatroomNum").val()
+					},
+				success : function(result){
+					if(result == 1){
+						alert("스터디에 가입되었습니다!");
+						location.reload();
+					}else if(result == 0){
+						alert("스터디 정원이 초과되었습니다.");
+					}
+				},
+				error:function(request,status,error){
+			        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			    }
+			})
+		}
+		
+function leave(){
+	$.ajax({
+		url : "${pageContext.request.contextPath}/studyroom/leave",
+		type : "post",
+		dataType : "json",
+		data : {
+			"memberNum" : $("#memberNum").val(),
+			"chatroomNum" : $("#chatroomNum").val()
+			},
+		success : function(result){
+			if(result == 1){
+				alert("스터디를 탈퇴하였습니다.");
+				location.reload();
+			}else{
+				alert("스터디 탈퇴과정에서 오류가 발생하였습니다.");
+			}
+		},
+		error:function(request,status,error){
+	        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	    }
+	})
+}
 </script>
 <body>
 <header>
@@ -143,7 +193,8 @@ $(document).ready(function(){
 	</nav>
 </header>
 	<form name="readForm" method="post">
-		<input type="hidden" name="num" value="${studyroomDto.num }"/>
+		<input type="hidden" name="memberNum" id="memberNum" value="${sessionScope.user.num }">
+		<input type="hidden" name="num" id="chatroomNum" value="${studyroomDto.num }"/>
 	</form>
 	
 	<h2 class="text-center">스터디 찾기</h2>
@@ -197,14 +248,14 @@ $(document).ready(function(){
 			<td colspan="4">		
 				<c:choose>
 					<c:when test="${sessionScope.user.num == studyroomDto.captain }">
-						<input type="button" value="채팅방 들어가기" class="btn-primary me-md-2" onclick="location.href='<c:url value="/chat?chatroomNum=${studyroomDto.num }"/>'">
+						<input type="button" value="채팅방 들어가기" class="btn-primary me-md-2" onclick="location.href='<c:url value="/enter/chat.do?roomNo=${studyroomDto.num }"/>'">
 					</c:when>
 					<c:when test="${isMember }">				
-						<input type="button" value="스터디탈퇴" class="btn-primary me-md-2" onclick="location.href='<c:url value="/studyroom/leave?memberNum=${sessionScope.user.num }&chatroomNum=${studyroomDto.num }"/>'">				
-						<input type="button" value="채팅방 들어가기" class="btn-primary me-md-2" onclick="location.href='<c:url value="/chat?chatroomNum=${studyroomDto.num }"/>'">
+						<input type="button" value="스터디탈퇴" class="btn-primary me-md-2" onclick="leave();">				
+						<input type="button" value="채팅방 들어가기" class="btn-primary me-md-2" onclick="location.href='<c:url value="/enter/chat.do?roomNo=${studyroomDto.num }"/>'">
 					</c:when>
 					<c:otherwise>
-						<input type="button" value="스터디가입" class="btn-primary me-md-2" onclick="location.href='<c:url value="/studyroom/register?memberNum=${sessionScope.user.num }&chatroomNum=${studyroomDto.num }"/>'">													
+						<input type="button" value="스터디가입" class="btn-primary me-md-2" onclick="register();">									
 					</c:otherwise>
 				</c:choose>	
 			</td>

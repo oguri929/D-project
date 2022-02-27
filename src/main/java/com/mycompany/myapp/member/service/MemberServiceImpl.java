@@ -159,6 +159,11 @@ public class MemberServiceImpl implements MemberService {
 		}
 		
 	}
+
+	@Override
+	public int deleteMember(String id) throws Exception {
+		return memberDao.deleteMember(id);
+	}
 		
 	
 	

@@ -155,4 +155,16 @@
 		</if>
 	</sql>
 	
+	<select id="selectStudyroomByCaptain" parameterType="int" resultType="int">
+		SELECT NUM FROM STUDYROOM WHERE CAPTAIN = #{captain}
+	</select>
+	
+	<select id="selectMemberFromAllMatch" parameterType="int" resultType="int">
+		SELECT CHATROOM_NUM FROM MATCHTABLE WHERE MEMBER_NUM=#{memberNum}
+	</select>
+	
+	<delete id="deleteMemberFromAllMatch" parameterType="int">
+		DELETE FROM MATCHTABLE WHERE MEMBER_NUM=#{memberNum} 
+	</delete>
+	
 </mapper>

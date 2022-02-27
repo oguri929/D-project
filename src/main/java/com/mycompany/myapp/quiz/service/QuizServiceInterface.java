@@ -25,5 +25,7 @@ public interface QuizServiceInterface {
 	public List<ChatRoomInfoOfMember> getChatroomListofMember(long memberNum);
 	public abstract int countTotQuiz(QuizSearchCriteria qscri);
 	public abstract List<QuizDtoForList> getQuizListforLit(QuizSearchCriteria qscri);
+	public int deleteQuizBySr_no(int chatroomNum);
+	public int deleteQuizByMaker(int makerNum);
 }
 	

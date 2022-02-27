@@ -144,7 +144,7 @@
 			<tr>
 				<th scope="row">${studyroomNum.count}</th>
 				<td>
-					<a href="/studyroom/read/${studyroom.num}">${studyroom.roomName }</a>
+					<a href="<c:url value="/studyroom/read/${studyroom.num}" />">${studyroom.roomName }</a>
 				</td>
 				<td>${studyroom.memberDto.id}</td>
 				<td>${studyroom.totMember}/${studyroom.memberLimit}</td>

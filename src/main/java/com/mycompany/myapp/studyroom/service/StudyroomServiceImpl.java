@@ -79,7 +79,7 @@ public class StudyroomServiceImpl implements StudyroomService {
 	@Override
 	public void addMember(Map<String, Integer> matchInfo) {
 		boolean isMember = studyroomDao.isMember(matchInfo);
-		
+
 		if(!isMember) {			
 			studyroomDao.insertMember(matchInfo);
 		}
@@ -111,6 +111,31 @@ public class StudyroomServiceImpl implements StudyroomService {
 	public boolean isMember(Map<String, Integer> matchInfo) {
 		return studyroomDao.isMember(matchInfo);
 	}
+
+	@Override
+	public List<Integer> selectStudyroomByCaptain(int captain) {
+		return studyroomDao.selectStudyroomByCaptain(captain);
+	}
+
+	@Override
+	public int deleteAllMember(int chatroomNum) {
+		return studyroomDao.deleteAllMember(chatroomNum);
+	}
+
+	@Override
+	public List<Integer> selectMemberFromAllMatch(int memberNum) {
+		return studyroomDao.selectMemberFromAllMatch(memberNum);
+	}
+
+	@Override
+	public int deleteMemberFromAllMatch(int memberNum) {
+		return studyroomDao.deleteMemberFromAllMatch(memberNum);
+	}
+	
+	
+	
+	
+	
 	
 	
 

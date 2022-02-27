@@ -28,7 +28,7 @@
 		$('.ifr').attr("src","${contextPath}/user/update.do");
 	}
 	function func2(){
-		$('.ifr').attr("src","${contextPath}/user/update.do");
+		$('.ifr').attr("src","${contextPath}/user/deleteMember");
 	}
 	function func3(){
 		$('.ifr').attr("src","${contextPath}/user/getStudyrooms");		

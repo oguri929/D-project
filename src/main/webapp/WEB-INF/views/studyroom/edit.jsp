@@ -32,7 +32,7 @@
 		
 		$(".list_btn").on("click", function(){
 			event.preventDefault();
-			location.href = "/studyroom/list";
+			location.href = "${pageContext.request.contextPath}/studyroom/list";
 		})
 	})
 </script>

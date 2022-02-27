@@ -35,16 +35,27 @@
 			<exclude-mapping path="/user/GoFindId.do"/>
 			<exclude-mapping path="/user/FindId.do"/>
 			<exclude-mapping path="/user/findpw.do"/>
+			<exclude-mapping path="/app/**"/><!-- 추가 -->
+			<exclude-mapping path="/endpoint/**"/><!-- 추가 -->
+			<exclude-mapping path="/subscribe/**"/><!-- 추가 -->
 			<beans:bean class="com.mycompany.myapp.utils.LoginCheckInterceptor"/>
 		</interceptor>
 	</interceptors>
-	<websocket:handlers>
+	
+	 <!-- #14.1 jsonView빈 등록 및 BeanNameViewResolber 등록 -->
+	<beans:bean id="jsonView" class="net.sf.json.spring.web.servlet.view.JsonView"/>
+	<beans:bean id="viewResolver"
+				class="org.springframework.web.servlet.view.BeanNameViewResolver">
+			<beans:property name="order" value="1"/>
+	</beans:bean>
+	
+	<!-- <websocket:handlers>
 		<websocket:mapping handler="handlerChat" path="/chat"/>
 		<websocket:handshake-interceptors>
 			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
 		</websocket:handshake-interceptors>
 		<websocket:sockjs websocket-enabled="true"/>
-	</websocket:handlers>
+	</websocket:handlers> -->
 	
 	<beans:bean id="boardController" class="com.mycompany.myapp.board.controller.BoardController">
 		<beans:constructor-arg ref="boardService" />	

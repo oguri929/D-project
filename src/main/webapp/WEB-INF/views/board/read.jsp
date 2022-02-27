@@ -32,22 +32,26 @@ $(document).ready(function(){
     var formObj = $("form[name='readForm']");
     //수정
     $(".edit_btn").on("click", function(){
-        formObj.attr("action", "/board/edit");
+        formObj.attr("action", "${pageContext.request.contextPath}/board/edit");
         formObj.attr("method", "get");
         formObj.submit();
     })
   
     //삭제
     $(".delete_btn").on("click", function(){
-        formObj.attr("action", "/board/delete");
-        formObj.attr("method", "post");
-        formObj.submit();
+    	var chk = confirm("정말 삭제하시겠습니까?");
+    	if (chk) {
+    		formObj.attr("action", "${pageContext.request.contextPath}/board/delete");
+            formObj.attr("method", "post");
+            formObj.submit();
+		}
     })
     
     //목록으로 돌아가기
     $(".list_btn").on("click", function(){	
-		location.href = "/board/list";
+		location.href = "${pageContext.request.contextPath}/board/list";
 	})
+
 })
 </script>
 <body>

@@ -7,12 +7,14 @@ import org.slf4j.Logger;
 
 import org.slf4j.LoggerFactory;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+import javax.mail.Session;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -28,11 +30,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.mycompany.myapp.chat.domain.Chat;
+import com.mycompany.myapp.chat.service.ChatService;
 import com.mycompany.myapp.member.dto.MemberDTO;
 import com.mycompany.myapp.member.dto.MemberDtoContainStudyroom;
 import com.mycompany.myapp.member.service.MemberService;
 import com.mycompany.myapp.quiz.dto.ChatRoomInfoOfMember;
 import com.mycompany.myapp.quiz.service.QuizService;
+import com.mycompany.myapp.studyroom.domain.StudyroomDto;
+import com.mycompany.myapp.studyroom.service.StudyroomService;
 
 
 
@@ -43,14 +50,19 @@ public class MemberController {
 	private Logger logger = LoggerFactory.getLogger(MemberController.class);
 	private MemberService memberService;
 	private QuizService quizService;
+	private StudyroomService studyroomService;
+	private ChatService chatService;
 	
 	@Autowired
-	public MemberController(MemberService memberService, QuizService quizService) {
+	public MemberController(MemberService memberService, QuizService quizService, StudyroomService studyroomService,
+			ChatService chatService) {
 		super();
 		this.memberService = memberService;
 		this.quizService = quizService;
+		this.studyroomService = studyroomService;
+		this.chatService = chatService;
 	}
-
+	
 	// 로그인
 	@RequestMapping(value="login.do", method=RequestMethod.GET)
 	public String login(MemberDTO dto) {
@@ -245,6 +257,64 @@ public class MemberController {
 	public void findPwAction(@ModelAttribute MemberDTO dto, HttpServletResponse response) throws Exception{
 		memberService.userFindPw(response, dto);
 
+	}
+	
+	//회원탈퇴 폼
+	@RequestMapping(value="/user/deleteMember", method = RequestMethod.GET)
+	public String deleteMember(Model model) {
+		model.addAttribute("dto", new MemberDTO());
+		return "/user/deleteMember";	
+	}
+	
+	//회원탈퇴 실행
+	@RequestMapping(value="/user/deleteMember", method = RequestMethod.POST)
+	public String deleteMember(MemberDTO dto, Model model, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		MemberDTO user = (MemberDTO) session.getAttribute("user");
+		//세션에 담긴 아이디
+		String id = user.getId();
+		//세션에 담긴 비밀번호
+		String oldPass = user.getPw();
+		//현재 입력된 비밀번호
+		String newPass = dto.getPw();
+		boolean result = BCrypt.checkpw(newPass, oldPass);
+		
+		//세션에 담긴 멤버 번호
+		int memberNum = user.getNum();
+		
+		if(result) {
+			try {
+				//1. 내가 스터디룸의 방장인 경우
+				List<Integer> caproomList = studyroomService.selectStudyroomByCaptain(memberNum);
+				if(!(caproomList.size() == 0) || !(caproomList.isEmpty())) {
+					for(int i : caproomList) {
+						studyroomService.deleteAllMember(i);
+						chatService.deleteChattingBySr_no(i);
+						quizService.deleteQuizBySr_no(i);
+						studyroomService.deleteStudyroom(i);
+					}
+				}
+				                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+				//2. 내가 다른 스터디룸에 가입한 경우
+				List<Integer> roomList = studyroomService.selectMemberFromAllMatch(memberNum);
+				if(!(roomList.size() == 0) || !(roomList.isEmpty())) {
+						studyroomService.deleteMemberFromAllMatch(memberNum);
+						quizService.deleteQuizByMaker(memberNum);
+				}
+				
+				//3. 멤버 탈퇴
+				memberService.deleteMember(id);
+				session.invalidate();
+				System.out.println("회원탈퇴 완료");
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}		
+			return "redirect:/";
+		}else {
+			return "redirect:/user/deleteMember";
+		}
+		
 	}
 	
 	

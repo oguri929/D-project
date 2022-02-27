@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mycompany.myapp.member.dto.MemberDTO;
 import com.mycompany.myapp.member.dto.MemberDtoContainStudyroom;
@@ -147,22 +148,25 @@ public class StudyroomController {
 		return "redirect:/studyroom/list";
 	}
 	
-	@RequestMapping(value = "/studyroom/register", method = RequestMethod.GET)
-	public String registerMember(HttpServletRequest req, Model model) {
+	// ResponseBody는 스프링에서 비동기 처리를 할 때 사용하는 어노테이션이다
+	@ResponseBody
+	@RequestMapping(value = "/studyroom/register", method = RequestMethod.POST)
+	public int registerMember(HttpServletRequest req, Model model) {
 		int memberNum = Integer.valueOf(req.getParameter("memberNum"));
 		int chatroomNum = Integer.valueOf(req.getParameter("chatroomNum"));
 		int totMember = studyroomService.countTotMember(chatroomNum);
 		StudyroomDto studyroomDto = studyroomService.readStudyroom(chatroomNum);
 		int memberLimit = studyroomDto.getMemberLimit();
-		
+		int result=0;
 		
 		if(totMember < memberLimit) {
 			Map<String, Integer> matchInfo = new HashMap<String, Integer>();
 			matchInfo.put("memberNum", memberNum);
 			matchInfo.put("chatroomNum", chatroomNum);
 			studyroomService.addMember(matchInfo);
+			result = 1;
 		}else {
-			System.out.println("정원초과");
+			result = 0;
 		}
 		
 		HttpSession session = req.getSession();
@@ -179,11 +183,13 @@ public class StudyroomController {
 		
 		
 		
-		return "redirect:/studyroom/read/"+chatroomNum;		
+		return result;
 	}
 	
-	@RequestMapping(value = "/studyroom/leave", method = RequestMethod.GET)
-	public String deleteMember(HttpServletRequest req, Model model) {
+	// ResponseBody는 스프링에서 비동기 처리를 할 때 사용하는 어노테이션이다
+	@ResponseBody
+	@RequestMapping(value = "/studyroom/leave", method = RequestMethod.POST)
+	public int deleteMember(HttpServletRequest req, Model model) {
 		int memberNum = Integer.valueOf(req.getParameter("memberNum"));
 		int chatroomNum = Integer.valueOf(req.getParameter("chatroomNum"));
 		Map<String, Integer> matchInfo = new HashMap<String, Integer>();
@@ -191,6 +197,7 @@ public class StudyroomController {
 		matchInfo.put("chatroomNum", chatroomNum);
 		
 		studyroomService.deleteMember(matchInfo);
+		int result=1;
 		
 		HttpSession session = req.getSession();
 		MemberDTO user = (MemberDTO)session.getAttribute("user");
@@ -204,7 +211,7 @@ public class StudyroomController {
 		}
 		session.setAttribute("subList", subList);
 		
-		return "redirect:/studyroom/read/"+chatroomNum;
+		return result;
 	}
 		
 }

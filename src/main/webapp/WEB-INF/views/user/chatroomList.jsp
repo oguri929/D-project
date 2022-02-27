@@ -46,7 +46,7 @@
 			</td>
 			<td>${chatroom.subject }</td>
 			<td>
-				<input type="button" value="채팅방 들어가기" class="btn-primary me-md-2" onclick="location.href='<c:url value="/chat?chatroomNum=${chatroom.chatroomNum }"/>'">
+				<input type="button" value="채팅방 들어가기" class="btn-primary me-md-2" onclick="location.href='<c:url value="/enter/chat.do?roomNo=${chatroom.chatroomNum }"/>'">
 			</td>				
 			<td>
 				<input type="button" value="스터디탈퇴" class="btn-primary me-md-2" onclick="location.href='<c:url value="/studyroom/leave?memberNum=${sessionScope.user.num }&chatroomNum=${chatroom.chatroomNum }"/>'">

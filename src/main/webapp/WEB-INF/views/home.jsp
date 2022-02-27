@@ -171,20 +171,19 @@
   
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/>
+        	<img src="/resources/images/home4.jpg" class="img-fluid" alt="Responsive image" />
+        </svg>
 
         <div class="container">
           <div class="carousel-caption text-start">
-            <h1>나만의 스터디 그룹을 개설해보세요!</h1>
-            <p>고독한 공부도 친구들과 함께라면 힘이나지 않을까요? 수능,공시,고시 등 길고긴 마라톤 함께 공부하세요! </p>
+            <h1 class="text-dark">나만의 스터디 그룹을 개설해보세요!</h1>
+            <p class="text-dark">고독한 공부도 친구들과 함께라면 힘이나지 않을까요? 수능,공시,고시 등 길고긴 마라톤 함께 공부하세요! </p>
             <p><a class="btn btn-lg btn-primary" href="<c:url value='/studyroom/list'/> ">스터디 찾아보기</a></p>
           </div>
         </div>
       </div>
-      <div class="carousel-item">
-        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/>
-        	
-        </svg>
+      
     </div>
   </div>
   </div>
@@ -199,8 +198,8 @@
     <!-- Three columns of text below the carousel -->
     <div class="row">
       <div class="col-lg-4">
-        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/>
-        	<img src="#" width="140" height="140" />        
+        <svg class="bd-placeholder-img" width="140" height="140" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#fff"/>
+        	<image href="/resources/images/envelope-check.svg" width="140" height="140" />        
         </svg>
 
         <h2>공지사항</h2>
@@ -208,8 +207,8 @@
         <p><a class="btn btn-secondary" href="<c:url value='/board/list'/>">공지사항 바로가기 &raquo;</a></p>
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4">
-        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/>
-        	<img src="#" width="140" height="140"/>
+        <svg class="bd-placeholder-img" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#fff"/>
+        	<image href="/resources/images/people.svg" width="140" height="140" />
         </svg>
 
         <h2>스터디 찾기</h2>
@@ -217,8 +216,8 @@
         <p><a class="btn btn-secondary" href="<c:url value='/studyroom/list'/> ">스터디 찾기 &raquo;</a></p>
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4">
-        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/>
-        	<img src="#" width="140" height="140"/>
+        <svg class="bd-placeholder-img" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#fff"/>
+        	<image href="/resources/images/puzzle.svg" width="140" height="140"/>
         </svg>
 
         <h2>퀴즈 풀기</h2>

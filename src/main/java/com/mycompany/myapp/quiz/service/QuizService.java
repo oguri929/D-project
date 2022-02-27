@@ -158,6 +158,20 @@ public class QuizService implements QuizServiceInterface{
 		// TODO Auto-generated method stub
 		return dao.selectAllQuiz(qscri);
 	}
-	
 
+	@Override
+	public int deleteQuizBySr_no(int chatroomNum) {
+		// TODO Auto-generated method stub
+		return dao.deleteQuizBySr_no(chatroomNum);
+	}
+
+	@Override
+	public int deleteQuizByMaker(int makerNum) {
+		// TODO Auto-generated method stub
+		return dao.deleteQuizByMaker(makerNum);
+	}
+	
+	
+	
+	
 }

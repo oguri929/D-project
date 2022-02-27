@@ -32,14 +32,14 @@
 		var formObj = $("form[name='editForm']");
 
 		$(".edit_btn").on("click", function(){
-	        formObj.attr("action", "/board/edit");
+	        formObj.attr("action", "${pageContext.request.contextPath}/board/edit");
 	        formObj.attr("method", "post");
 	        formObj.submit();
 	    })
 		
 		$(".list_btn").on("click", function(){
 			event.preventDefault();
-			location.href = "/board/list";
+			location.href = "${pageContext.request.contextPath}/board/list";
 		})
 	})
 </script>

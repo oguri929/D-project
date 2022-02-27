@@ -84,6 +84,13 @@ public class MemberDAOImpl implements MemberDAO {
 	public int userFindPw(MemberDTO dto) throws Exception {
 		return sqlSessionTemplate.update("userFindPw", dto);
 	}
+
+	@Override
+	public int deleteMember(String id) throws Exception {
+		return sqlSessionTemplate.delete("member.deleteMember", id);
+	}
+	
+	
 	
 
 

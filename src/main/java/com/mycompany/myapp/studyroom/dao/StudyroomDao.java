@@ -45,5 +45,11 @@ public interface StudyroomDao {
 	public abstract int countTotMember(int chatroomNum);
 	//스터디룸의 모든 멤버 삭제
 	public abstract int deleteAllMember(int chatroomNum);
+	//방장으로 스터디룸 조회
+	public abstract List<Integer> selectStudyroomByCaptain(int captain);
+	//멤버번호로 매치테이블에서 조회
+	public abstract List<Integer> selectMemberFromAllMatch(int memberNum);
+	//멤버번호로 매치테이블에서 삭제
+	public abstract int deleteMemberFromAllMatch(int memberNum);
 	
 }

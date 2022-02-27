@@ -40,6 +40,8 @@ public interface MemberDAO {
 	// 비밀번호 인증
 	public int userFindPw(MemberDTO dto) throws Exception;
 
+	//멤버 삭제
+	public int deleteMember(String id) throws Exception;
 
 
 

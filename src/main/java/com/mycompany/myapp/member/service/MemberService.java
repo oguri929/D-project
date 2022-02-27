@@ -41,4 +41,7 @@ public interface MemberService {
 	// 비밀번호 찾기	
 	public void userFindPw(HttpServletResponse response, MemberDTO dto) throws Exception;
 	
+	//멤버 삭제
+	public int deleteMember(String id) throws Exception;
+	
 }
