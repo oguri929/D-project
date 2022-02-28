@@ -2,6 +2,8 @@ package com.mycompany.myapp.board.domain;
 
 import java.sql.Date;
 
+import javax.validation.constraints.NotNull;
+
 import org.apache.ibatis.type.Alias;
 
 import com.mycompany.myapp.member.dto.MemberDTO;
@@ -9,8 +11,14 @@ import com.mycompany.myapp.member.dto.MemberDTO;
 @Alias("boardDto")
 public class BoardDto {
 	private int num;
+	
+	@NotNull(message = "제목을 입력해주세요.")
 	private String title;
+	
+	@NotNull(message = "작성자 정보가 없습니다.")
 	private int writer;
+	
+	@NotNull(message = "내용을 입력해주세요.")
 	private String content;
 	private int cnt;
 	private Date regdate;

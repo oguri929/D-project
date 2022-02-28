@@ -57,7 +57,6 @@
 <body class="text-center">
 	<main class="form-signin">
 		<form action="${contextPath}/login.do" method="post">
-			<img class="mb-4" src="#" alt="" width="72" height="57">
 		    <h1 class="h3 mb-3 fw-normal">로그인을 해주세요</h1>
 	    
 			<div class="form-floating">

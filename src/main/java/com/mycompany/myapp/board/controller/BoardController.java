@@ -6,12 +6,17 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,7 +34,8 @@ import com.mycompany.myapp.utils.PageMaker;
 @Controller("boardController")
 public class BoardController {
 	private static final String filePath="C:\\board\\file";
-
+	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
+	
 	private BoardService boardService;
 	private MemberService memberService;
 	
@@ -47,9 +53,19 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/board/write", method = RequestMethod.POST)
-	public String writeBoard(BoardDto boardDto, MultipartHttpServletRequest mpRequest, 
-							BindingResult bindingResult) throws Exception {
+	// binding한 결과가 result에 담긴다.
+	public String writeBoard(@ModelAttribute @Valid BoardDto boardDto, BindingResult bindingResult,
+							MultipartHttpServletRequest mpRequest) throws Exception {
+		logger.debug("board : {}", boardDto);
+		
+		//에러가 있는지 검사
 		if(bindingResult.hasErrors()) {
+			logger.debug("Binding Result has error!");
+			//에러를 List로 저장
+			List<ObjectError> list = bindingResult.getAllErrors();
+			for( ObjectError error : list ) {
+				System.out.println(error);
+			}
 			return "/board/write";
 		}
 		boardService.writeBoard(boardDto, mpRequest);
@@ -100,7 +116,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/board/edit", method = RequestMethod.POST)
-	public String editBoard(Model model, BoardDto boardDto, MultipartHttpServletRequest mpRequest,
+	public String editBoard(Model model, @Valid BoardDto boardDto, MultipartHttpServletRequest mpRequest,
 							BindingResult bindingResult) throws Exception {
 		if(bindingResult.hasErrors()) {
 			return "/board/edit";

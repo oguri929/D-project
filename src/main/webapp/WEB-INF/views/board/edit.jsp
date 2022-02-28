@@ -11,6 +11,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 	<title>editBoard</title>
 	<style type="text/css">
 		body {
@@ -25,10 +26,20 @@
 		  padding: 15px;
 		  margin: auto;
 		}
+		
+		.error{
+		  colkr:red;
+		  font-weight:bold;
+		}
 	</style>
 </head>
 <script type="text/javascript">
-	$(document).ready(function(){
+<![CDATA[ $(function() {
+	$("form[name='editForm']").validate(); 
+	}); 
+]]>
+
+	$(document).ready(function(){	
 		var formObj = $("form[name='editForm']");
 
 		$(".edit_btn").on("click", function(){
@@ -94,7 +105,7 @@
 		</tr>
 		<tr>
 			<th scope="row" class="w-25 p-3">제목</th>
-			<td><input type="text" name="title" value="${boardDto.title }"></td>
+			<td><input type="text" name="title" value="${boardDto.title }" required></td>
 		</tr>
 		<tr>
 			<th scope="row" class="w-25 p-3">작성자</th>
@@ -103,7 +114,7 @@
 		</tr>
 		<tr>
 			<th scope="row" class="w-25 p-3">내용</th>
-			<td><input type="text" name="content" value="${boardDto.title }"></td>
+			<td><textarea name="content" cols="100" rows="20" required>${boardDto.content }</textarea></td>
 		</tr>
 		<tr>
 			<th scope="row" class="w-25 p-3">첨부파일</th>

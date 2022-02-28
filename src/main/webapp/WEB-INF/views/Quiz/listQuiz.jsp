@@ -137,7 +137,7 @@
             <td>
                ${quiz.subjectName }
             </td>
-            <td><a href="/updateQuizDetail/num/${quiz.num}">${quiz.question}</a></td>
+            <td><a href="<c:url value="/updateQuizDetail/num/${quiz.num}"/>">${quiz.question}</a></td>
             <td>${quiz.nickName }</td>
             <td>${quiz.numOfQuiz}</td>
             <td>${quiz.correctRate}</td>

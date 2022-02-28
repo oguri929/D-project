@@ -158,9 +158,9 @@
 	<tr>
 		<th scope="row" class="w-25 p-3">성별</th>
 		<td>
-			<input type="radio" name="gender" value="102" />여성
+			<input type="radio" name="gender" value="female" />여성
 			<span style="padding-left:120px"></span>
-			<input type="radio" name="gender" value="102" checked />남성
+			<input type="radio" name="gender" value="male" checked />남성
 		</td>
 	</tr>
 	<tr>

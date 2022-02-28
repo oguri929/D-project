@@ -11,6 +11,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 	<title>createStudyroom</title>
 	<style type="text/css">
 		body {
@@ -24,6 +25,11 @@
 		  max-width: 1000px;
 		  padding: 15px;
 		  margin: auto;
+		}
+		
+		.error{
+		  color:red;
+		  font-weight:bold;
 		}
 	</style>
 </head>
@@ -70,28 +76,28 @@
 </header>
 	<h2 class="text-center">스터디 만들기</h2>
 	
-	<form method="post" action="<c:url value="/studyroom/create"/>">
+	<form name="createForm" method="post" action="<c:url value="/studyroom/create"/>">
 		<table class="table table-bordered">
 		<tr>
 			<th scope="row" class="w-25 p-3">스터디이름</th>
-			<td colspan="4"><input type="text" name="roomName"></td>
+			<td colspan="4"><input type="text" name="roomName" required></td>
 		</tr>
 		<tr>
 			<th scope="row" class="w-25 p-3">제한인원</th>
-			<td><input type="number" name="memberLimit"></td>
-			<th scope="row" class="w-25 p-3">채팅방 비밀번호</th>
-			<td><input type="password" name="pw"></td>
+			<td><input type="number" name="memberLimit" min=1 max=10 required></td>
+			<th scope="row" class="w-25 p-3" >채팅방 비밀번호</th>
+			<td><input type="password" name="pw" required></td>
 		</tr>
 		<tr>
 			<th scope="row" class="w-25 p-3">방장</th>
 			<td colspan="4">${sessionScope.user.id}</td>
-							<input type="hidden" name="captain" value="${sessionScope.user.num }" />
+			<input type="hidden" name="captain" value="${sessionScope.user.num }" />
 		</tr>
 		<tr>
 			<th scope="row" class="w-25 p-3">지역</th>
 			<td colspan="4">
-				<select name="h_area1" id="select1">
-					  <option>-선택-</option>
+				<select name="h_area1" id="select1" required>
+					  <option value="">-선택-</option>
 					  <option>서울</option>
 					  <option>부산</option>
 					  <option>대구</option>
@@ -109,20 +115,20 @@
 					  <option>충남</option>
 					  <option>충북</option>
 				</select>
-				<select name="h_area2" id="select2">
-					  <option>-선택-</option>
+				<select name="h_area2" id="select2" required>
+					  <option value="">-선택-</option>
 				</select>
 			</td>
 		</tr>
 		<tr>
 			<th scope="row" class="w-25 p-3">스터디정보</th>
-			<td colspan="4"><textarea name="roomDiscript" cols="100" rows="15"></textarea></td>
+			<td colspan="4"><textarea name="roomDiscript" cols="100" rows="15" required></textarea></td>
 		</tr>
 		<tr>
 			<th scope="row" class="w-25 p-3">과목정보</th>
 			<td colspan="3">
 				<c:forEach var="sub" items="${subjectList}">
-					<input type="radio" name="subjectNum" value="${sub.subjectNum}">${sub.subject}
+					<input type="radio" name="subjectNum" value="${sub.subjectNum}" required>${sub.subject}
 				</c:forEach>
 			</td>
 		</tr>

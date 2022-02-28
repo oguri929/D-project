@@ -92,7 +92,7 @@ $(document).ready(function(){
     $(".delete_btn").on("click", function(){
     	var chk = confirm("정말 삭제하시겠습니까?");
     	if (chk) {
-    		formObj.attr("action", "${pageContext.request.contextPath}/board/delete");
+    		formObj.attr("action", "${pageContext.request.contextPath}/studyroom/delete");
             formObj.attr("method", "post");
             formObj.submit();
 		}
@@ -193,7 +193,7 @@ function leave(){
 	</nav>
 </header>
 	<form name="readForm" method="post">
-		<input type="hidden" name="memberNum" id="memberNum" value="${sessionScope.user.num }">
+		<input type="hidden" name="memberNum" id="memberNum" value="${sessionScope.user.num }"/>
 		<input type="hidden" name="num" id="chatroomNum" value="${studyroomDto.num }"/>
 	</form>
 	

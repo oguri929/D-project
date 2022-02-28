@@ -29,7 +29,36 @@
 	</style>
 
 </head>
+<script type="text/javascript">
+	$(document).ready(function(){
+    var formObj = $("form[name='myForm']");
+	})
+	
+function leave(){
+	$.ajax({
+		url : "${pageContext.request.contextPath}/studyroom/leave",
+		type : "post",
+		dataType : "json",
+		data : {
+			"memberNum" : $("#memberNum").val(),
+			"chatroomNum" : $("#chatroomNum").val()
+			},
+		success : function(result){
+			if(result == 1){
+				alert("스터디를 탈퇴하였습니다.");
+				location.reload();
+			}else{
+				alert("스터디 탈퇴과정에서 오류가 발생하였습니다.");
+			}
+		},
+		error:function(request,status,error){
+	        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	    }
+	})
+}
+</script>
 <body>
+<input type="hidden" name="memberNum" id="memberNum" value="${sessionScope.user.num }"/>
 	<h2 class="text-center">나의 스터디룸</h2>
 	<table class="table table-bordered">
 		<tr>
@@ -49,7 +78,8 @@
 				<input type="button" value="채팅방 들어가기" class="btn-primary me-md-2" onclick="location.href='<c:url value="/enter/chat.do?roomNo=${chatroom.chatroomNum }"/>'">
 			</td>				
 			<td>
-				<input type="button" value="스터디탈퇴" class="btn-primary me-md-2" onclick="location.href='<c:url value="/studyroom/leave?memberNum=${sessionScope.user.num }&chatroomNum=${chatroom.chatroomNum }"/>'">
+				<input type="hidden" name="chatroomNum" id="chatroomNum" value="${chatroom.chatroomNum }"/>
+				<input type="button" value="스터디탈퇴" class="btn-primary me-md-2" onclick="leave();">
 			</td>
 		</tr>
 		</c:forEach>

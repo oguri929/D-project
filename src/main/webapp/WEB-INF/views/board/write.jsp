@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +11,7 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 	<title>writeBoard</title>
 	<style type="text/css">
 		body {
@@ -23,6 +25,11 @@
 		  max-width: 1000px;
 		  padding: 15px;
 		  margin: auto;
+		}
+		
+		.error{
+		  colkr:red;
+		  font-weight:bold;
 		}
 	</style>
 </head>
@@ -72,7 +79,7 @@
 		<table class="table table-bordered">
 		<tr>
 			<th scope="row" class="w-25 p-3">제목</th>
-			<td colspan="2"><input type="text" name="title"></td>
+			<td colspan="2"><input type="text" name="title" required></td>
 		</tr>
 		<tr>
 			<th scope="row" class="w-25 p-3">작성자</th>
@@ -81,7 +88,7 @@
 		</tr>
 		<tr>
 			<th scope="row" class="w-25 p-3">내용</th>
-			<td colspan="2"><textarea name="content" cols="100" rows="20"></textarea></td>
+			<td colspan="2"><textarea name="content" cols="100" rows="20" required></textarea></td>
 		</tr>
 		<tr>
 			<th scope="row" class="w-25 p-3">첨부파일</th>
@@ -93,5 +100,6 @@
 			<button type="button" class="btn-primary me-md-2" onClick="location.href='<c:url value="/board/list"/>'">목록</button>
 		</div>
 	</form>
+	
 </body>
 </html>

@@ -11,6 +11,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 	<title>editStudyroom</title>
 	<style type="text/css">
 		body {
@@ -25,16 +26,46 @@
 		  padding: 15px;
 		  margin: auto;
 		}
+		
+		.error{
+		  color:red;
+		  font-weight:bold;
+		}
 	</style>
 </head>
 <script type="text/javascript">
+
 	$(document).ready(function(){
+		var formObj = $("form[name='editForm']");
 		
 		$(".list_btn").on("click", function(){
 			event.preventDefault();
 			location.href = "${pageContext.request.contextPath}/studyroom/list";
 		})
 	})
+	
+function leave(){
+	$.ajax({
+		url : "${pageContext.request.contextPath}/studyroom/leave",
+		type : "post",
+		dataType : "json",
+		data : {
+			"memberNum" : $("#memberNum").val(),
+			"chatroomNum" : $("#chatroomNum").val()
+			},
+		success : function(result){
+			if(result == 1){
+				alert("스터디를 탈퇴하였습니다.");
+				location.reload();
+			}else{
+				alert("스터디 탈퇴과정에서 오류가 발생하였습니다.");
+			}
+		},
+		error:function(request,status,error){
+	        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	    }
+	})
+}
 </script>
 <body>
 <header>
@@ -79,22 +110,22 @@
 </header>
 	<h2 class="text-center">스터디 수정</h2>
 	
-	<form method="post" action="<c:url value="/studyroom/edit"/>" >
+	<form name="editForm" method="post" action="<c:url value="/studyroom/edit"/>" >
 		<table class="table table-bordered">
 		<tr>
 			<th scope="row" class="w-25 p-3">방번호</th>
 			<td colspan="4">${studyroomDto.num }</td>
-			<input type="hidden" name="num" value="${studyroomDto.num }" />
+			<input type="hidden" name="num" id="chatroomNum" value="${studyroomDto.num }" />
 		</tr>
 		<tr>
 			<th scope="row" class="w-25 p-3">스터디이름</th>
-			<td colspan="4"><input type="text" name="roomName" value="${studyroomDto.roomName }"></td>
+			<td colspan="4"><input type="text" name="roomName" value="${studyroomDto.roomName }" required></td>
 		</tr>
 		<tr>
 			<th scope="row" class="w-25 p-3">제한인원</th>
-			<td><input type="number" name="memberLimit" value="${studyroomDto.memberLimit }"></td>
+			<td><input type="number" name="memberLimit" value="${studyroomDto.memberLimit }" min=1 max=10 required></td>
 			<th scope="row" class="w-25 p-3">채팅방 비밀번호</th>
-			<td><input type="password" name="pw" value="${studyroomDto.pw }"></td>
+			<td><input type="password" name="pw" value="${studyroomDto.pw }" required></td>
 		</tr>
 		<tr>
 			<th scope="row" class="w-25 p-3">방장</th>
@@ -108,7 +139,7 @@
 		</tr>
 		<tr>
 			<th scope="row" class="w-25 p-3">스터디정보</th>
-			<td colspan="4"><textarea name="roomDiscript" cols="100" rows="20">${studyroomDto.roomDiscript }</textarea></td>
+			<td colspan="4"><textarea name="roomDiscript" cols="100" rows="20" required>${studyroomDto.roomDiscript }</textarea></td>
 		</tr>
 		<tr>
 			<th scope="row" class="w-25 p-3">과목정보</th>
@@ -116,10 +147,10 @@
 				<c:forEach var="sub" items="${subjectList }">
 					<c:choose>
 						<c:when test="${sub.subjectNum == studyroomDto.subjectNum }">
-							<input type="radio" name="subjectNum" value="${sub.subjectNum}" checked>${sub.subject}	
+							<input type="radio" name="subjectNum" value="${sub.subjectNum}" checked required>${sub.subject}	
 						</c:when>
 						<c:otherwise>							
-							<input type="radio" name="subjectNum" value="${sub.subjectNum}">${sub.subject}	
+							<input type="radio" name="subjectNum" value="${sub.subjectNum}" required>${sub.subject}	
 						</c:otherwise>
 					</c:choose>			
 				</c:forEach>
@@ -150,7 +181,9 @@
 			<c:forEach var="mem" items="${memberList }">
 				<tr class="col text-center">
 					<td>
-						${mem.id } <input type="button" value="스터디내보내기" onclick="location.href='<c:url value="/studyroom/leave?memberNum=${mem.num }&chatroomNum=${studyroomDto.num }"/>'">
+						<input type="hidden" name="memberNum" id="memberNum" value="${mem.num }"/>
+						${mem.id } 
+						<input type="button" value="스터디내보내기" onclick="leave();">
 					</td>
 				</tr>
 			</c:forEach>

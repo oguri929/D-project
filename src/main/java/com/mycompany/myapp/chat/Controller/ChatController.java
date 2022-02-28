@@ -1,6 +1,7 @@
 package com.mycompany.myapp.chat.Controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +20,11 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -91,10 +95,14 @@ public class ChatController {
 	}
 	
 	@RequestMapping(value="/file", method = RequestMethod.POST)
-	@ResponseBody
-	public Chat fileUpload(MultipartHttpServletRequest request ,Model model) {
-	        
-			int roomNo=Integer.parseInt(request.getParameter("roomNo"));
+	//@ResponseBody 삭제 //pulic 뒤에 return type을 String 으로 변환
+	public String fileUpload(MultipartHttpServletRequest request ,Model model
+			) throws IOException{
+			int roomNo=0;    
+			if(request.getParameter("roomNo")!=null) {
+				roomNo=Integer.parseInt(request.getParameter("roomNo"));
+	        }
+	        System.out.println(roomNo);
 			String savePath="/resources/uploadFile";
 	        String rootUploadDir = request.getSession().getServletContext().getRealPath(savePath);// C:/Upload
 	        System.out.println("save path: "+rootUploadDir);
@@ -103,9 +111,8 @@ public class ChatController {
 	        if(!dir.exists()) { //업로드 디렉토리가 존재하지 않으면 생성
 	            dir.mkdirs();
 	        }
-	        
 	        Iterator<String> iterator = request.getFileNames(); //업로드된 파일정보 수집(2개 - file1,file2)
-	        
+	       
 	        int fileLoop = 0;
 	        String uploadFileName;
 	        MultipartFile mFile = null;
@@ -113,13 +120,15 @@ public class ChatController {
 	        String sysFileName = ""; //변환된 파일명
 	        String extension="";
 	        ArrayList<String> list = new ArrayList<String>();
+	        //아래 simpleDateFormat 추가
+	        SimpleDateFormat sDateFormat = new SimpleDateFormat("yy/MM/DD/ HH:mm");
 	        
 	        while(iterator.hasNext()) {
 	            fileLoop++;
 	            
 	            uploadFileName = iterator.next();
 	            mFile = request.getFile(uploadFileName);
-	            
+	            System.out.println("mFile: "+mFile);
 	            orgFileName = mFile.getOriginalFilename();    
 	            System.out.println("orgFileName: "+orgFileName);
 	            System.out.println("contain "+orgFileName.contains("."));
@@ -150,14 +159,17 @@ public class ChatController {
 	        chat.setSrNo(roomNo);
 	        chat.setSender(Integer.toString(dto.getNum()));
 	        chat.setChatContent(orgFileName);
-	        chat.setSendDate(new Date(System.currentTimeMillis()));
+	        Date dateFrom=new Date(System.currentTimeMillis());//추가
+	        chat.setSendDate(dateFrom);//괄호 안에 변수 변경
 	        chat.setDateType("f");
 	        chat.setSysName(fileName);
+	        chat.setNowTime(sDateFormat.format(chat.getSendDate()));//추가
+			chatService.InsertChat(chat);
 	        
-	        chatService.InsertChat(chat);
 	        messageTemplate.convertAndSend("/subscribe/chat/"+roomNo, chat);
-	        System.out.println("file upload end");
-	        return chat;
+	        
+	        System.out.println(chat);
+	        return "/chat/tem";//여기 수정
 	    }
 
 }
