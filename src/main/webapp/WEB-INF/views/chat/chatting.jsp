@@ -20,50 +20,32 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
     <title>chatting</title>
 	<style>
-      html,body {
-		  height: 100%;
-		}
-
-		body {
-		  display: flex;
-		  align-items: center;
-		  padding-top: 40px;
-		  padding-bottom: 40px;
-		  background-color: #f5f5f5;
+      body {
+		  padding-top: 5rem;
+		  padding-bottom: 3rem;
+		  color: #5a5a5a;
 		}
 		
-		.form-signin {
+		.table{
 		  width: 100%;
-		  max-width: 330px;
+		  max-width: 1000px;
 		  padding: 15px;
 		  margin: auto;
 		}
-		
-		.form-signin .checkbox {
-		  font-weight: 400;
-		}
-		
-		.form-signin .form-floating:focus-within {
-		  z-index: 2;
-		}
-		
-		.form-signin input[type="text"] {
-		  margin-bottom: -1px;
-		  border-bottom-right-radius: 0;
-		  border-bottom-left-radius: 0;
-		}
-		
-		.form-signin input[type="password"] {
-		  margin-bottom: 10px;
-		  border-top-left-radius: 0;
-		  border-top-right-radius: 0;
-		}
+
     </style>
 </head>
-<body class="text-center">
-<h3 class="h3 mb-3 fw-normal">${roomNo }번방 채팅</h3>
+<body>
+<h3 class="h3 mb-3 fw-normal text-center">${roomNo }번방 채팅</h3>
 <div id="chat-container" class="border">
-	<div class="content chatcontent" data-room-nom="${roomNo}">
+<table class="table">
+	<tr>
+		<td>
+			<div class="content chatcontent" data-room-nom="${roomNo}"></div>
+		</td>
+	</tr>
+	<tr>
+		<td>
 		<div id="list-guestbook" class="">
 			<c:forEach items="${firstList }" var="chat">
 				<li data-no="${chat.no}">
@@ -78,23 +60,31 @@
 					<p class="chat text-left p-2">${chat.chatContent}</p>
 					</c:otherwise>
 					</c:choose>
-				</div>
+					</div>
 				</li>
-			</c:forEach>
-			
+			</c:forEach>	
 		</div>
-	</div>
-	<div class="chat-fix">
-		<div id="alert" onclick="moveDown();" class="alert alert-success" role="alert">
-			<strong></strong>
-		</div>
-	</div>
-	<div class="fix_btn row">
-		
-		<input type="text" name ="msg" id="msgi" />
-		<button type="button" class="send col-sm-4 btn btn-secondary">보내기</button>
-		<input type="button" value="파일 올리기" onclick="window.open('<c:url value="/file?roomNo=${roomNo}"/>')"/>
-	</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div class="chat-fix">
+			<div id="alert" onclick="moveDown();" class="alert alert-success" role="alert">
+				<strong></strong>
+			</div>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div>	
+				<input type="text" name ="msg" id="msgi" class="form-control input-lg" />
+				<button type="button" class="send col-sm-2 btn btn-secondary">보내기</button>
+				<input type="button" value="파일 올리기" class="col-sm-2 btn btn-secondary" onclick="window.open('<c:url value="/file?roomNo=${roomNo}"/>')"/>
+			</div>
+		</td>
+	</tr>
+</table>
 	<div id="ex1" class="modal">
 	<!-- 
 	  <div style="text-align:right; margin-right:170px">
