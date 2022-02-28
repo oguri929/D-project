@@ -5,26 +5,26 @@
 <mapper namespace="chat">
 <select id="selectChatList" resultType="chat">
  <![CDATA[  
-select * from 
+select ROWNUM, b.* from 
 (select
 ROWNUM,c.*,m.nickname
 from
 chatting c
 join member m on (m.num=c.sender) 
-where sr_no=#{roomNo} and rownum <=10  order by no desc)
-order by no
+where sr_no=#{roomNo} order by SEND_DATE desc) b
+where rownum <= 10 order by SEND_DATE
     ]]> 
  </select>
  <select id="selectFirstChatList" resultType="chat" parameterType="int">
 <![CDATA[  
-select * from 
+select ROWNUM, b.* from 
 (select
 ROWNUM,c.*,m.nickname
 from
 chatting c
 join member m on (m.num=c.sender) 
-where sr_no=#{roomNo} and rownum <=10  order by no desc)
-order by no
+where sr_no=#{roomNo} order by SEND_DATE desc) b
+where rownum <= 10 order by SEND_DATE
       ]]> 
  </select>
   

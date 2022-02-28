@@ -20,43 +20,27 @@
 	<form id="submit" action="<c:url value="/file"/>" enctype="multipart/form-data" method="post" style="text-align:center;">
     	<input type="file" name="file1"><p>
     	<input type="hidden" name="roomNo" value="${roomNo}">
-    	<input type="submit" value="파일업로드1">
-    	<button type="button" id="btn" >파일업로드</button>
+    	<input type="submit" id="btn" value="파일업로드">
     	
 	</form>
-	
-	<!-- ajax 이용
-	
 	<script>
 	
 	$(document).ready(function(){
-		var formData= new FormData($('formFile')[0]);
-		formData.append('roomNo',${roomNo});
+		alert("file");
 		$("#btn").on("click",function(){
-			alert($('formFile')[0]);
+			alert("send");
 			$.ajax({
 				url:'<c:url value="/file"/>',
-				type:"POST",
-				enctype:'multipart/form-data',
-				data:formData,
-				//dataType:"json",
-				timeout:00,
-				cache:false,
-				contentType:false,
-				processData:false,
-				success:function(data){
+				data:'multipart/form-data',
+				success:function(xh){
 					alert("success");
 					window.close();
 					this.opener.document.focus();
-				},
-				error:function(data){
-					alert("error");
 				}
 			});
 		});	
 	});
 	</script>
-	 -->
 	<!--  
 	<script>
 	alert("test3");
