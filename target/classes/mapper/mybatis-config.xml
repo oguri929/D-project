@@ -23,5 +23,7 @@
 		<typeAlias alias="chat" type="com.mycompany.myapp.chat.domain.Chat" />
 		<!-- <typeAlias alias="roomVO" type="com.mycompany.myapp.room.domain.RoomVO"/> -->
 		<typeAlias alias="chatVO" type="com.mycompany.myapp.chat.domain.ChatVO"/>
+		<typeAlias alias="articleVO" type="com.mycompany.myapp.qnaboard.domain.ArticleVO"/>
+		<typeAlias alias="replyVO" type="com.mycompany.myapp.qnaboard.domain.ReplyVO"/>
 	</typeAliases>
 </configuration>
