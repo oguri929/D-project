@@ -50,6 +50,7 @@ public class QuizDao implements QuizDaoInterface {
 	}
 	@Override
 	public List<ChatRoomInfoOfMember> selectAllChatroomOfMember(long memberNum) {
+		
 		return sqlSessiontemplate.selectList(NAMESPACE+"getChatRoomNames", memberNum);
 	}
 	@Override

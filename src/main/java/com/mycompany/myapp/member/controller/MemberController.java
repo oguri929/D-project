@@ -209,7 +209,13 @@ public class MemberController {
 	public String getMyStudyrooms(HttpServletRequest req, Model model) {
 		HttpSession session = req.getSession();
 		MemberDTO user = (MemberDTO)session.getAttribute("user");
-		List<ChatRoomInfoOfMember> chatroomList = quizService.getChatroomListofMember(user.getNum());
+		List<Integer> cntRollInStudy=studyroomService.selectMemberFromAllMatch(user.getNum());
+		List<ChatRoomInfoOfMember> chatroomList;
+		if(cntRollInStudy.size()!=0) {
+			chatroomList = quizService.getChatroomListofMember(user.getNum());
+		}else {
+			chatroomList=null;
+		}
 		model.addAttribute("chatroomList", chatroomList);
 		
 		return "/user/chatroomList";

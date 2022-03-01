@@ -52,4 +52,5 @@ public interface StudyroomDao {
 	//멤버번호로 매치테이블에서 삭제
 	public abstract int deleteMemberFromAllMatch(int memberNum);
 	
+	
 }

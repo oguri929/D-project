@@ -103,6 +103,9 @@
 	WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
 	ORDER BY NUM DESC
 	</select>
+	<select id="checkRollInStudyroom" resultType="int" parameterType="int">
+		select count(*) from MATCHTABLE where MEMBER_NUM=#{member_num}
+	</select>
 	
 	<select id="selectStudyroomByMemberDto" resultType="memberDtoCS" parameterType="memberDTO">
 		SELECT  * FROM MATCHTABLE MAT 
