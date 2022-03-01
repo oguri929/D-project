@@ -67,27 +67,39 @@ function leave(){
 			<th scope="row" class="w-25 p-3">채팅방 바로가기</th>
 			<th scope="row" class="w-25 p-3">탈퇴</th>
 		</tr>
-		<c:forEach var="chatroom" items="${chatroomList }">
-		<tr>
-			<td>
-				<a href='<c:url value="/studyroom/read/${chatroom.chatroomNum }"/>'>
-				${chatroom.roomName }</a>
-			</td>
-			<td>${chatroom.subject }</td>
-			<td>
-				<input type="button" value="채팅방 들어가기" class="btn-primary me-md-2" onclick="location.href='<c:url value="/enter/chat.do?roomNo=${chatroom.chatroomNum }"/>'">
-			</td>				
-			<td>
-				<input type="hidden" name="chatroomNum" id="chatroomNum" value="${chatroom.chatroomNum }"/>
-				<input type="button" value="스터디탈퇴" class="btn-primary me-md-2" onclick="leave();">
-			</td>
-		</tr>
-		</c:forEach>
-		<tr class="col text-center">
-			<td colspan="4">
-				<button type="button" onclick="javascript:window.history.back();" class="btn-primary me-md-2">이전</button>
-			</td>			
-		</tr>
+		<c:choose>
+			<c:when test="${chatroomList.size() !=0 }">
+				<c:forEach var="chatroom" items="${chatroomList }">
+				<tr>
+					<td>
+						<a href='<c:url value="/studyroom/read/${chatroom.chatroomNum }"/>'>
+						${chatroom.roomName }</a>
+					</td>
+					<td>${chatroom.subject }</td>
+					<td>
+						<input type="button" value="채팅방 들어가기" class="btn-primary me-md-2" onclick="location.href='<c:url value="/enter/chat.do?roomNo=${chatroom.chatroomNum }"/>'">
+					</td>				
+					<td>
+						<input type="hidden" name="chatroomNum" id="chatroomNum" value="${chatroom.chatroomNum }"/>
+						<input type="button" value="스터디탈퇴" class="btn-primary me-md-2" onclick="leave();">
+					</td>
+				</tr>
+				
+				<tr class="col text-center">
+					<td colspan="4">
+						<button type="button" onclick="javascript:window.history.back();" class="btn-primary me-md-2">이전</button>
+					</td>			
+				</tr>
+				
+				</c:forEach>
+			</c:when>
+			<c:otherwise>
+				<tr>
+					<td colspan="4">가입된 스터디가 없습니다.</td>
+				</tr>
+			</c:otherwise>
+		</c:choose>
+		
 	</table><br>
 </body>
 </html>

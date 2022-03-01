@@ -14,11 +14,13 @@ import com.mycompany.myapp.quiz.dto.ChatRoomInfoOfMember;
 import com.mycompany.myapp.quiz.dto.QuizDto;
 import com.mycompany.myapp.quiz.dto.QuizDtoForList;
 import com.mycompany.myapp.quiz.dto.SolveQuizVo;
+import com.mycompany.myapp.studyroom.service.StudyroomService;
 import com.mycompany.myapp.utils.QuizSearchCriteria;
 
 @Service
 public class QuizService implements QuizServiceInterface{
 	private QuizDao dao;
+	
 	public QuizService(QuizDao dao){
 		this.dao=dao;
 	}
@@ -144,6 +146,7 @@ public class QuizService implements QuizServiceInterface{
 		List<ChatRoomInfoOfMember> result=dao.selectAllChatroomOfMember(memberNum);
 		System.out.println("service");
 		System.out.println(result.get(0).getSubject());
+		
 		return dao.selectAllChatroomOfMember(memberNum);
 	}
 

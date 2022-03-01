@@ -56,4 +56,5 @@ public interface StudyroomDao {
 	//과목 중복 체크
 	public abstract int subCheck(String subject);
 	
+	
 }

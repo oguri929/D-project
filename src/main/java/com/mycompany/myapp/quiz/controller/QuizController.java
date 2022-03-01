@@ -65,9 +65,14 @@ public class QuizController {
 	public String getMakeQuiz(QuizDto dto,HttpServletRequest request,Model model) {
 		HttpSession session=request.getSession();
 		MemberDTO memberDto=(MemberDTO) session.getAttribute("user");
+		List<Integer> cntRollInStudy=studyroomService.selectMemberFromAllMatch(memberDto.getNum());
 		List<SubjectDto> subjectList = studyroomService.getSubjectList();
-		List<ChatRoomInfoOfMember> chatroomList=ser.getChatroomListofMember(memberDto.getNum());
-		
+		List<ChatRoomInfoOfMember> chatroomList;
+		if(cntRollInStudy.size()!=0) {
+			chatroomList=ser.getChatroomListofMember(memberDto.getNum());
+		}else {
+			chatroomList=null;
+		}
 		model.addAttribute("chatroomList",chatroomList);
 		model.addAttribute("subjectList",subjectList);
 		return "Quiz/makeQuiz";
