@@ -1,10 +1,13 @@
 package com.mycompany.myapp.studyroom.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -213,6 +216,48 @@ public class StudyroomController {
 		
 		return result;
 	}
+	
+	@RequestMapping(value="/subject/add", method = RequestMethod.GET)
+	public String addSubject(Model model) {
+		List<SubjectDto> subjectList = studyroomService.getSubjectList();
+		model.addAttribute("subjectDto", new SubjectDto());
+		model.addAttribute("subjectList", subjectList);
+		return "/subject/add";
+	}
+	
+	@RequestMapping(value="/subject/add", method = RequestMethod.POST)
+	public String addSubject(SubjectDto subjectDto, Model model, HttpServletResponse response) throws IOException {
+		int result = studyroomService.subCheck(subjectDto.getSubject());
+		String url="";
+		
+		if(result == 0) {
+			studyroomService.addSubject(subjectDto);
+			url = "redirect:/subject/add";
+	
+		}else {
+			response.setContentType("text/html; charset=euc-kr");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('이미 존재하는 과목입니다.'); history.go(-1);</script>");
+			out.flush();
+		}
+		return url;
+		
+	}
+	
+	@RequestMapping(value="/subject/edit", method=RequestMethod.GET)
+	public String editSubejct(Model model) {
+		List<SubjectDto> subjectList = studyroomService.getSubjectList();
+		model.addAttribute("subjectDto", new SubjectDto());
+		model.addAttribute("subjectList", subjectList);
+		return "/subject/edit";
+	}
+	
+	@RequestMapping(value="/subject/edit", method = RequestMethod.POST)
+	public String editSubject(SubjectDto subjectDto) {
+		studyroomService.editSubject(subjectDto);
+		return "redirect:/subject/add";
+	}
+	
 		
 }
 

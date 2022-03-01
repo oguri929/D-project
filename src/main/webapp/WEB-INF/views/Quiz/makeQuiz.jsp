@@ -55,22 +55,27 @@
 <script>
 function selectSunjectNum(obj){
 	this.value
+	alert(this.value);
 }
 
 var quizNum=1;
 function makeQuiz(){
 	
 	
-	quizNum +=1
+	quizNum +=1;
 }
 function hideChoiceOption(){
-	var choice_option_row=document.getElementsById('choice_option'))
+	var choice_option_row=document.getElementsById('choice_option');
 	choice_option_row.style.display='none';
 	
 		
 }
-function showChoiceOption(){
-	var choice_option_row=document.getElementsById('choice_option'))
+function showChoiceOption(obj){
+	
+	var choice_option_row=$(".choice_option");
+	var select_value=$('');
+	var i=$(this).parent();
+	alert(i.prop('name'));
 	choice_option_row.style.display='';
 		
 }
@@ -139,12 +144,13 @@ function showChoiceOption(){
 		</tr>
 		<tr>
 			<th scope="row" class="w-25 p-3">문제타입</th>
-			<td>
-				<select name="quizList[0].quizType" >
+			<td><div class='num-0' id='num-0'>
+				<select name="quizList[0].quizType" class='quizType' onChange="showChoiceOption(this);">
 					<option value="1" selected>5지선다</option>
 					<option value="2">단답형</option>
 					<option value="3">주관식</option>
 				</select>
+				</div>
 			</td>
 		</tr>
 		<tr>

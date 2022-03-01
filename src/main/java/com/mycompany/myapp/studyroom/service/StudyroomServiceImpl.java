@@ -23,11 +23,6 @@ public class StudyroomServiceImpl implements StudyroomService {
 	public List<SubjectDto> getSubjectList() {
 		return studyroomDao.selectAllSubject();
 	}
-	
-	@Override
-	public void addSubject(String addSubject) {
-		studyroomDao.insertSubject(addSubject);
-	}
 
 	@Override
 	public void createStudyroom(StudyroomDto studyroomDto) {
@@ -131,6 +126,24 @@ public class StudyroomServiceImpl implements StudyroomService {
 	public int deleteMemberFromAllMatch(int memberNum) {
 		return studyroomDao.deleteMemberFromAllMatch(memberNum);
 	}
+
+	@Override
+	public void addSubject(SubjectDto subjectDto) {
+		studyroomDao.insertSubject(subjectDto);
+	}
+
+	@Override
+	public int editSubject(SubjectDto subjectDto) {
+		return studyroomDao.updateSubject(subjectDto);
+	}
+
+	@Override
+	public int subCheck(String subject) {
+		return studyroomDao.subCheck(subject);
+	}
+	
+	
+	
 	
 	
 	

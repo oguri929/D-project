@@ -11,8 +11,6 @@ import com.mycompany.myapp.utils.SearchCriteria;
 public interface StudyroomService {
 	//과목 목록 가져오기
 	public abstract List<SubjectDto> getSubjectList();
-	//과목 추가
-	public abstract void addSubject(String addSubject);
 	//스터디룸 만들기
 	public abstract void createStudyroom(StudyroomDto studyroomDto);
 	//스터디룸 리스트 가져오기
@@ -49,4 +47,10 @@ public interface StudyroomService {
 	public abstract List<Integer> selectMemberFromAllMatch(int memberNum);
 	//멤버번호로 매치테이블에서 삭제
 	public abstract int deleteMemberFromAllMatch(int memberNum);
+	//과목 추가하기
+	public abstract void addSubject(SubjectDto subjectDto);
+	//과목 수정하기
+	public abstract int editSubject(SubjectDto subjectDto);
+	//과목 중복 체크
+	public abstract int subCheck(String subject);
 }
