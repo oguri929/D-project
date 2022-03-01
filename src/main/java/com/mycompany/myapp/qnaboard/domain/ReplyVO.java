@@ -4,13 +4,16 @@ import java.util.Date;
 
 import org.apache.ibatis.type.Alias;
 
+import com.mycompany.myapp.member.dto.MemberDTO;
+
 @Alias("replyVO")
 public class ReplyVO {
 	private int bno;
 	private int rno;
 	private String content;
-	private String writer;
+	private int writer;
 	private Date regdate;
+	private MemberDTO memberDto;
 	
 	public int getBno() {
 		return bno;
@@ -30,10 +33,10 @@ public class ReplyVO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getWriter() {
+	public int getWriter() {
 		return writer;
 	}
-	public void setWriter(String writer) {
+	public void setWriter(int writer) {
 		this.writer = writer;
 	}
 	public Date getRegdate() {
@@ -42,5 +45,14 @@ public class ReplyVO {
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
 	}
+	public MemberDTO getMemberDto() {
+		return memberDto;
+	}
+	public void setMemberDto(MemberDTO memberDto) {
+		this.memberDto = memberDto;
+	}
+	
+	
+	
 	
 }

@@ -15,7 +15,28 @@
 		  color: #5a5a5a;
 		}
 		
-		.table{
+		.form-group{
+		  width: 100%;
+		  max-width: 1000px;
+		  padding: 15px;
+		  margin: auto;
+		}
+		
+		.buttons{
+		  width: 100%;
+		  max-width: 1000px;
+		  padding: 15px;
+		  margin: auto;
+		}
+		
+		.reply{
+		  width: 100%;
+		  max-width: 1000px;
+		  padding: 15px;
+		  margin: auto;
+		}
+		
+		.replyList{
 		  width: 100%;
 		  max-width: 1000px;
 		  padding: 15px;
@@ -50,7 +71,7 @@
 			
 			$(".replyWriteBtn").on("click", function(){
 				  var formObj = $("form[name='replyForm']");
-				  formObj.attr("action", "<c:url value="/replyWrite"/>");
+				  formObj.attr("action", "<c:url value='/replyWrite'/>");
 				  formObj.submit();
 			});
 		})
@@ -117,14 +138,14 @@
 				</div>
 				<div class="form-group">
 					<label for="writer" class="col-sm-2 control-label">작성자</label>
-					<input type="text" id="writer" name="writer" class="form-control" value="${read.writer}"  readonly="readonly"/>
+					<input type="text" id="writer" name="writer" class="form-control" value="${read.memberDto.id}"  readonly="readonly"/>
 				</div>
 				<div class="form-group">
 					<label for="regdate" class="col-sm-2 control-label">작성날짜</label>
 					<fmt:formatDate value="${read.regdate}" pattern="yyyy-MM-dd" />	
 				</div>
 								
-				<div>
+				<div class="buttons">
 					<button type="button" class="update_btn btn btn-warning">수정</button>
 					<button type="button" class="delete_btn btn btn-danger">삭제</button>
 					<button type="button" class="list_btn btn btn-primary">목록</button>	
@@ -137,7 +158,7 @@
 						<c:forEach items="${replyList}" var="replyList">
 							<li>
 								<p>
-								작성자 : ${replyList.writer}<br />
+								작성자 : ${replyList.memberDto.id}<br />
 								작성 날짜 :  <fmt:formatDate value="${replyList.regdate}" pattern="yyyy-MM-dd" />
 								</p>
 								  
@@ -155,13 +176,13 @@
   				<div class="form-group">
 						<label for="writer" class="col-sm-2 control-label">댓글 작성자</label>
 						<div class="col-sm-10">
-							<input type="text" id="writer" name="writer" class="form-control" />
+							${sessionScope.user.id }<input type="hidden" id="writer" name="writer" value="${sessionScope.user.num }" class="form-control" />
 						</div>
 					</div>
 					
  					<div class="form-group">
 						<label for="content" class="col-sm-2 control-label">댓글 내용</label>
-						<div class="col-sm-10">
+						<div class="col-sm-8">
 							<input type="text" id="content" name="content" class="form-control"/>
 						</div>
 					</div>

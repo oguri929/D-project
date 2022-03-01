@@ -9,7 +9,7 @@
    </insert>
    
 	<select id="list" resultType="articleVO">
-		select  bno, title, writer, regdate
+		select  *
 		 from article
 		 order by bno desc
 	</select>
