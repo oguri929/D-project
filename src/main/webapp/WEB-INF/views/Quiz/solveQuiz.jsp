@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<c:set var="contextPath"  value="${pageContext}"  />
 <!DOCTYPE html>
 <html>
 <head>
@@ -71,6 +72,7 @@
 	    </div>
 	</nav>
 </header>
+<c:if test="${ subList.size()!=0}">
 	<h2 class="text-center">퀴즈 풀기</h2>
 	<form method="post">
 	<table class="table table-bordered">
@@ -158,5 +160,9 @@
 		</tr>
 	</table>
 </form>
+</c:if>
+<c:if test="${ subList.size()==0}">
+<%@include file="../errorPage/noStudyroom.jsp"%>
+</c:if>
 </body>
 </html>

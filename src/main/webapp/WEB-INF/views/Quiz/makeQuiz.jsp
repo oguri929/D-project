@@ -121,191 +121,84 @@ function showChoiceOption(obj){
 	    </div>
 	</nav>
 </header>
-	<h2 class="text-center">퀴즈 만들기</h2>
-	<form method="post">
-	<c:forEach var="room" items="${chatroomList }" varStatus="status"> 
-		<input type="hidden" name="roomName${room.subjectNum }" value="${room.chatroomNum }"/>
-	</c:forEach>
-	
-	<table class="table table-bordered">	
-		<tr>
-			<th scope="row" class="w-25 p-3">과목</th>
-			<td>
-			<c:if test="${!empty chatroomList}">
-			<select id="test" name="quizList[0].sSubjectNum" onChange="selectSunjectNum(this);">
-				<c:forEach var="room" items="${chatroomList }" varStatus="status"> 
-					<option value="${room.subjectNum },${room.chatroomNum }">${room.subject},${room.roomName }</option>
-					
-				</c:forEach>
-			</select>
-			
-			</c:if>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row" class="w-25 p-3">문제타입</th>
-			<td><div class='num-0' id='num-0'>
-				<select name="quizList[0].quizType" class='quizType' onChange="showChoiceOption(this);">
-					<option value="1" selected>5지선다</option>
-					<option value="2">단답형</option>
-					<option value="3">주관식</option>
-				</select>
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row" class="w-25 p-3">질문</th>
-			<td><textarea name="quizList[0].question"></textarea></td>
-		</tr>
-		
-		<tr class="choice_option">
-			<td>보기1</td>
-			<td><input type="text" name="quizList[0].option1"/></td>
-		</tr>
-		<tr class="choice_option">
-			<td>보기2</td>
-			<td><input type="text" name="quizList[0].option2"/></td>
-		</tr>
-		<tr class="choice_option">
-			<td>보기3</td>
-			<td><input type="text" name="quizList[0].option3"/></td>
-		</tr>
-		<tr class="choice_option">
-			<td>보기4</td>
-			<td><input type="text" name="quizList[0].option4"/></td>
-		</tr>
-		<tr class="choice_option">
-			<td>보기5</td>
-			<td><input type="text" name="quizList[0].option5"/></td>
-		</tr>
-		<tr>
-			<th scope="row" class="w-25 p-3">정답</th>
-			<td><input type="text" name="quizList[0].answer"/></td>
-		</tr>
-		<tr>
-			<th scope="row" class="w-25 p-3">해설</th>
-			<td><textarea name="quizList[0].explanation"></textarea></td>
-		</tr>
-	</table>
-	
-	
-	<!-- 
-	<div class="table">
-                <div class="row">
-                    <div class="cell">
-                        <p>과목</p>
-                    </div>
-                    <div class="cell">
-                        <p>                
-			                <c:if test="${!empty chatroomList}">
-			  	              <select name=quizList[1].subjectNum">
-									<c:forEach var="room" items="${chatroomList }" varStatus="status"> 
-										<option value="${room.subjectNum }">${room.subject}</option>
-									</c:forEach>
-								</select>
-							</c:if>
-						</p>
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="cell">
-                        <p>방제목</p>
-                    </div>
-                    <div class="cell">
-                        <p>                
-			                <c:if test="${!empty chatroomList}">
-			  	              <select name=quizList[1].subjectNum">
-									<c:forEach var="room" items="${chatroomList }" varStatus="status"> 
-										<option value="${room.subjectNum }">${room.subject}</option>
-									</c:forEach>
-								</select>
-							</c:if>
-						</p>
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="cell">
-                        <p>문제타입</p>
-                    </div>
-                    <div class="cell">
-                        <p><select name="quizType" >
-								<option value="1">5지선다</option>
-								<option value="2">단답형</option>
-								<option value="3">주관식</option>
-							</select></p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="cell">
-                        <p>질문</p>
-                    </div>
-                    <div class="cell">
-                        <p><textarea name="quizList[1].question"></textarea></p>
-                    </div>
-                </div>
-                 <div class="row option">
-                    <div class="cell">
-                        <p>보기1</p>
-                    </div>
-                    <div class="cell">
-                        <p><input type="text" name="quizList[1].option1"/></p>
-                    </div>
-                </div>
-                <div class="row option">
-                    <div class="cell">
-                        <p>보기2</p>
-                    </div>
-                    <div class="cell">
-                        <p><input type="text" name="quizList[1].option2"/></p>
-                    </div>
-                </div>
-                <div class="row option">
-                    <div class="cell">
-                        <p>보기3</p>
-                    </div>
-                    <div class="cell">
-                        <p><input type="text" name="quizList[1].option3"/></p>
-                    </div>
-                </div>
-                <div class="row option">
-                    <div class="cell">
-                        <p>보기4</p>
-                    </div>
-                    <div class="cell">
-                        <p><input type="text" name="quizList[1].option4"/></p>
-                    </div>
-                </div>
-                <div class="row option">
-                    <div class="cell">
-                        <p>보기5</p>
-                    </div>
-                    <div class="cell">
-                        <p><input type="text" name="quizList[1].option5"/></p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="cell">
-                        <p>정답</p>
-                    </div>
-                    <div class="cell">
-                        <p><input type="text" name="quizList[1].answer"/></p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="cell">
-                        <p>해설</p>
-                    </div>
-                    <div class="cell">
-                        <p><input type="text" name="quizList[1].explanation"/></p>
-                    </div>
-                </div>
-            </div> -->
-	<div class="col text-center">
-		<input type="submit" class="btn-primary me-md-2" value="문제 제출"/>
-	</div>
-</form>
 
+<c:choose>
+	<c:when test="${chatroomList eq null }">
+		<h2 class="text-center">퀴즈 만들기</h2>
+		<form method="post">
+		<c:forEach var="room" items="${chatroomList }" varStatus="status"> 
+			<input type="hidden" name="roomName${room.subjectNum }" value="${room.chatroomNum }"/>
+		</c:forEach>
+		
+		<table class="table table-bordered">	
+			<tr>
+				<th scope="row" class="w-25 p-3">과목</th>
+				<td>
+				<c:if test="${!empty chatroomList}">
+				<select id="test" name="quizList[0].sSubjectNum" onChange="selectSunjectNum(this);">
+					<c:forEach var="room" items="${chatroomList }" varStatus="status"> 
+						<option value="${room.subjectNum },${room.chatroomNum }">${room.subject},${room.roomName }</option>
+						
+					</c:forEach>
+				</select>
+				
+				</c:if>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row" class="w-25 p-3">문제타입</th>
+				<td>
+					<select name="quizList[0].quizType" >
+						<option value="1" selected>5지선다</option>
+						<option value="2">단답형</option>
+						<option value="3">주관식</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row" class="w-25 p-3">질문</th>
+				<td><textarea name="quizList[0].question"></textarea></td>
+			</tr>
+			
+			<tr class="choice_option">
+				<td>보기1</td>
+				<td><input type="text" name="quizList[0].option1"/></td>
+			</tr>
+			<tr class="choice_option">
+				<td>보기2</td>
+				<td><input type="text" name="quizList[0].option2"/></td>
+			</tr>
+			<tr class="choice_option">
+				<td>보기3</td>
+				<td><input type="text" name="quizList[0].option3"/></td>
+			</tr>
+			<tr class="choice_option">
+				<td>보기4</td>
+				<td><input type="text" name="quizList[0].option4"/></td>
+			</tr>
+			<tr class="choice_option">
+				<td>보기5</td>
+				<td><input type="text" name="quizList[0].option5"/></td>
+			</tr>
+			<tr>
+				<th scope="row" class="w-25 p-3">정답</th>
+				<td><input type="text" name="quizList[0].answer"/></td>
+			</tr>
+			<tr>
+				<th scope="row" class="w-25 p-3">해설</th>
+				<td><textarea name="quizList[0].explanation"></textarea></td>
+			</tr>
+		</table>
+
+		
+		<div class="col text-center">
+			<input type="submit" class="btn-primary me-md-2" value="문제 제출"/>
+		</div>
+		</form>
+	</c:when>
+	<c:otherwise>
+		<%@include file="../errorPage/noStudyroom.jsp"%>
+	</c:otherwise>
+</c:choose>
 </body>
 </html>
