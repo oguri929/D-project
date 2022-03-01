@@ -11,8 +11,6 @@ import com.mycompany.myapp.utils.SearchCriteria;
 public interface StudyroomDao {
 	//과목 리스트 가져오기
 	public abstract List<SubjectDto> selectAllSubject();
-	//과목 추가하기
-	public abstract void insertSubject(String addSubject);
 	//스터디룸 삽입
 	public abstract void insertStudyroom(StudyroomDto studyroomDto);
 	//모든 스터디룸 조회
@@ -51,6 +49,12 @@ public interface StudyroomDao {
 	public abstract List<Integer> selectMemberFromAllMatch(int memberNum);
 	//멤버번호로 매치테이블에서 삭제
 	public abstract int deleteMemberFromAllMatch(int memberNum);
+	//과목 추가하기
+	public abstract void insertSubject(SubjectDto subjectDto);
+	//과목 수정하기
+	public abstract int updateSubject(SubjectDto subjectDto);
+	//과목 중복 체크
+	public abstract int subCheck(String subject);
 	
 	
 }

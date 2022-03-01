@@ -91,6 +91,13 @@
 	    </script>
 			</td>
 		</tr>
+		<tr>
+			<c:if test="${sessionScope.user.id == 'admin' }">
+				<td>
+					<a href='<c:url value="/subject/add" />'>과목 추가 및 수정</a>
+				</td>
+			</c:if>
+		</tr>
 	</table>
 	</div>
 		

@@ -16,10 +16,22 @@
 		SELECT SUBJECT_NUM FROM SUBJECT WHERE SUBJECT = #{addSubject} 
 	</select>
 	
-	<insert id="insertSubject" parameterType="String">
+	<insert id="insertSubject" parameterType="subjectDto">
 		INSERT INTO SUBJECT(SUBJECT_NUM, SUBJECT)
-		VALUES(SUBJECT_SEQ.NEXTVAL, #{addSubject})
+		VALUES(SUBJECT_SEQ.NEXTVAL, #{subject})
 	</insert>
+	
+	<update id="updateSubject" parameterType="subjectDto">
+		UPDATE SUBJECT SET
+		SUBJECT = #{subject}
+		where SUBJECT_NUM=#{subjectNum}
+	</update>
+	
+	<select id="subCheck" parameterType="String" resultType="int">
+	      SELECT COUNT(*) FROM SUBJECT
+	      WHERE
+	      SUBJECT = #{subject}
+		</select>
 	
 	<insert id="insertStudyroom" parameterType="studyroomDto" useGeneratedKeys="true" keyProperty="num">
 		INSERT INTO STUDYROOM(

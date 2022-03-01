@@ -55,22 +55,27 @@
 <script>
 function selectSunjectNum(obj){
 	this.value
+	alert(this.value);
 }
 
 var quizNum=1;
 function makeQuiz(){
 	
 	
-	quizNum +=1
+	quizNum +=1;
 }
 function hideChoiceOption(){
-	var choice_option_row=document.getElementsById('choice_option'))
+	var choice_option_row=document.getElementsById('choice_option');
 	choice_option_row.style.display='none';
 	
 		
 }
-function showChoiceOption(){
-	var choice_option_row=document.getElementsById('choice_option'))
+function showChoiceOption(obj){
+	
+	var choice_option_row=$(".choice_option");
+	var select_value=$('');
+	var i=$(this).parent();
+	alert(i.prop('name'));
 	choice_option_row.style.display='';
 		
 }
@@ -116,6 +121,7 @@ function showChoiceOption(){
 	    </div>
 	</nav>
 </header>
+
 <c:choose>
 	<c:when test="${chatroomList eq null }">
 		<h2 class="text-center">퀴즈 만들기</h2>
@@ -183,6 +189,7 @@ function showChoiceOption(){
 				<td><textarea name="quizList[0].explanation"></textarea></td>
 			</tr>
 		</table>
+
 		
 		<div class="col text-center">
 			<input type="submit" class="btn-primary me-md-2" value="문제 제출"/>

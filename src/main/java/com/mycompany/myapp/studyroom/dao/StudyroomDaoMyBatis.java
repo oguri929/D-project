@@ -26,11 +26,6 @@ public class StudyroomDaoMyBatis implements StudyroomDao{
 	}
 	
 	@Override
-	public void insertSubject(String addSubject) {
-		sqlSessionTemplate.insert("mapper.studyroom.insertSubject", addSubject);
-	}
-	
-	@Override
 	public void insertStudyroom(StudyroomDto studyroomDto) {
 		sqlSessionTemplate.insert("mapper.studyroom.insertStudyroom", studyroomDto);
 	}
@@ -124,6 +119,25 @@ public class StudyroomDaoMyBatis implements StudyroomDao{
 	public int deleteMemberFromAllMatch(int memberNum) {
 		return sqlSessionTemplate.delete("mapper.studyroom.deleteMemberFromAllMatch", memberNum);
 	}
+
+	@Override
+	public void insertSubject(SubjectDto subjectDto) {
+		sqlSessionTemplate.insert("insertSubject", subjectDto);
+	}
+
+	@Override
+	public int updateSubject(SubjectDto subjectDto) {
+		return sqlSessionTemplate.update("updateSubject", subjectDto);
+	}
+
+	@Override
+	public int subCheck(String subject) {
+		return sqlSessionTemplate.selectOne("subCheck", subject);
+	}
+	
+	
+	
+	
 	
 	
 	
