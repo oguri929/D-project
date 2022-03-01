@@ -58,6 +58,7 @@
 				<value>classpath:mapper/quiz-mapper.xml</value>
 				<value>classpath:mapper/sqlmap-chat.xml</value>
 				<value>classpath:mapper/chat-mapper.xml</value>
+				<value>classpath:mapper/sqlmap-board.xml</value>
 			</list>
 		</property>
 	</bean>

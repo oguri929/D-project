@@ -70,7 +70,12 @@
 			<header>
 				<h1 style="text-align:center;"> Q&A 게시판</h1>
 			</header>
-		
+				<c:choose>
+				<c:when test="${empty list }">
+				등록된 QnA가 없습니다.
+				</c:when>
+				
+				<c:when test="${!empty list }">
 				<section id="container">
 				<form role="form" method="get">
 					<table class="table table-hover">
@@ -84,7 +89,7 @@
 								<td>
 									<a href="<c:url value="/readView"/>?bno=${list.bno}"><c:out value="${list.title}" /></a>
 								</td>
-								<td><c:out value="${list.writer}" /></td>
+								<td><c:out value="${list.memberDto.id}" /></td>
 								<td><fmt:formatDate value="${list.regdate}" pattern="yyyy-MM-dd"/></td>
 							</tr>
 						</c:forEach>
@@ -95,6 +100,8 @@
 					</table>
 				</form>
 			</section>
+			</c:when>
+			</c:choose>
 		</div>
 	</body>
 </html>

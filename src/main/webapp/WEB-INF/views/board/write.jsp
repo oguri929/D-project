@@ -84,7 +84,7 @@
 		<tr>
 			<th scope="row" class="w-25 p-3">작성자</th>
 			<td colspan="2">${sessionScope.user.id }</td>
-			<input type="hidden" name="writer" value="${sessionScope.user.num }">
+			<input type="hidden" name="writer" value="${sessionScope.user.num }" />
 		</tr>
 		<tr>
 			<th scope="row" class="w-25 p-3">내용</th>

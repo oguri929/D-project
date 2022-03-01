@@ -68,7 +68,7 @@
 		
 		<br>
 		
-		<div id="root">
+		<div id="root" class="text-center">
 			<header>
 				<h1>Q&A</h1>
 			</header>
@@ -76,25 +76,28 @@
 			 
 			<section id="container">
 				<form role="form" method="post" action="<c:url value="/writeView"/>">
-					<table>
+					<table class="table table-bordered">
 						<tbody>
 							<tr>
+								<th scope="row" class="w-25 p-3">제목</th>
 								<td>
-									<label for="title">제목</label>
 									<input type="text" id="title" name="title"/>
 								</td>
 							</tr>	
 							<tr>
+								<th scope="row" class="w-25 p-3">내용</th>
 								<td>
-									<label for="content">내용</label><textarea id="content" name="content" ></textarea>
+									<textarea id="content" name="content" cols="100" rows="20"></textarea>
 								</td>
 							</tr>
 							<tr>
+								<th scope="row" class="w-25 p-3">작성자</th>
 								<td>
-									<label for="writer">작성자</label><input type="text" id="writer" name="writer" />
+									${sessionScope.user.id }
+									<input type="hidden" id="writer" name="writer" value="${sessionScope.user.num }" />
 								</td>
-							<tr>
-								<td>						
+							<tr class="text-center">
+								<td colspan="2">						
 									<button type="submit">작성</button>
 								</td>
 							</tr>			

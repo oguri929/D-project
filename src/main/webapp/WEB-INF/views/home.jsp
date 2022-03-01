@@ -197,7 +197,7 @@
 
     <!-- Three columns of text below the carousel -->
     <div class="row">
-      <div class="col-lg-4">
+      <div class="col-lg-3">
         <svg class="bd-placeholder-img" width="140" height="140" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#fff"/>
         	<image href="/resources/images/envelope-check.svg" width="140" height="140" />        
         </svg>
@@ -206,7 +206,7 @@
         <p>스터디 매치 공지사항을 확인해보세요.</p>
         <p><a class="btn btn-secondary" href="<c:url value='/board/list'/>">공지사항 바로가기 &raquo;</a></p>
       </div><!-- /.col-lg-4 -->
-      <div class="col-lg-4">
+      <div class="col-lg-3">
         <svg class="bd-placeholder-img" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#fff"/>
         	<image href="/resources/images/people.svg" width="140" height="140" />
         </svg>
@@ -215,7 +215,7 @@
         <p>스터디 그룹을 만들거나, 함께할 스터디 그룹을 찾아보세요.</p>
         <p><a class="btn btn-secondary" href="<c:url value='/studyroom/list'/> ">스터디 찾기 &raquo;</a></p>
       </div><!-- /.col-lg-4 -->
-      <div class="col-lg-4">
+      <div class="col-lg-3">
         <svg class="bd-placeholder-img" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#fff"/>
         	<image href="/resources/images/puzzle.svg" width="140" height="140"/>
         </svg>
@@ -224,6 +224,17 @@
         <p>스터디 매치만의 특징! 퀴즈를 만들고, 이미 만들어진 많은 퀴즈를 풀어보세요.</p>
         <p><a class="btn btn-secondary" href="<c:url value='/solveQuiz'/>">퀴즈 풀어보기 &raquo;</a></p>
       </div><!-- /.col-lg-4 -->
+      
+      <div class="col-lg-3">
+        <svg class="bd-placeholder-img" width="140" height="140" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#fff"/>
+        	<image href="/resources/images/exclamation-circle.svg" width="140" height="140" />        
+        </svg>
+
+        <h2>QnA</h2>
+        <p>궁금한 점이 있다면 바로 물어봐주세요.</p>
+        <p><a class="btn btn-secondary" href="<c:url value='/writeList'/>">큐앤에이 바로가기 &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+      
     </div><!-- /.row -->
 
 

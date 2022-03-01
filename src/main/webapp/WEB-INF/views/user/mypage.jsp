@@ -33,6 +33,9 @@
 	function func3(){
 		$('.ifr').attr("src","${contextPath}/user/getStudyrooms");		
 	}
+	function func4(){
+		$('.ifr').attr("src","${contextPath}/writeList");		
+	}
 </script>
 </head>
 <body>
@@ -101,6 +104,12 @@
         <a href="#" onclick="func3();" class="nav-link link-dark">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
           가입한 스터디 목록
+        </a>
+      </li>
+      <li>
+        <a href="#" onclick="func4();" class="nav-link link-dark">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
+          QnA게시판
         </a>
       </li>
     </ul>
