@@ -60,6 +60,8 @@ public class ChatController {
 	@ResponseBody
 	public List<Chat> selectChatList(@RequestParam int roomNo,@RequestParam int endNo){
 		Map<String,Object> map=new HashMap<>();
+		map.put("roomNo",roomNo);
+		map.put("startNo",endNo-1);
 		List<Chat> list=chatService.selectChatList(map);
 		System.out.println("chatList");
 		return list;

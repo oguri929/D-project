@@ -36,16 +36,19 @@
     </style>
 </head>
 <body>
-<h3 class="h3 mb-3 fw-normal text-center">${roomNo }번방 채팅</h3>
+
 <div id="chat-container" class="border">
 <table class="table">
 	<tr>
+		<th style="position:sticky;top:0px;"> <h3 class="h3 mb-3 fw-normal text-center" >${roomNo }번방 채팅</h3></td>
+	</tr>
+	<tr >
 		<td>
 			<div class="content chatcontent" data-room-nom="${roomNo}"></div>
 		</td>
 	</tr>
 	<tr>
-		<td>
+		<td >
 		<div id="list-guestbook" class="">
 			<c:forEach items="${firstList }" var="chat">
 				<li data-no="${chat.no}">
@@ -69,15 +72,15 @@
 	<tr>
 		<td>
 			<div class="chat-fix">
-			<div id="alert" onclick="moveDown();" class="alert alert-success" role="alert">
+			<div id="alert" onclick="moveDown();" class="alert alert-success" role="alert" style="display:none;">
 				<strong></strong>
 			</div>
 			</div>
 		</td>
 	</tr>
 	<tr>
-		<td>
-			<div>	
+		<td  id="input" style="position:sticky;bottom:0px;">
+			<div style="postion:fixed">	
 				<input type="text" name ="msg" id="msgi" class="form-control input-lg" />
 				<button type="button" class="send col-sm-2 btn btn-secondary">보내기</button>
 				<input type="button" value="파일 올리기" class="col-sm-2 btn btn-secondary" onclick="window.open('<c:url value="/file?roomNo=${roomNo}"/>')"/>
@@ -119,12 +122,24 @@ function moveDown(){
 }
 
 $(document).ready(function(){
+	//location.replace("div[data-no=156]");
+	$("#input").css('position','sticky').css('down','0px')
+	$(window).scrollTop($(".chatcontent")[0].scrollHeight);
 	
-	$(".chatcontent").scrollTop($(".chatcontent")[0].scrollHeight);
 	var chatBox=$(".box");
 	var messageInput=$('input[name="msg"]');
 	var roomNo="${roomNo}";
 	var sock= new SockJS("${pageContext.request.contextPath}/endpoint");
+	var endDiv=$("#list-guestbook li").last();
+	var startDiv=$("#list-guestbook li").first();
+	
+	window.scrollTo({top:endDiv.offset().top,
+		behavior:'instant'});
+	var isEnd=false;
+	var isScrolled =false;
+	
+	
+	
 	client=Stomp.over(sock);
 	
 	client.connect({},function(){
@@ -134,6 +149,7 @@ $(document).ready(function(){
 			var endNo=content.no;
 			var html =renderList(content,endNo);
 			$("#list-guestbook").append(html);
+			
 			newAlerts(content,endNo);
 		});
 	});
@@ -184,18 +200,21 @@ $(document).ready(function(){
 	var isScrolled =false;
 	var fetchList= function(){
 		if(isEnd==true){
+			alert("대화의 처음입니다");
 			return;
 		}
+		
+		endDiv=$("#list-guestbook li").first();
+		
 		var endNo=$("#list-guestbook li").first().data("no") || 0;
-		console.log("endNo" +endNo);
 		$.ajax({
-			url : "${pageContext.request.contextPath}/chat/chatList.do?endNo"
-				+endNo+"&roomNo=${roomNo}",
+			url : "${pageContext.request.contextPath}/chat/chatList.do?roomNo=${roomNo}"
+				+"&endNo="+endNo,
 				type : "GET",
 				dataType : "json",
 				success : function(result){
 					
-					var lenth=result.size;
+					var length=result.size;
 					if(length<10){
 						isEnd=true;
 					}
@@ -206,8 +225,8 @@ $(document).ready(function(){
 					
 					var position=$('[data-no='+endNo+']').prev().offset();
 					console.log(position);
-					document.querySelector('.chatcontent').scrollTo({top:position.top,
-						behavior:'auto'});
+					window.scrollTo({top:position.top,
+						behavior:'instant'});
 					isScrolled=false;
 				},
 				error : function(xhr,status,err){
@@ -221,8 +240,8 @@ $(document).ready(function(){
 	}
 	
 	var renderList=function(vo,endNo){
-		//var date=moment(vo.sendDate).format('YY/MM/DD HH:MM');
-		var date=vo.nowTime;
+		var date=moment(vo.sendDate).format('YY/MM/DD HH:MM');
+		//var date=vo.nowTime;
 		var html="";
 		if(endNo==0) endNo=vo.no;
 		var content="";
@@ -240,13 +259,19 @@ $(document).ready(function(){
 			+ "</li>";
 		return html;
 	}
-	$(".chatcontent").scroll(function(){
+//	$(window).scroll(function () {//스크를 위치를 반환
+//		var height = $(document).scrollTop();
+//		if(height<10 && isScrolled ==false){
+//			isScrolled = true;
+//			fetchList();
+//		}
+//	});
+	
+	$(window).scroll(function(){
 		var $window=$(this);
 		var scrollTop=$window.scrollTop();
-		var windowheight=$window.hegith();
-		var documentHeight=$(document).height();
-		
-		if(scrollTop < 1 && isScrolled ==false){
+		startDiv=$("#list-guestbook li").first();
+		if(scrollTop < startDiv.offset().top && isScrolled ==false){
 			isScrolled = true;
 			fetchList();
 		}
