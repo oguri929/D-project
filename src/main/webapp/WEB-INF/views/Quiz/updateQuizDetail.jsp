@@ -28,6 +28,38 @@
 		  margin: auto;
 		}
 	</style>
+	<script>
+		$(document).ready(function(){
+	
+	function selectType(obj){
+		var options=obj.parent().nextAll('tr.choice_option');
+		alert("시작");
+		if (obj.val()!=1){
+			//options.css('display':'none');
+		}else{
+			//options.css('display':'block');
+		}
+	}
+	
+	var opts=$("select").parent().parent().nextAll('tr.choice_option');
+	if ($("select").value!=1){
+		opts.hide();
+	}else{
+		opts.show();
+	}
+	
+	
+	$("select").change(function(){
+		var options=$(this).parent().parent().nextAll('tr.choice_option');
+		alert(this.value);
+		if (this.value!=1){
+			options.hide();
+		}else{
+			options.show();
+		}
+	});
+	});
+	</script>
 </head>
 <body>
 <header>
@@ -80,8 +112,8 @@
 			<td>
 				<select name="quizType" >
 					<option value="1" <c:if test="${quiz.quizType==1}"> selected </c:if>>5지선다</option>
-					<option value="2" <c:if test="${quiz.quizType==2}"> </c:if>>단답형</option>
-					<option value="3" <c:if test="${quiz.quizType==3}">  </c:if>>주관식</option>
+					<option value="2" <c:if test="${quiz.quizType==2}"> selected</c:if>>단답형</option>
+					<option value="3" <c:if test="${quiz.quizType==3}"> selected</c:if>>주관식</option>
 				</select>
 			</td>
 		</tr>
@@ -90,23 +122,23 @@
 			<td><textarea name="question">${quiz.question }</textarea></td>
 		</tr>
 		
-		<tr>
+		<tr class="choice_option">
 			<td>보기1</td>
 			<td><input type="text" name="option1" value="${quiz.option1 }"/></td>
 		</tr>
-		<tr>
+		<tr class="choice_option">
 			<td>보기2</td>
 			<td><input type="text" name="option2" value="${quiz.option2 }"/></td>
 		</tr>
-		<tr>
+		<tr class="choice_option">
 			<td>보기3</td>
 			<td><input type="text" name="option3" value="${quiz.option3 }"/></td>
 		</tr>
-		<tr>
+		<tr class="choice_option">
 			<td>보기4</td>
 			<td><input type="text" name="option4" value="${quiz.option4 }"/></td>
 		</tr>
-		<tr>
+		<tr class="choice_option">
 			<td>보기5</td>
 			<td><input type="text" name="option5" value="${quiz.option5 }"/></td>
 		</tr>

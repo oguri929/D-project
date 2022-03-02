@@ -105,7 +105,7 @@
 		<input type="hidden" name="answerList[${dto.key}].subjectNum" value="${dto.value.subjectNum}" />
 		
 		<tr>
-			<th scope="row" class="w-25 p-3">문제타입</th>
+			<th scope="row" class="type">문제타입</th>
 			<td>
 				<c:choose>
 				<c:when test="${dto.value.quizType==1 }">
@@ -126,30 +126,37 @@
 				<input type="text" name="answerList[${dto.key}].question" value="${dto.value.question}" />
 			</td>
 		</tr>
-		<tr>
-			<td>보기1</td>
-			<td><input type="radio" name="answerList[${dto.key}].answer" value="1"/>${dto.value.option1 }</td>
-		</tr>
-		<tr>
-			<td>보기2</td>
-			<td><input type="radio" name="answerList[${dto.key}].answer" value="2"/>${dto.value.option2 }</td>
-		</tr>
-		<tr>
-			<td>보기3</td>
-			<td><input type="radio" name="answerList[${dto.key}].answer" value="3"/>${dto.value.option3 }</td>
-		</tr>
-		<tr>
-			<td>보기4</td>
-			<td><input type="radio" name="answerList[${dto.key}].answer" value="4"/>${dto.value.option4 }</td>
-		</tr>
-		<tr>
-			<td>보기5</td>
-			<td><input type="radio" name="answerList[${dto.key}].answer" value="5"/>${dto.value.option5 }</td>
-		</tr>
-		<tr>
-			<td>단답형 정답</td>
-			<td><textarea name="answerList[${dto.key}].answer"></textarea></td>
-		</tr>
+		<c:choose>
+			<c:when test="${dto.value.quizType==1 }">
+				<tr class="choice-option">
+					<td>보기1</td>
+					<td><input type="radio" name="answerList[${dto.key}].answer" value="1"/>${dto.value.option1 }</td>
+				</tr>
+				<tr class="choice-option">
+					<td>보기2</td>
+					<td><input type="radio" name="answerList[${dto.key}].answer" value="2"/>${dto.value.option2 }</td>
+				</tr>
+				<tr class="choice-option">
+					<td>보기3</td>
+					<td><input type="radio" name="answerList[${dto.key}].answer" value="3"/>${dto.value.option3 }</td>
+				</tr>
+				<tr class="choice-option">
+					<td>보기4</td>
+					<td><input type="radio" name="answerList[${dto.key}].answer" value="4"/>${dto.value.option4 }</td>
+				</tr>
+				<tr class="choice-option">
+					<td>보기5</td>
+					<td><input type="radio" name="answerList[${dto.key}].answer" value="5"/>${dto.value.option5 }</td>
+				</tr>
+			</c:when>
+			<c:otherwise>
+			<tr class="text-answer">
+				<td> 정답</td>
+				<td><textarea name="answerList[${dto.key}].answer"></textarea></td>
+			</tr>
+			</c:otherwise>
+		</c:choose>
+		
 		</c:forEach>
 		<tr class="col text-center">
 			<td colspan="2">

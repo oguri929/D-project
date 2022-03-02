@@ -95,27 +95,30 @@
 			<th scope="row" class="w-25 p-3">질문</th>
 			<td>${quiz.value.question }</td>
 		</tr>
-		
-		<tr>
-			<td>보기1</td>
-			<td>${quiz.value.option1 }</td>
-		</tr>
-		<tr>
-			<td>보기2</td>
-			<td>${quiz.value.option2 }</td>
-		</tr>
-		<tr>
-			<td>보기3</td>
-			<td>${quiz.value.option3 }</td>
-		</tr>
-		<tr>
-			<td>보기4</td>
-			<td>${quiz.value.option4 }</td>
-		</tr>
-		<tr>
-			<td>보기5</td>
-			<td>${quiz.value.option5 }</td>
-		</tr>
+		<c:choose>
+			<c:when test="${dto.value.quizType==1 }">
+				<tr>
+					<td>보기1</td>
+					<td>${quiz.value.option1 }</td>
+				</tr>
+				<tr>
+					<td>보기2</td>
+					<td>${quiz.value.option2 }</td>
+				</tr>
+				<tr>
+					<td>보기3</td>
+					<td>${quiz.value.option3 }</td>
+				</tr>
+				<tr>
+					<td>보기4</td>
+					<td>${quiz.value.option4 }</td>
+				</tr>
+				<tr>
+					<td>보기5</td>
+					<td>${quiz.value.option5 }</td>
+				</tr>
+			</c:when>
+		</c:choose>
 		<tr>
 			<th scope="row" class="w-25 p-3">나의 정답</th>
 			<td>${quiz.key.answer }</td>

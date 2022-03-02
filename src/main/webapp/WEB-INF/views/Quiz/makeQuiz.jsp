@@ -54,26 +54,34 @@
 </head>
 <script>
 function selectSunjectNum(obj){
-	this.value
+	alert(this.value);
+	
 }
 
-var quizNum=1;
-function makeQuiz(){
+
+$(document).ready(function(){
 	
-	
-	quizNum +=1
-}
-function hideChoiceOption(){
-	var choice_option_row=document.getElementsById('choice_option'))
-	choice_option_row.style.display='none';
-	
+	function selectType(obj){
+		var options=obj.parent().nextAll('tr.choice_option');
+		alert("시작");
+		if (obj.val()!=1){
+			//options.css('display':'none');
+		}else{
+			//options.css('display':'block');
+		}
+	}
+	$("select").change(function(){
+		var options=$(this).parent().parent().nextAll('tr.choice_option');
 		
-}
-function showChoiceOption(){
-	var choice_option_row=document.getElementsById('choice_option'))
-	choice_option_row.style.display='';
+		if (this.value!=1){
+			options.hide();
+		}else{
+			options.show();
+		}
+	});
 		
-}
+});
+
 </script>
 <body>
 <header>
@@ -127,7 +135,7 @@ function showChoiceOption(){
 			<th scope="row" class="w-25 p-3">과목</th>
 			<td>
 			<c:if test="${!empty chatroomList}">
-			<select id="test" name="quizList[0].sSubjectNum" onChange="selectSunjectNum(this);">
+			<select id="test" name="quizList[0].sSubjectNum">
 				<c:forEach var="room" items="${chatroomList }" varStatus="status"> 
 					<option value="${room.subjectNum },${room.chatroomNum }">${room.subject},${room.roomName }</option>
 					
@@ -140,7 +148,7 @@ function showChoiceOption(){
 		<tr>
 			<th scope="row" class="w-25 p-3">문제타입</th>
 			<td>
-				<select name="quizList[0].quizType" >
+				<select name="quizList[0].quizType" onChange="selectType(this);">
 					<option value="1" selected>5지선다</option>
 					<option value="2">단답형</option>
 					<option value="3">주관식</option>
@@ -182,120 +190,6 @@ function showChoiceOption(){
 		</tr>
 	</table>
 	
-	
-	<!-- 
-	<div class="table">
-                <div class="row">
-                    <div class="cell">
-                        <p>과목</p>
-                    </div>
-                    <div class="cell">
-                        <p>                
-			                <c:if test="${!empty chatroomList}">
-			  	              <select name=quizList[1].subjectNum">
-									<c:forEach var="room" items="${chatroomList }" varStatus="status"> 
-										<option value="${room.subjectNum }">${room.subject}</option>
-									</c:forEach>
-								</select>
-							</c:if>
-						</p>
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="cell">
-                        <p>방제목</p>
-                    </div>
-                    <div class="cell">
-                        <p>                
-			                <c:if test="${!empty chatroomList}">
-			  	              <select name=quizList[1].subjectNum">
-									<c:forEach var="room" items="${chatroomList }" varStatus="status"> 
-										<option value="${room.subjectNum }">${room.subject}</option>
-									</c:forEach>
-								</select>
-							</c:if>
-						</p>
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="cell">
-                        <p>문제타입</p>
-                    </div>
-                    <div class="cell">
-                        <p><select name="quizType" >
-								<option value="1">5지선다</option>
-								<option value="2">단답형</option>
-								<option value="3">주관식</option>
-							</select></p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="cell">
-                        <p>질문</p>
-                    </div>
-                    <div class="cell">
-                        <p><textarea name="quizList[1].question"></textarea></p>
-                    </div>
-                </div>
-                 <div class="row option">
-                    <div class="cell">
-                        <p>보기1</p>
-                    </div>
-                    <div class="cell">
-                        <p><input type="text" name="quizList[1].option1"/></p>
-                    </div>
-                </div>
-                <div class="row option">
-                    <div class="cell">
-                        <p>보기2</p>
-                    </div>
-                    <div class="cell">
-                        <p><input type="text" name="quizList[1].option2"/></p>
-                    </div>
-                </div>
-                <div class="row option">
-                    <div class="cell">
-                        <p>보기3</p>
-                    </div>
-                    <div class="cell">
-                        <p><input type="text" name="quizList[1].option3"/></p>
-                    </div>
-                </div>
-                <div class="row option">
-                    <div class="cell">
-                        <p>보기4</p>
-                    </div>
-                    <div class="cell">
-                        <p><input type="text" name="quizList[1].option4"/></p>
-                    </div>
-                </div>
-                <div class="row option">
-                    <div class="cell">
-                        <p>보기5</p>
-                    </div>
-                    <div class="cell">
-                        <p><input type="text" name="quizList[1].option5"/></p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="cell">
-                        <p>정답</p>
-                    </div>
-                    <div class="cell">
-                        <p><input type="text" name="quizList[1].answer"/></p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="cell">
-                        <p>해설</p>
-                    </div>
-                    <div class="cell">
-                        <p><input type="text" name="quizList[1].explanation"/></p>
-                    </div>
-                </div>
-            </div> -->
 	<div class="col text-center">
 		<input type="submit" class="btn-primary me-md-2" value="문제 제출"/>
 	</div>
