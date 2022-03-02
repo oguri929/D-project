@@ -32,6 +32,9 @@
 		  padding: 15px;
 		  margin: auto;
 		}
+		.text-right{
+		text-align:right;
+		}
 
     </style>
 </head>
@@ -51,7 +54,14 @@
 		<td >
 		<div id="list-guestbook" class="">
 			<c:forEach items="${firstList }" var="chat">
-				<li data-no="${chat.no}">
+				<c:choose>
+					<c:when test="${sessionScope.user.num==chat.sender }">
+						<li class="text-right" data-no="${chat.no}">
+					</c:when>
+					<c:otherwise>
+						<li data-no="${chat.no}">
+					</c:otherwise>
+				</c:choose>
 				<strong>${chat.nickname}</strong>
 				<div>
 					<strong style="display : inline;"><fmt:formatDate value="${chat.sendDate}" pattern="yy/MM/dd HH:mm"/></strong>
@@ -70,8 +80,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td>
-			<div class="chat-fix">
+		<td id="alertTd"  style="position:sticky;bottom:0px;">
+			<div class="chat-fix" >
 			<div id="alert" onclick="moveDown();" class="alert alert-success" role="alert" style="display:none;">
 				<strong></strong>
 			</div>
@@ -123,8 +133,9 @@ function moveDown(){
 
 $(document).ready(function(){
 	//location.replace("div[data-no=156]");
-	$("#input").css('position','sticky').css('down','0px')
+	
 	$(window).scrollTop($(".chatcontent")[0].scrollHeight);
+	$('#alertTd').css('position','sticky').css('bottom',$('#input').outerHeight());
 	
 	var chatBox=$(".box");
 	var messageInput=$('input[name="msg"]');
@@ -135,10 +146,9 @@ $(document).ready(function(){
 	
 	window.scrollTo({top:endDiv.offset().top,
 		behavior:'instant'});
+	var delta=$(document).height()-$(window).scrollTop();
 	var isEnd=false;
 	var isScrolled =false;
-	
-	
 	
 	client=Stomp.over(sock);
 	
@@ -148,9 +158,15 @@ $(document).ready(function(){
 			var content=JSON.parse(chat.body);
 			var endNo=content.no;
 			var html =renderList(content,endNo);
+			var getDelta=$(document).height()-$(window).scrollTop();
 			$("#list-guestbook").append(html);
+			if(getDelta==delta){
+				window.scrollTo({top:endDiv.offset().top,
+					behavior:'instant'})
+			}else{
+				newAlerts(content,endNo);
+			}
 			
-			newAlerts(content,endNo);
 		});
 	});
 	
@@ -243,20 +259,30 @@ $(document).ready(function(){
 		var date=moment(vo.sendDate).format('YY/MM/DD HH:MM');
 		//var date=vo.nowTime;
 		var html="";
+		tem="";
+		var chatMe=0;
 		if(endNo==0) endNo=vo.no;
 		var content="";
+		if("${sessionScope.user.num}"==vo.sender){
+			chatMe=1;
+		}
 		if(vo.dateType=="f"){
 			content="<p class='text-muted p-2'><a href=\"<c:url value='/resources/uploadFile'/>/"+vo.sysName+"\" download>"+vo.chatContent+"</a></p>";
 		}else{
 		content="<p class='text-muted p-2'>"+vo.chatContent+"</p>";
 		}
-		html="<li class='pr-2' data-no='"+endNo+"'>"
-			+"<strong>"+vo.nickname+"</strong>"	
+		if(chatMe==1){
+			html="<li class='text-right' data-no='"+endNo+"'>"
+		}else{
+			html="<li data-no='"+endNo+"'>"
+		}
+		tem="<strong>"+vo.nickname+"</strong>"	
 			+"<div>"
 			+"<strong style='display:inline;' class='align-self-end'>"+date+ "</strong>"
 			+ content
 			+"</div>"
 			+ "</li>";
+		html=html+tem;
 		return html;
 	}
 //	$(window).scroll(function () {//스크를 위치를 반환
